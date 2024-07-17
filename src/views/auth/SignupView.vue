@@ -1,5 +1,4 @@
 <template>
-  <div class="left-layout">
     <h1>사용자 등록</h1>
     <div class="login-form">
       <div class="input-box">
@@ -18,7 +17,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -40,5 +38,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import url('@/assets/scss/auth.scss');
+  @import url('@/assets/scss/auth/auth.scss');
 </style>

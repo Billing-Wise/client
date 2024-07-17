@@ -1,5 +1,4 @@
 <template>
-  <div class="left-layout">
     <h1>로그인</h1>
     <div class="login-form">
       <div class="input-box">
@@ -10,11 +9,10 @@
         <auth-button-vue title="로그인" :clickFunc="login"/>
         <div class="guide-line">
           <span>아이디 / 비밀번호 찾기</span>
-          <span @click="goCertify">사용자 등록</span>
+          <span @click="certify">사용자 등록</span>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -22,6 +20,7 @@ import AuthButtonVue from '@/components/auth/AuthButton.vue'
 import AuthInputVue from '@/components/auth/AuthInput.vue'
 import { mapStores } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
+import { authAxios } from '@/utils/axios';
 
 export default {
   name: 'LoginView',
@@ -33,11 +32,21 @@ export default {
     ...mapStores(useAuthStore)
   },
   methods: {
-    login() {
-      this.authStore.login();
-      this.$router.replace({ name: 'home' });
+    async login() {
+      const data = {
+
+      };
+
+      const result = authAxios.post(
+        '/login',
+        data
+      )
+      
+      console.log(result);
+      // this.authStore.login();
+      // this.$router.push({ name: 'home' });
     },
-    goCertify() {
+    certify() {
       this.$router.push({ name : 'certify' })
     }
   }
@@ -45,5 +54,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import url('@/assets/scss/auth.scss');
+  @import url('@/assets/scss/auth/auth.scss');
 </style>
