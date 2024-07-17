@@ -19,7 +19,7 @@ import AuthButtonVue from '@/components/auth/AuthButton.vue'
 import AuthInputVue from '@/components/auth/AuthInput.vue'
 
 export default {
-  name: 'CertifyView',
+  name: 'EmailCertifyView',
   components: {
     AuthButtonVue,
     AuthInputVue,

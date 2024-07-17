@@ -14,7 +14,9 @@ export default {
 
 <style lang="scss" scoped>
   .auth-button {
-    @include base-button;
+    @include base-button(100%, 18px);
+    width: 100%;
+    font-size: 18px;
     background-color: $theme-color;
     border: none;
     color : white;

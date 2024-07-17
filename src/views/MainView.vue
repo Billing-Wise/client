@@ -10,7 +10,7 @@
 
 <script>
 import NavBarVue from "@/components/common/NavBar.vue";
-import SideBarVue from "@/components/common/SideBar.vue";
+import SideBarVue from "@/components/common/TheSideBar.vue";
 
 export default {
   name: 'MainView',

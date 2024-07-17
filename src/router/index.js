@@ -58,9 +58,9 @@ const router = createRouter({
           component: () => import('@/views/auth/LoginView.vue'),
         },
         {
-          path: '/cetify',
-          name: 'certify',
-          component: () => import('@/views/auth/CertifyView.vue'),
+          path: '/email-certify',
+          name: 'email-certify',
+          component: () => import('@/views/auth/EmailCertifyView.vue'),
         },
         {
           path: '/signup',
