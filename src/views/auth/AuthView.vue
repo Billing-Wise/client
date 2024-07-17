@@ -1,6 +1,8 @@
 <template>
   <div class="root-container">
-    <router-view/>
+    <div class="left-layout">
+      <router-view/>
+    </div>
     <logo-side-vue/>
   </div>
 </template>
@@ -19,5 +21,10 @@ export default {
 <style lang="scss" scoped>
   .root-container {
     @include flex-box(row, center, 0px);
+  }
+
+  .left-layout {
+    @include flex-box(column, center, 20px);
+    flex-grow: 1;
   }
 </style>

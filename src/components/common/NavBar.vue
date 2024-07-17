@@ -5,7 +5,6 @@
       <div class="nav-info-item">KOSA</div>
       <div class="nav-info-item">홍길동 님</div>
     </div>
-
   </nav>
 </template>
 
