@@ -1,6 +1,7 @@
 $light-theme-color: rgba(130, 112, 190, 0.7);
 $theme-color: #8270BE;
 $input-color: #6C7F98;
+$back-color: #EBEBEB;
 
 $base-shadow : 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
@@ -15,13 +16,10 @@ $side-bar-width : 150px;
   gap: $gap;
 }
 
-@mixin base-button($width, $font-size) {
-  width: $width;
+@mixin base-button() {
   box-shadow: 0 5px 10px rgba(0,0,0,0.16), 0 5px 10px rgba(0,0,0,0.23);
   box-sizing: border-box;
-  padding: 10px;
   border-radius: 10px;
-  font-size: $font-size;
   font-weight: bold;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   cursor: pointer;
@@ -30,6 +28,14 @@ $side-bar-width : 150px;
   }
   &:active {
     opacity: 0.7;
+  }
+}
+
+@mixin base-icon() {
+  cursor: pointer;
+  transition: all 0.5s;
+  &:hover {
+    opacity: 0.5;
   }
 }
 
