@@ -10,12 +10,17 @@
 
 <script>
 export default {
-  name: 'NavBarVue',
+  name: 'TheNavBarVue',
   data() {
     return {
+      
     };
   },
   mounted() {
+
+  },
+  method() {
+
   },
 }
 </script>

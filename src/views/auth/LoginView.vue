@@ -6,7 +6,7 @@
       <auth-input-vue title="비밀번호" inputType="password" v-model="password" @keydown.enter="login"/>
     </div>
     <div class="button-box">
-      <span class="warning-msg" v-show="invalidInput">{{ invalidMsg }}</span>
+      <div class="warning-msg">{{ invalidMsg }}</div>
       <auth-button-vue title="로그인" :clickFunc="login" />
       <div class="guide-line">
         <span>아이디 / 비밀번호 찾기</span>

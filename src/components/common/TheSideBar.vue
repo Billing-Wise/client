@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import SideBarItemVue from './side-bar/TheSideBarItem.vue';
-import SideBarLogoutVue from './side-bar/TheSideBarLogout.vue';
+import SideBarItemVue from './side-bar/SideBarItem.vue';
+import SideBarLogoutVue from './side-bar/SideBarLogout.vue';
 
 export default {
-  name: 'SideBarVue',
+  name: 'TheSideBarVue',
   components: {
     SideBarLogoutVue,
     SideBarItemVue

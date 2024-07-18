@@ -1,3 +1,4 @@
+import { authAxios } from '@/utils/axios';
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
@@ -8,10 +9,11 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     login() {
-      this.isLoggedIn = true
+      this.isLoggedIn = true;
     },
-    logout() {
-      this.isLoggedIn = false
+    async logout() {
+      await authAxios.post('auth/logout');
+      this.isLoggedIn = false;
     }
   },
   persist: {

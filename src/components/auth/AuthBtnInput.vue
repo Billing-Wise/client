@@ -3,7 +3,7 @@
       <p class="title">{{title}}</p>
       <div class="main-box">
         <input :type="inputType" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
-        <button>{{buttonTitle}}</button>
+        <button @click="clickFunc">{{buttonTitle}}</button>
       </div>
     </div>
   </template>
@@ -15,7 +15,8 @@
       'title' : String,
       'inputType': String,
       'buttonTitle': String,
-      'modelValue': String
+      'modelValue': String,
+      'clickFunc' : Function
     },
     emits: ['update:modelValue']
   
