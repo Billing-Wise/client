@@ -1,7 +1,7 @@
 <template>
   <div class="main-view" >
-    <NavBarVue/>
-    <SideBarVue/>
+    <TheNavBarVue/>
+    <TheSideBarVue/>
     <div class="main-content">
       <RouterView/>
     </div>
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import NavBarVue from "@/components/common/NavBar.vue";
-import SideBarVue from "@/components/common/SideBar.vue";
+import TheNavBarVue from "@/components/common/TheNavBar.vue";
+import TheSideBarVue from "@/components/common/TheSideBar.vue";
 
 export default {
   name: 'MainView',
   components: {
-    NavBarVue, 
-    SideBarVue  
+    TheNavBarVue, 
+    TheSideBarVue  
   },
 }
 </script>

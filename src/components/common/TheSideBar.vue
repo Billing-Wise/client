@@ -17,7 +17,7 @@ import SideBarItemVue from './side-bar/SideBarItem.vue';
 import SideBarLogoutVue from './side-bar/SideBarLogout.vue';
 
 export default {
-  name: 'SideBarVue',
+  name: 'TheSideBarVue',
   components: {
     SideBarLogoutVue,
     SideBarItemVue

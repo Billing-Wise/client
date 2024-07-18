@@ -3,29 +3,69 @@ h1 {
 }
 
 .login-form {
-  @include flex-box(column, center, 60px);
-  width: 400px;
+  @include flex-box(column, center, 50px);
+  width: 500px;
+  margin: 0 30px;
   .input-box {
     @include flex-box(column, center, 20px);
     width: 100%;
   }
-  .button-box {
-    @include flex-box(column, center, 20px);
+}
+
+.signup-form {
+  @include flex-box(column, center, 50px);
+  width: 700px;
+  margin: 0 30px;
+  .signup-grid {
+    @include flex-box(row, center, 50px);
     width: 100%;
-    .guide-line {
-      width: 100%;
-      @include flex-box(row, space-between, 0px);
-      font-size: 14px;
-      font-weight: bold;
-      span {
-        cursor: pointer;
-        transition: all 0.5s;
-        &:hover {
-          color: black;
-        }
+  }
+  .input-left {
+    @include flex-box(column, center, 20px);
+    width: 60%;
+  }
+  .input-right {
+    @include flex-box(column, center, 20px);
+    width: 40%;
+  }
+  
+}
+
+.input-item {
+  width: 100%;
+}
+
+.button-box {
+  @include flex-box(column, center, 20px);
+  width: 100%;
+  .guide-line {
+    width: 100%;
+    @include flex-box(row, space-between, 0px);
+    font-size: 14px;
+    font-weight: bold;
+    span {
+      cursor: pointer;
+      transition: all 0.5s;
+      &:hover {
+        opacity: 0.5;
       }
     }
   }
 }
 
+.warning-msg {
+  color: #ff6347;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: left;
+  height: 15px;
+}
+
+.valid-msg {
+  color: #3CB371;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: left;
+  height: 15px;
+}
 

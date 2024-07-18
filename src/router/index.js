@@ -58,11 +58,6 @@ const router = createRouter({
           component: () => import('@/views/auth/LoginView.vue'),
         },
         {
-          path: '/cetify',
-          name: 'certify',
-          component: () => import('@/views/auth/CertifyView.vue'),
-        },
-        {
           path: '/signup',
           name: 'signup',
           component: () => import('@/views/auth/SignupView.vue'),

@@ -2,20 +2,29 @@
   <nav class="nav-bar">
     <img src="@/assets/images/name_white.png" alt="">
     <div class="nav-info">
-      <div class="nav-info-item">KOSA</div>
-      <div class="nav-info-item">홍길동 님</div>
+      <div class="nav-info-item">{{ clientName }}</div>
+      <div class="nav-info-item">{{ userName }} 님</div>
     </div>
   </nav>
 </template>
 
 <script>
+import { mainAxios } from '@/utils/axios';
+
 export default {
-  name: 'NavBarVue',
+  name: 'TheNavBarVue',
   data() {
     return {
+      clientName: String,
+      userName: String,
     };
   },
-  mounted() {
+  async mounted() {
+    const result = await mainAxios.get('users/current');
+    this.clientName = result.data.clientName
+    this.userName = result.data.userName
+  },
+  method: {
   },
 }
 </script>

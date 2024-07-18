@@ -1,3 +1,5 @@
+import router from '@/router';
+import { authAxios } from '@/utils/axios';
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
@@ -8,10 +10,12 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     login() {
-      this.isLoggedIn = true
+      this.isLoggedIn = true;
     },
     logout() {
-      this.isLoggedIn = false
+      authAxios.post('auth/logout');
+      this.isLoggedIn = false;
+      router.push({name: 'login'})
     }
   },
   persist: {

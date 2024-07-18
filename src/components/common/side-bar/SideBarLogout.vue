@@ -14,9 +14,8 @@ export default {
     ...mapStores(useAuthStore)
   },
   methods: {
-    logout() {
-      this.authStore.logout();
-      this.$router.push({ name: 'login' });
+    async logout() {
+      await this.authStore.logout();
     }
   }
 }
