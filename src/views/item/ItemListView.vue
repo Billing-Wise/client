@@ -16,6 +16,7 @@ import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
 import SearchInputVue from '@/components/common/input/SearchInput.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import { useItemStore } from '@/stores/item';
+import { mapActions } from 'pinia';
 import { mapStores } from 'pinia';
 
 export default {
@@ -34,6 +35,7 @@ export default {
     ...mapStores(useItemStore)
   },
   methods: {
+    ...mapActions(useItemStore, ['setPage']),
     // 조회 api 함수 - 로직 수정하면 됩니다.
     getData(page, size) {
       console.log(page, size)

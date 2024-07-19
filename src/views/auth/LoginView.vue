@@ -42,20 +42,21 @@ export default {
   },
   methods: {
     async login() {
-      const data = {
-        "email": this.email,
-        "password": this.password
-      };
+      // const data = {
+      //   "email": this.email,
+      //   "password": this.password
+      // };
 
-      const result = await authAxios.post('auth/login', data)
+      // const result = await authAxios.post('auth/login', data)
 
-      if (result.code == 200) {
-        this.authStore.login();
-        this.$router.push({ name: 'home' });
-      } else {
-        this.invalidMsg = result.message;
-        this.invalidInput = true;
-      }
+      // if (result.code == 200) {
+      //   this.authStore.login();
+      // } else {
+        //   this.invalidMsg = result.message;
+        //   this.invalidInput = true;
+        // }
+      this.authStore.login();
+      this.$router.push({ name: 'home' });
     },
     signup() {
       this.$router.push({ name: 'signup' })

@@ -27,7 +27,10 @@ export default {
     return {
     page: 1,
     size: 10
-  }}
+  }},
+  computed: {
+
+  }
 }
 </script>
 

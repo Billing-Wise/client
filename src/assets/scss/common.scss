@@ -33,7 +33,7 @@ $side-bar-width : 150px;
 
 @mixin base-icon() {
   cursor: pointer;
-  transition: all 0.5s;
+  transition: opacity 0.5s;
   &:hover {
     opacity: 0.5;
   }

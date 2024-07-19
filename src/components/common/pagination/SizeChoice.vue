@@ -6,10 +6,10 @@
       <i class="bi bi-caret-up-fill"></i>
     </div>
     <ul class="size-dropdown" v-if="activate">
-      <li>50</li>
-      <li>20</li>
-      <li>10</li>
-      <li>5</li>
+      <li @click="setSize(50)" class="size-item">50</li>
+      <li @click="setSize(20)" class="size-item">20</li>
+      <li @click="setSize(10)" class="size-item">10</li>
+      <li @click="setSize(5)" class="size-item">5</li>
     </ul>
   </div>
 </template>
@@ -31,8 +31,24 @@ export default {
   methods : {
     activateDropdown() {
       this.activate = !this.activate;
+    },
+    setSize(size){
+      this.store.setSize(size);
+      this.activate = false;
+    },
+    handleClickOutside(event) {
+      if (!event.target.closest('.size-box, .size-item, .size-dropdown')) {
+        this.activate = false;
+      }
     }
+  },
+  mounted() {
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  unmounted() {
+    document.removeEventListener('click', this.handleClickOutside);
   }
+
 }
 </script>
 
