@@ -7,6 +7,7 @@ $base-shadow : 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
 $nav-bar-height : 60px;
 $side-bar-width : 150px;
+$mobile-header-height : 100px;
 
 @mixin flex-box($direction, $align, $gap) {
   display: flex;

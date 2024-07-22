@@ -1,12 +1,23 @@
 <template>
   <div>
-    <h1>납부자 결제 시작</h1>
   </div>
 </template>
 
 <script>
+import { useMobileStore } from '@/stores/mobilePage';
+import { mapActions, mapStores } from 'pinia';
+
 export default {
-    name: 'PaymentStartView'
+  name: 'PaymentStartView',
+  computed: {
+    ...mapStores(useMobileStore)
+  },
+  methods: {
+    ...mapActions(useMobileStore, ['setPageName'])
+  },
+  mounted() {
+    this.mobilePageStore.setPageName("회원 결제")
+  }
 }
 </script>
 
