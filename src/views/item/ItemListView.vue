@@ -1,14 +1,17 @@
 <template>
   <div class="root-container">
     <div class="top-btn-box">
-      <ThemeIconBtnVue title="상품 등록" icon="bi bi-plus-square"/>
-      <SearchInputVue title="상품명 검색" v-model="itemName" :search="getData"/>
+      <ThemeIconBtnVue title="상품 등록" icon="bi bi-plus-square" :func="() => operateModal(true)"/>
+      <SearchInputVue title="상품명 검색" v-model="itemName" :search="getItemList"/>
     </div>
     <div class="table-box">
       <ItemTableVue/>
       <PaginationBarVue :store="itemStore"/>
     </div>
   </div>
+  <ItemCreateModal 
+    :isVisible="modalVisible" 
+    :closeModal="() => operateModal(false)"/>
 </template>
 
 <script>
@@ -16,10 +19,11 @@ import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
 import SearchInputVue from '@/components/common/input/SearchInput.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import ItemTableVue from '@/components/item/ItemTable.vue';
+import ItemCreateModal from '@/components/item/ItemCreateModal.vue';
 import { useItemStore } from '@/stores/item';
-import { mainAxios } from '@/utils/axios';
 import { mapActions } from 'pinia';
 import { mapStores } from 'pinia';
+import { getItemList } from '@/utils/item';
 
 export default {
   name : 'ItemListView',
@@ -28,38 +32,41 @@ export default {
     SearchInputVue,
     PaginationBarVue,
     ItemTableVue,
+    ItemCreateModal,
   },
   data() {
     return {
-      itemName: ""
+      itemName: "",
+      modalVisible: false,
     }
   },
   computed: {
     ...mapStores(useItemStore)
   },
   watch: {
-    'itemStore.size': 'getData',
-    'itemStore.page': 'getData',
+    'itemStore.size': 'getItemList',
+    'itemStore.page': 'getItemList',
     'itemStore.columns': {
-      handler: 'getData',
+      handler: 'getItemList',
       deep: true
     }
   },
   methods: {
     ...mapActions(useItemStore, ['setPage','setItemList']),
-    // 조회 api 함수 - 로직 수정하면 됩니다.
-    async getData() {
-      let url = `items?page=${this.itemStore.page}&size=${this.itemStore.size}&name=${this.itemName}`;
-      this.itemStore.columns.forEach(column => {
-        if (column.sort != null) url += `&sort=${column.data},${column.sort}`
-      });
-      const result = await mainAxios.get(url);
-      this.itemStore.setMaxPage(result.data.totalPages - 1);
-      this.itemStore.setItemList(result.data.content);
+    // 메서드 - 상품 목록 조회
+    async getItemList() {
+      const result = await getItemList(this.itemName);
+      if (result.code !== 200) {
+        // 예외 처리
+      }
     },
+    // 메서드 - 상품 생성 모달창 조작
+    operateModal(value) {
+      this.modalVisible = value;
+    }
   },
   async mounted() {
-    this.getData();
+    this.getItemList();
   }
 }
 </script>
@@ -70,7 +77,6 @@ export default {
     background: $back-color;
     width: 100%;
     min-height:100%;
-    height: 100%;
     padding: 30px 40px
   }
   .top-btn-box {

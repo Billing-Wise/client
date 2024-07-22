@@ -26,7 +26,7 @@ export default {
     ...mapStores(useItemStore),
   },
   methods: {
-    ...mapActions(useItemStore, ['setColumnSort'])
+    ...mapActions(useItemStore, ['setColumnSort']),
   }
 }
 </script>

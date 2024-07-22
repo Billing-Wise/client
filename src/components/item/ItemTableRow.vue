@@ -1,6 +1,6 @@
 <template>
-  <tr class="item-row"> 
-    <td class="item-column"><span>{{ itemData.id }}</span></td>
+  <tr class="item-row" @click="toItemDetail"> 
+    <td class="item-column" ><span>{{ itemData.id }}</span></td>
     <td class="item-column"><img :src="itemData.imageUrl" alt="item-image" class="item-image"></td>
     <td class="item-column"><span>{{ itemData.name }}</span></td>
     <td class="item-column"><span>{{ itemData.price }}원</span></td>
@@ -26,6 +26,11 @@ export default {
       return toDateFromDateTime(this.itemData.updatedAt)
     }
   },
+  methods: {
+    toItemDetail() {
+      this.$router.push(`/item/${this.itemData.id}`);
+    }
+  }
 }
 </script>
 

@@ -1,11 +1,23 @@
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  top: $nav-bar-height;
+  left: $side-bar-width;
+  width: calc(100vw - $side-bar-width);
+  height: calc(100vh - $nav-bar-height);
+  background: rgba(255, 2550, 255, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.modal-content {
+  @include flex-box(column, center, 20px);
+  width: 400px;
+  padding: 0px 30px;
+  border-radius : 10px;
+  box-shadow: $base-shadow;
+  background-color: white;
+  .modal-main {
+    @include flex-box(column, center, 20px);
+  }
 }
