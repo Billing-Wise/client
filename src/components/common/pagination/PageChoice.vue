@@ -1,8 +1,8 @@
 <template>
   <div class="page-choice">
     <div class="btn-box">
-      <div class="move-icon" @click="this.store.setPage(0)">&lt;&lt;</div>
-      <div class="move-icon" @click="this.store.setPage(store.page - 1)">&lt;</div>
+      <i class="bi bi-chevron-double-left move-icon" @click="this.store.setPage(0)"></i>
+      <i class="bi bi-chevron-left move-icon" @click="this.store.setPage(store.page - 1)"></i>
     </div>
     <div class="number-box">
       <div 
@@ -11,12 +11,12 @@
         :key="page" 
         :class="{ 'active': store.page === page }"
         class="page-number">
-        <span>{{ page + 1 }}</span>
+        {{ page + 1 }}
       </div>
     </div>
     <div class="btn-box">
-      <div class="move-icon" @click="this.store.setPage(store.page + 1)">></div>
-      <div class="move-icon" @click="this.store.setPage(store.maxPage)">>></div>
+      <i class="bi bi-chevron-right move-icon" @click="this.store.setPage(store.page + 1)"></i>
+      <i class="bi bi-chevron-double-right move-icon" @click="this.store.setPage(store.maxPage)"></i>
     </div>
   </div>
 </template>
@@ -55,25 +55,22 @@ export default {
 
 <style lang="scss" scoped>
 .page-choice {
-  @include flex-box(row, center, 20px);
+  @include flex-box(row, center, 40px);
   .btn-box {
     @include flex-box(row, center, 10px) 
   }
   .number-box {
-    @include flex-box(row, center, 15px)
+    @include flex-box(row, center, 30px)
   }
 }
 
 .move-icon {
   @include flex-box(row, center, 0px);
   @include base-icon;
-  width: 32px;
-  height: 32px;
-  background-color: $theme-color;
+  color: $theme-color;
   border-radius: 50%;
-  font-size: 14px;
+  font-size: 28px;
   font-weight: bold;
-  color : white;
 }
 
 .page-number {
@@ -84,11 +81,11 @@ export default {
 }
 
 .active {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   background-color: $theme-color;
   border-radius: 50%;
-  font-size: 18px !important;///
+  font-size: 16px !important;///
   color : white;
 }
 </style>
