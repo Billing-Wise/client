@@ -66,7 +66,7 @@ export default {
 
 .size-box {
   @include flex-box(row, center, 5px);
-  padding: 3px 7px;
+  padding: 3px 10px;
   border-radius: 10px;
   box-shadow: 0px 1px 5px 1px rgb(0, 0, 0, 0.3);
   transition: all 0.5s;

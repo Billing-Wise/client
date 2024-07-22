@@ -231,7 +231,7 @@ export default {
         "phone" : this.phone.value
       }
       const result = await authAxios.post('auth/register', data);
-      console.log(result);
+
       if (result.code === 200) {
         // --- 회원가입 성공 모달 출력 ---
         this.$router.push({name: 'login'});

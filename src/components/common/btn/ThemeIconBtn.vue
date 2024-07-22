@@ -1,8 +1,8 @@
 <template>
-  <Button class="icon-btn" @click="func">
+  <button class="icon-btn" @click="func">
     <span>{{ title }}</span>
     <i :class="icon"></i>
-  </Button>
+  </button>
 </template>
 
 <script>
