@@ -60,5 +60,7 @@ export default {
     position: absolute;
     top: $mobile-header-height;
     width: 100%;
+    height: calc(100% - $mobile-header-height);
+    width: 100%;
   }
 </style>
