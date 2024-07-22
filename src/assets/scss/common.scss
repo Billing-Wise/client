@@ -56,6 +56,12 @@ $mobile-header-height : 100px;
   }
 }
 
+@mixin white-text($font-size) {
+  color: white;
+  font-weight: bold;
+  font-size: $font-size;
+}
+
 
 
 

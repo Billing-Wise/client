@@ -33,8 +33,8 @@ export default {
     width: 100%;
     margin: auto;
     position: relative;
-    @media (min-width: 501px) {
-      max-width: 500px;
+    @media (min-width: 801px) {
+      max-width: 800px;
     }
   }
 

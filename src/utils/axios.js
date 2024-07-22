@@ -48,4 +48,22 @@ mainAxios.interceptors.response.use(
   }
 );
 
-export { authAxios, mainAxios }
+// 회원 관련 axios
+const memberAxios = axios.create({
+  baseURL: `${import.meta.env.VITE_API_URL}`, 
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true
+});
+
+authAxios.interceptors.response.use(
+  (response) => {
+    return response.data;
+  },
+  (error) => {
+    return error.response.data;
+  }
+);
+
+export { authAxios, mainAxios, memberAxios }
