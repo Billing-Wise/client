@@ -5,11 +5,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
       name: 'main',
+      path: '/',
       component: () => import('@/views/MainView.vue'),
       meta: { 
-        requiresAuth: true 
+        requiresAuth: true,
+        nonMember: false,  
       },
       children: [
         {
@@ -49,7 +50,8 @@ const router = createRouter({
       path: '/auth',
       component: () => import('@/views/auth/AuthView.vue'),
       meta: { 
-        requiresAuth: false 
+        requiresAuth: false,
+        nonMember: false, 
       },
       children: [
         {
@@ -64,6 +66,27 @@ const router = createRouter({
         },
       ]
     },
+    {
+      name : 'mobile',
+      path: '/m',
+      component: () => import('@/views/MobileView.vue'),
+      meta: { 
+        requiresAuth: false,
+        nonMember: true,
+      },
+      children: [
+        {
+          path: '/m/consent',
+          name: 'consent',
+          component: () => import('@/views/consent/ConsentItemView.vue'),
+        },
+        {
+          path: '/m/payment',
+          name: 'payment',
+          component: () => import('@/views/payment/PaymentStartView.vue'),
+        },
+      ]
+    },
   ]
 });
 
@@ -72,7 +95,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
     next('/login');
-  } else if (!to.meta.requiresAuth && authStore.isLoggedIn) {
+  } else if (!to.meta.nonMember && !to.meta.requiresAuth && authStore.isLoggedIn) {
     next('');
   } else {
     next();

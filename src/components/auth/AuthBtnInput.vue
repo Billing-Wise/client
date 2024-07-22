@@ -38,10 +38,13 @@
 
     .main-box {
       input {
-        @include base-input(70%, 16px)
+        @include base-input(70%, 16px);
       }
       button {
-        @include base-button(25%, 16px);
+        @include base-button();
+        padding: 10px;
+        width: 25%;
+        font-size: 16px;
         background-color: $theme-color;
         border: none;
         color : white;

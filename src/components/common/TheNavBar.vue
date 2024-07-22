@@ -20,9 +20,11 @@ export default {
     };
   },
   async mounted() {
-    const result = await mainAxios.get('users/current');
-    this.clientName = result.data.clientName
-    this.userName = result.data.userName
+    // const result = await mainAxios.get('users/current');
+    // this.clientName = result.data.clientName
+    // this.userName = result.data.userName
+    this.clientName = "KOSA"
+    this.userName = "홍길동"
   },
   method: {
   },
