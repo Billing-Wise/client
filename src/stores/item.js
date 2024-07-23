@@ -39,6 +39,9 @@ export const useItemStore = defineStore('item', {
       if (column) {
         column.sort = sortValue;
       }
+    },
+    setCurrentItem(info) {
+      this.currentItem = info;
     }
   },
 })

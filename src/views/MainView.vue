@@ -28,6 +28,7 @@ export default {
     left: $side-bar-width;
     width: calc(100vw - $side-bar-width);
     height: calc(100vh - $nav-bar-height);
+    // height: calc(100vh - $nav-bar-height);
     overflow-x: auto;
   }
 </style>
