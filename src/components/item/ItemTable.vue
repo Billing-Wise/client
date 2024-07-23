@@ -1,5 +1,4 @@
 <template>
-
   <table class="item-table">
     <thead>
       <TableHaederVue :store="itemStore"/>

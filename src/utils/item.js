@@ -1,9 +1,10 @@
 import { useItemStore } from "@/stores/item";
 import { fileAxios, mainAxios } from "./axios";
 
+const itemStore = useItemStore();
+
 // 아이템 목록 조회
 async function getItemList(itemName) {
-  const itemStore = useItemStore();
 
   let url = `items?page=${itemStore.page}&size=${itemStore.size}&name=${itemName}`;
   itemStore.columns.forEach(column => {
@@ -19,19 +20,19 @@ async function getItemList(itemName) {
 
 // 아이템 상세 조회
 async function getItem(itemId) {
-  const itemStore = useItemStore();
-
   let url = `items/${itemId}`;
   const result = await mainAxios.get(url);
   
-  itemStore.setCurrentItem(result.data)
+  if (result.code === 200) {
+    itemStore.setCurrentItem(result.data);
+  }
 
-  return result;
+  return {'code': result.code, 'message' : result.message};
 }
 
 // 아이템 생성
 async function createItem(infos, imgFile) {
-  
+
   const formData = new FormData();
   const jsonData = JSON.stringify(infos);
 
@@ -46,6 +47,43 @@ async function createItem(infos, imgFile) {
   return result;
 }
 
+// 아이템 수정
+async function editItem(itemId, infos) {
+  const result = await mainAxios.put(`items/${itemId}`, infos);
+
+  if (result.code === 200) {
+    itemStore.setCurrentItem(result.data);
+  }
+
+  return {'code': result.code, 'message' : result.message};
+}
+
+// 아이템 이미지 수정
+async function editItemImage(itemId, imgFile) {
+  const formData = new FormData();
+  formData.append('image', imgFile, 'image');
+
+  const result = await fileAxios.put(`items/${itemId}/image`, formData);
+
+  if (result.code === 200) {
+    itemStore.setCurrentItem(result.data);
+  }
+
+  return {'code': result.code, 'message' : result.message};
+}
+
+// 아이템 삭제
+async function deleteItem(itemId) {
+  const result = await fileAxios.delete(`items/${itemId}`);
+
+  if (result.code === 200) {
+    itemStore.setCurrentItem({});
+  }
+
+  return {'code': result.code, 'message' : result.message};
+}
 
 
-export { getItemList, getItem, createItem }
+
+
+export { getItemList, getItem, createItem, editItem, editItemImage, deleteItem }

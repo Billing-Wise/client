@@ -13,21 +13,23 @@
           <InfoInputVue title="가격" v-model="price"/>
           <TextAreaInputVue rows=5 title="상세설명을 입력하세요." v-model="description"/>
         </div>
-        <ModalFooterVue :title="title" :errorMsg="errorMsg" :func="() => createItem()"/>
+        <ModalFooterVue :title="title" :errorMsg="errorMsg" :func="() => updateItem()"/>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+import { useItemStore } from '@/stores/item';
+import { mapStores } from 'pinia';
 import ModalHeaderVue from '../common/modal/ModalHeader.vue';
 import ModalFooterVue from '../common/modal/ModalFooter.vue';
 import InfoInputVue from '../common/input/InfoInput.vue';
 import TextAreaInputVue from '../common/input/TextAreaInput.vue';
-import { createItem } from '@/utils/item';
+import { editItem, editItemImage } from '@/utils/item';
 
 export default {
-  name: 'ItemCreateModalVue',
+  name: 'ItemUpdateModalVue',
   components: {
     ModalHeaderVue,
     ModalFooterVue,
@@ -40,7 +42,7 @@ export default {
   },
   data() {
     return {
-      title: '상품 생성',
+      title: '상품 수정',
       errorMsg: '',
       name: '',
       price: '',
@@ -49,7 +51,22 @@ export default {
       imgFile: null
     }
   },
+  computed: {
+    ...mapStores(useItemStore),
+  },
+  watch: {
+    isVisible(newVal) {
+      if (newVal) this.showData();
+    },
+  },
   methods: {
+    // 현재 데이터 표시
+    async showData() {
+      this.name = this.itemStore.currentItem.name;
+      this.price = this.itemStore.currentItem.price + '';
+      this.description = this.itemStore.currentItem.description;
+      this.imgSrc = this.itemStore.currentItem.imageUrl;
+    },
     // 이미지 업로드
     triggerFileInput() {
       this.$refs.fileInput.click();
@@ -66,22 +83,35 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-    // 상품 생성
-    async createItem() {
+    // 상품 수정
+    async updateItem() {
+      let editSuccess = true;;
+
+      // 상품 정보 수정
       const data = {
-          name: this.name,
-          price: this.price,
-          description: this.description
+        name: this.name,
+        price: this.price,
+        description: this.description
       };
+      const result = await editItem(this.itemStore.currentItem.id, data);
 
-      const result = await createItem(data, this.imgFile);
-
-      if (result.code === 200) {
-        this.closeModal();
-        this.$router.push(`/item/${result.data.id}`);
-      } else {
+      if (result.code !== 200) {
         this.errorMsg = result.message;
+        editSuccess = false;
       }
+
+      // 상품 이미지 수정
+      if (this.imgFile !== null && editSuccess) {
+        console.log(this.imgFile)
+        const result_img = await editItemImage(this.itemStore.currentItem.id, this.imgFile);
+        if (result_img.code !== 200) {
+          this.errorMsg = result_img.message;
+          editSuccess = false;
+        } 
+      }
+
+      // 모달창 종료
+      if (editSuccess) this.closeModal();
     },
   },
 }
