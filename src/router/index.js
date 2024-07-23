@@ -81,6 +81,11 @@ const router = createRouter({
           component: () => import('@/views/consent/ConsentItemView.vue'),
         },
         {
+          path: 'explanation',
+          name: 'consentExplanation',
+          component: () => import('@/views/consent/ConsentExplanationView.vue'),
+        },
+        {
           path: '/m/payment',
           name: 'payment',
           component: () => import('@/views/payment/PaymentStartView.vue'),
