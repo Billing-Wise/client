@@ -83,7 +83,4 @@ async function deleteItem(itemId) {
   return {'code': result.code, 'message' : result.message};
 }
 
-
-
-
 export { getItemList, getItem, createItem, editItem, editItemImage, deleteItem }

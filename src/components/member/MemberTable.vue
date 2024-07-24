@@ -1,32 +1,32 @@
 <template>
   <table class="item-table">
     <thead>
-      <TableHaederVue :store="itemStore"/>
+      <TableHaederVue :store="memberStore"/>
     </thead>
     <tbody>
-      <ItemTableRowVue v-for="(value, key) in itemStore.itemList" :key="key" :itemData="value"/>
+      <MemberTableRowVue v-for="(value, key) in memberStore.memberList" :key="key" :memberData="value"/>
     </tbody>
   </table>
 </template>
 
 <script>
 import { mapActions, mapStores } from 'pinia';
-import { useItemStore } from '@/stores/item';
+import { useMemberStore } from '@/stores/member';
 import TableHaederVue from '../common/table/TableHaeder.vue';
-import ItemTableRowVue from './ItemTableRow.vue';
+import MemberTableRowVue from './MemberTableRow.vue';
 
 export default {
-  name: 'ItemTableVue',
+  name: 'MemberTableVue',
   components: {
     TableHaederVue,
-    ItemTableRowVue
+    MemberTableRowVue
   },  
   computed: {
-    ...mapStores(useItemStore),
+    ...mapStores(useMemberStore),
   },
   methods: {
-    ...mapActions(useItemStore, ['setColumnSort']),
-  }
+    ...mapActions(useMemberStore, ['setColumnSort']),
+  },
 }
 </script>
 
