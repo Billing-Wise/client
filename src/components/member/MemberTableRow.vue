@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     toMemberDetail() {
-      // this.$router.push(`/member/${this.memberData.id}`);
+      this.$router.push(`/member/${this.memberData.id}`);
     }
   }
 }

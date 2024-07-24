@@ -2,8 +2,8 @@
   <div class="root-container">
     <div class="top-btn-box">
       <div class="btn-box">
-        <ThemeIconBtnVue title="회원 등록" icon="bi bi-plus-square" @click="() => operateModal(true)"/>
-        <ExcelBtnVue title="대량 등록"/>
+        <ThemeIconBtnVue title="회원 등록" icon="bi bi-plus-square" :func="() => operateModal(true)"/>
+        <ExcelBtnVue title="대량 등록" :func="directCreateBulk"/>
       </div>
       <div  class="btn-box">
         <SearchInputVue title="검색어 입력" v-model="searchInput" :search="getMemberList"/>
@@ -27,7 +27,7 @@ import ExcelBtnVue from '@/components/common/btn/ExcelBtn.vue';
 import KeywordSelectVue from '@/components/common/select/KeywordSelect.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import MemberTableVue from '@/components/member/MemberTable.vue';
-import MemberCreateModalVue from '@/components/member/MemberCreateModal.vue';
+import MemberCreateModalVue from '@/components/member/modal/MemberCreateModal.vue';
 import { mapStores } from 'pinia';
 import { useMemberStore } from '@/stores/member';
 import { getMemberList } from '@/utils/member';
@@ -81,6 +81,9 @@ export default {
     },
     operateModal(value) {
       this.modalVisible = value;
+    },
+    directCreateBulk() {
+      this.$router.push({name: 'memberBulk'});
     }
   },
   mounted() {

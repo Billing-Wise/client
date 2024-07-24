@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="isVisible" class="modal-overlay" @click.self="closeModal">
+    <div v-if="isVisible" class="modal-overlay">
       <div class="modal-content">
         <ModalHeaderVue :title="title" :closeModal="closeModal"/>
         <div class="modal-main">
@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import ModalHeaderVue from '../common/modal/ModalHeader.vue';
-import ModalFooterVue from '../common/modal/ModalFooter.vue';
-import InfoInputVue from '../common/input/InfoInput.vue';
-import TextAreaInputVue from '../common/input/TextAreaInput.vue';
+import ModalHeaderVue from '../../common/modal/ModalHeader.vue';
+import ModalFooterVue from '../../common/modal/ModalFooter.vue';
+import InfoInputVue from '../../common/input/InfoInput.vue';
+import TextAreaInputVue from '../../common/input/TextAreaInput.vue';
 import { createMember } from '@/utils/member';
 
 export default {
@@ -57,7 +57,7 @@ export default {
 
       if (result.code === 200) {
         this.closeModal();
-        // this.$router.push(`/item/${result.data.id}`);
+        this.$router.push(`/member/${result.data}`);
       } else {
         this.errorMsg = result.message;
       }

@@ -72,6 +72,10 @@ export default {
   @include flex-box(column, space-between, 0px);
   width: 400px;
   height: 100%;
+  padding: 40px 30px;
+  border-radius : 10px;
+  box-shadow: $base-shadow;
+  background-color: white;
 }
 
 .btn-box {
