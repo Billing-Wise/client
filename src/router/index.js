@@ -76,15 +76,21 @@ const router = createRouter({
       },
       children: [
         {
-          path: '/m/consent',
+          path: '/m/consent/:clientId',
           name: 'consent',
           component: () => import('@/views/consent/ConsentItemView.vue'),
         },
         {
-          path: 'explanation',
+          path: 'explanation/:clientId',
           name: 'consentExplanation',
           component: () => import('@/views/consent/ConsentExplanationView.vue'),
         },
+        {
+          path: 'member-info/:clientId',
+          name: 'memberInfo',
+          component: () => import('@/views/consent/MemberInfoView.vue'),
+        },
+        
         {
           path: '/m/payment',
           name: 'payment',
