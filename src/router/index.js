@@ -90,7 +90,16 @@ const router = createRouter({
           name: 'memberInfo',
           component: () => import('@/views/consent/MemberInfoView.vue'),
         },
-        
+        {
+          path: 'contract-confirmation/:clientId',
+          name: 'contractInfoConfirmation',
+          component: () => import('@/views/consent/ContractInfoConfirmation.vue')
+        },
+        {
+          path: 'account-info/:clientId',
+          name: 'accountInfo',
+          component: () => import('@/views/consent/AccountInfoView.vue')
+        },
         {
           path: '/m/payment',
           name: 'payment',

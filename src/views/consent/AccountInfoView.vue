@@ -16,7 +16,7 @@
 
 <script>
 import { onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+// import { useRoute, useRouter } from 'vue-router';
 import { useMobileStore } from '@/stores/mobilePage';
 import ThmemBtnVue from '@/components/common/btn/ThemeBtn.vue';
 
@@ -24,26 +24,26 @@ export default {
   name: 'ConsentExplanationView',
   components: { ThmemBtnVue },
   setup() {
-    const route = useRoute();
-    const router = useRouter();
+    // const route = useRoute();
+    // const router = useRouter();
     const mobileStore = useMobileStore();
 
     onMounted(() => {
       mobileStore.setPageName('회원 정보 입력');
     });
 
-    const goBack = () => {
-      router.push({ name: 'consent' });
-    };
+    // const goBack = () => {
+      // router.push({ name: 'consent' });
+    // };
 
-    const goToMemberInfo = () => {
-      router.push({ 
-        name: 'memberInfo',
-        params: { selectedItems: route.params.selectedItems }
-      });
-    };
+    // const goToMemberInfo = () => {
+    //   router.push({ 
+    //     name: 'memberInfo',
+    //     params: { selectedItems: route.params.selectedItems }
+    //   });
+    // };
 
-    return { goBack, goToMemberInfo };
+    // return { goBack, goToMemberInfo };
   }
 };
 </script>

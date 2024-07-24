@@ -90,6 +90,7 @@ export default {
     goBack() {
       this.$router.push({ name: 'consentExplanation' });
     },
+    
 
     goNext() {
       this.validateName();
@@ -102,12 +103,16 @@ export default {
           email: this.email,
           phone: this.phone
         });
-        this.$router.push({ name: 'contractInfo' });
+        this.$router.push({ name: 'contractInfoConfirmation', 
+        params: { 
+            clientId: this.$route.params.clientId
+          }
+        });
       }
     },
 
     submitForm() {
-      this.goNext();
+      this.goToNext();
     }
   }
 };
@@ -171,6 +176,7 @@ export default {
   .button-container {
     display: flex;
     justify-content: space-between;
+    background-color: $back-color;
     width: 100%;
     padding: 20px;
   }

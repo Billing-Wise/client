@@ -124,21 +124,39 @@ export default {
 
     updateProductInfo() {
       const selectedItem = this.items.find(item => item.id === this.selectedItemId);
-      if (selectedItem && this.itemAmount !== null) {
-        this.contractStore.setProductInfo({
-          id: selectedItem.id,
-          name: selectedItem.name,
-          price: selectedItem.price,
-          imageUrl: selectedItem.imageUrl,
-          amount: this.itemAmount,
-          isSubscription: true,
-          totalPrice: this.totalPrice
-        });
-      }
-    },
+      if (selectedItem && this.itemAmount !== null && this.itemAmount > 0) {
+      const totalPrice = selectedItem.price * this.itemAmount;
+
+      this.contractStore.setProductInfo({
+      id: selectedItem.id,
+      name: selectedItem.name,
+      price: selectedItem.price,
+      imageUrl: selectedItem.imageUrl,
+      amount: this.itemAmount,
+      isSubscription: true,
+      totalPrice: totalPrice  
+     });
+    
+    
+     this.contractStore.setPaymentInfo({
+       totalAmount: totalPrice
+     });
+    } else {
+     
+      console.warn('상품 선택 또는 수량이 올바르지 않습니다.');
+     
+    }
+  },
 
     goToNextStep() {
       if (this.selectedItemId && this.itemAmount) {
+        this.updateProductInfo();
+
+      this.contractStore.setPaymentInfo({
+        totalAmount: this.totalPrice
+      });
+       
+       
         this.$router.push({
           name: 'consentExplanation',
           params: { 
@@ -159,7 +177,7 @@ export default {
       this.updateProductInfo();
     }
   },
-  
+
   mounted() {
     this.setPageName('상품 선택');
     this.fetchItems();
@@ -173,7 +191,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: $back-color;
 }
 
 .items-container {
@@ -276,7 +294,7 @@ export default {
 .footer-container {
   @include flex-box(row, space-between, 10px);
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: $back-color;
 }
 
 .quantity-input {
