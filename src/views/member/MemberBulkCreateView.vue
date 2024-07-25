@@ -4,8 +4,7 @@
       <ExcelUploadVue :store="memberBulkStore" />
       <div class="btn-box">
         <WarningWideBtnVue title="취소" :func="cancelBulk"/>
-        <ThemeWideBtnVue title="초기화" :func="resetBulk"/>
-        <SuccessWideBtnVue title="회원 등록" />
+        <SuccessWideBtnVue title="회원 등록" :func="registerBulk"/>
       </div>
     </div>
     <div class="right-side">
@@ -13,16 +12,19 @@
       <MemberCreateTableVue />
     </div>
   </div>
+  <MemberBulkErrorModalVue :isVisible="isInValid" :close-modal="() => operateErrorModal(false)"/>
 </template>
 
 <script>
 import { useMemberBulkStore } from '@/stores/memberBulk';
 import { mapActions, mapStores } from 'pinia';
+import { createMemberBulk } from '@/utils/member';
 import ExcelUploadVue from '@/components/common/ExcelUpload.vue';
 import MemberCreateTableVue from '@/components/member/MemberCreateTable.vue';
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue';
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue';
-import ThemeWideBtnVue from '@/components/common/btn/ThemeWideBtn.vue';
+import MemberBulkErrorModalVue from '@/components/member/modal/MemberBulkErrorModal.vue';
+import { useMemberStore } from '@/stores/member';
 
 export default {
   name: 'MemberBulkCreateView',
@@ -31,26 +33,42 @@ export default {
     MemberCreateTableVue,
     WarningWideBtnVue,
     SuccessWideBtnVue,
-    ThemeWideBtnVue
+    MemberBulkErrorModalVue
+  },
+  data() {
+    return {
+      isInValid: false,
+    }
   },
   computed: {
-    ...mapStores(useMemberBulkStore)
+    ...mapStores(useMemberBulkStore),
+    ...mapStores(useMemberStore)
   },
   methods: {
-    ...mapActions(useMemberBulkStore, ['setIsValid', 'setUploadData', 'setErrorList', 'setFile']),
+    ...mapActions(useMemberBulkStore, ['setUploadData', 'setErrorList', 'setFile']),
     cancelBulk() {
       this.$router.push({name: 'member'})
     },
-    resetBulk() {
-      this.memberBulkStore.setFile(null);
-      this.memberBulkStore.setIsValid(false);
-      this.memberBulkStore.setUploadData(null);
-      this.memberBulkStore.setErrorList(null);
-    }
+    operateErrorModal(value) {
+      this.isInValid = value;
+    },
+    async registerBulk() {
+      if (this.memberBulkStore.file === null) {
+        this.memberBulkStore.setErrorList(['파일이 업로드되지 않았습니다.']);
+        this.operateErrorModal(true);
+        return;
+      }
+
+      const result = await createMemberBulk(this.memberBulkStore.file);
+
+      if (result.code !== 200) {
+        this.operateErrorModal(true);
+        return;
+      } 
+      
+      this.$router.push({name: 'member'})
+    },
   },
-  mounted() {
-    this.resetBulk();
-  }
 }
 </script>
 

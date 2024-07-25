@@ -8,7 +8,7 @@
         <img :src="`/src/assets/images/${store.exampleImg}`" alt="">
         <div class="guide-line">
           <span>※ 위 사진처럼 이름과 형식을 맞춰서 입력해주세요</span>
-          <ExcelBtnVue title="샘플" :func="downloadSample" />
+          <ExcelBtnVue title="양식" :func="downloadSample" />
         </div>
       </div>
       <FileInputVue v-model="file" />
@@ -47,12 +47,6 @@ export default {
       errorMsg: '',
     }
   },
-  watch: {
-    'store.file': function(newFile) {
-      this.file = newFile;
-      console.log(this.file)
-    }
-  },
   methods: {
     downloadSample() {
       const link = this.$refs.hiddenLink;
@@ -74,7 +68,6 @@ export default {
 
       this.errorMsg = ''
       this.store.setFile(this.file);
-      this.store.setIsValid(true);
       
       const reader = new FileReader();
 
@@ -89,10 +82,13 @@ export default {
       };
 
       reader.readAsArrayBuffer(this.file);
-
     }
   },
-  mounted() { }
+  mounted() { 
+    this.store.setFile(null);
+    this.store.setUploadData(null);
+    this.store.setErrorList(null);
+  }
 }
 </script>
 

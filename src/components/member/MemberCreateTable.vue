@@ -27,7 +27,7 @@ export default {
   name: 'MemberCreateTableVue',
   data() {
     return {
-      colums: ['이름', '이메일', '전화번호']
+      colums: ['회원명', '이메일', '전화번호']
     }
   },
   computed: {

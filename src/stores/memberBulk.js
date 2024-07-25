@@ -6,17 +6,13 @@ export const useMemberBulkStore = defineStore('memberBulk', {
       exampleImg: 'example_member.png',
       download: '회원등록.xlsx',
       file: null,
-      isValid: false,
       uploadData: null,
-      errorList: null,
+      errorList: [],
     }
   },
   actions: {
     setFile(file) {
       this.file = file;
-    },
-    setIsValid(isValid) {
-      this.isValid = isValid;
     },
     setUploadData(uploadData) {
       this.uploadData = uploadData;

@@ -99,7 +99,7 @@ export default {
   @include flex-box(column, space-between, 20px);
   background: $back-color;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 30px 40px
 }
 

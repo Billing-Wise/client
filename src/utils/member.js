@@ -1,7 +1,9 @@
 import { useMemberStore } from "@/stores/member";
-import { mainAxios } from "@/utils/axios";
+import { useMemberBulkStore } from "@/stores/memberBulk";
+import { fileAxios, mainAxios } from "@/utils/axios";
 
 const memberStore = useMemberStore();
+const memberBulkStore = useMemberBulkStore();
 
 // 회원 목록 조회
 async function getMemberList(keyword, input) {
@@ -39,6 +41,25 @@ async function createMember(infos) {
   return result;
 }
 
+// 회원 대량 등록
+async function createMemberBulk(file) {
+  const formData = new FormData();
+  formData.append('file', file, 'file');
+
+  const result = await fileAxios.post('members/bulk-register', formData);
+
+  if (result.code !== 200) {
+    if (result.data) {
+      memberBulkStore.errorList = [...result.data];
+    } else {
+      memberBulkStore.errorList = [result.message];
+    }
+  }
+
+  return result;
+}
+
+
 // 회원 수정
 async function updateMember(memberId, infos) {
   const result = await mainAxios.put(`members/${memberId}`, infos);
@@ -57,4 +78,4 @@ async function deleteMember(memberId) {
   return result;
 }
 
-export { getMemberList, getMember, createMember, updateMember, deleteMember }
+export { getMemberList, getMember, createMember, createMemberBulk, updateMember, deleteMember }

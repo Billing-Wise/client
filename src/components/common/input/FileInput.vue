@@ -56,11 +56,11 @@ export default {
     }
 
     .file-box {
-      @include flex-box(row, center, 0px);
+      @include flex-box(row, start, 0px);
       @include base-icon;
       width: 100%;
       height: 100%;
-      padding: 0px 10px;
+      padding: 0px 20px;
       font-weight: bold;
       border: $theme-color solid;
       border-top-right-radius: 5px;
