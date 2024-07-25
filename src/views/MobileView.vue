@@ -36,6 +36,7 @@ export default {
     @media (min-width: 801px) {
       max-width: 800px;
     }
+
   }
 
   .logo-header {
