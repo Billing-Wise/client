@@ -1,5 +1,4 @@
 <template>
-
   <table class="item-table">
     <thead>
       <TableHaederVue :store="itemStore"/>
@@ -26,7 +25,7 @@ export default {
     ...mapStores(useItemStore),
   },
   methods: {
-    ...mapActions(useItemStore, ['setColumnSort'])
+    ...mapActions(useItemStore, ['setColumnSort']),
   }
 }
 </script>
@@ -35,6 +34,5 @@ export default {
 @import "@/assets/scss/component/table.scss";
 .item-table {
   @include base-table();
-
 }
 </style>

@@ -24,9 +24,24 @@ const router = createRouter({
           component: () => import('@/views/item/ItemListView.vue')
         },
         {
+          path : '/item/:id',
+          name:'itemDetail',
+          component: () => import('@/views/item/ItemDetailView.vue')
+        },
+        {
           path : '/member',
           name:'member',
           component: () => import('@/views/member/MemberListView.vue')
+        },
+        {
+          path : '/member/bulk',
+          name:'memberBulk',
+          component: () => import('@/views/member/MemberBulkCreateView.vue')
+        },
+        {
+          path : '/member/:id',
+          name:'memberDetail',
+          component: () => import('@/views/member/MemberDetailView.vue')
         },
         {
           path : '/contract',
@@ -106,9 +121,49 @@ const router = createRouter({
           component: () => import('@/views/consent/FinalConfirmation.vue')
         },
         {
-          path: '/m/payment',
-          name: 'payment',
-          component: () => import('@/views/payment/PaymentStartView.vue'),
+          path: '/m/payment/:invoiceId/info',
+          name: 'paymentInfo',
+          component: () => import('@/views/payment/PaymentInfoView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/method',
+          name: 'paymentMethod',
+          component: () => import('@/views/payment/PaymentMethodView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/card/agreement',
+          name: 'cardAgreement',
+          component: () => import('@/views/payment/card/CardPaymentAgreementView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/card/input',
+          name: 'cardInput',
+          component: () => import('@/views/payment/card/CardPaymentInputView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/card/confirm',
+          name: 'cardConfirm',
+          component: () => import('@/views/payment/card/CardPaymentConfirmView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/account/agreement',
+          name: 'accountAgreement',
+          component: () => import('@/views/payment/account/AccountPaymentAgreementView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/account/input',
+          name: 'accountInput',
+          component: () => import('@/views/payment/account/AccountPaymentInputView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/account/confirm',
+          name: 'accountConfirm',
+          component: () => import('@/views/payment/account/AccountPaymentConfirmView.vue'),
+        },
+        {
+          path: '/m/payment/:invoiceId/result',
+          name: 'paymentResult',
+          component: () => import('@/views/payment/PaymentResultView.vue'),
         },
       ]
     },

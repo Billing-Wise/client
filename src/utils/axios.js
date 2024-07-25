@@ -48,6 +48,36 @@ mainAxios.interceptors.response.use(
   }
 );
 
+// 파일 API
+const fileAxios = axios.create({
+  baseURL: `${import.meta.env.VITE_API_URL}`, 
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+  withCredentials: true
+})
+
+fileAxios.interceptors.response.use(
+  (response) => {
+    return response.data;
+  },
+  async (error) => {
+    // 잘못된 토큰
+    if (error.response.data.code === 401) {
+      const authStore = useAuthStore();
+      authStore.logout();
+    // 만료된 엑세스 토큰
+    } else if (error.response.data.code === 419) {
+      await mainAxios.post('auth/reissue')
+      return await mainAxios(error.config);
+    // 그 외의 예외
+    } else {
+      return error.response.data;
+    }
+  }
+);
+
+
 // 회원 관련 axios
 const memberAxios = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}`, 
@@ -66,4 +96,4 @@ authAxios.interceptors.response.use(
   }
 );
 
-export { authAxios, mainAxios, memberAxios }
+export { authAxios, mainAxios, fileAxios, memberAxios }
