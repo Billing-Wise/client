@@ -17,7 +17,7 @@ import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
 import DescriptionInfoVue from '../common/info/DescriptionInfo.vue';
 
 export default {
-  name: 'InfoInfoVue',
+  name: 'ItemInfoVue',
   components: {
     TitleInfoVue,
     DescriptionInfoVue
@@ -38,10 +38,6 @@ export default {
 .info-container {
   @include flex-box(column, center, 20px);
   width: 100%;
-  padding: 40px 30px;
-  border-radius : 10px;
-  box-shadow: $base-shadow;
-  background-color: white;
   img {
     width: 320px;
     height: 320px;

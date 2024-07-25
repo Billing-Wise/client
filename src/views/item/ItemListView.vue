@@ -72,26 +72,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/scss/component/table.scss";
+
 .root-container {
   @include flex-box(column, space-between, 20px);
   background: $back-color;
   width: 100%;
-  min-height:100%;
+  height: 100%;
   padding: 30px 40px
 }
 
 .top-btn-box {
   @include flex-box(row, space-between, 20px);
   width: 100%;
-}
-
-.table-box {
-  @include flex-box(column, space-between, 20px);
-  box-shadow: $base-shadow;
-  background: white;
-  width: 100%;
-  flex-grow: 1;
-  padding: 20px 30px;
-  border-radius: 5px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="isVisible" class="modal-overlay" @click.self="closeModal">
+    <div v-if="isVisible" class="modal-overlay">
       <div class="modal-content">
         <ModalHeaderVue :title="title" :closeModal="closeModal"/>
         <div class="modal-main">
