@@ -1,14 +1,12 @@
 <template>
   <PaymentContainerVue>
-    <DescriptionBoxVue>결제 정보를 확인해주세요.</DescriptionBoxVue>
+    <DescriptionBoxVue>결제 확인을 누르면 결제가 진행됩니다.</DescriptionBoxVue>
     <LoadingContainerVue v-if="loading" />
     <ErrorContainerVue v-else-if="error" :errorMessage="error" />
     <div v-else-if="paymentInfo" class="payment-info">
       <div class="member info">
-        <ItemTitleVue>회원 정보</ItemTitleVue>
+        <ItemTitleVue>구매자</ItemTitleVue>
         <ItemContentVue>{{ paymentInfo.memberName }}</ItemContentVue>
-        <ItemContentVue>{{ paymentInfo.memberEmail }}</ItemContentVue>
-        <ItemContentVue>{{ formatPhoneNumber(paymentInfo.memberPhone) }}</ItemContentVue>
       </div>
       <div class="item info">
         <ItemTitleVue>상품</ItemTitleVue>
@@ -21,22 +19,24 @@
         <ItemTitleVue>총 금액</ItemTitleVue>
         <ItemContentVue>{{ formatPrice(paymentInfo.totalPrice) }}</ItemContentVue>
       </div>
-      <div class="date info">
-        <ItemTitleVue>약정일</ItemTitleVue>
-        <ItemContentVue>{{ formatDate(paymentInfo.contractDate) }}</ItemContentVue>
+      <div class="info">
+        <ItemTitleVue>카드</ItemTitleVue>
+        <ItemContentVue>{{ cardTypeValue }}</ItemContentVue>
       </div>
       <div class="date info">
-        <ItemTitleVue>결제 기한</ItemTitleVue>
-        <ItemContentVue>{{ formatDate(paymentInfo.dueDate) }}</ItemContentVue>
+        <ItemTitleVue>결제일</ItemTitleVue>
+        <ItemContentVue>{{ todayDate }}</ItemContentVue>
       </div>
     </div>
-    <NextPageButtonVue v-if="paymentInfo && !error" @click="goToPaymentMethod">다음</NextPageButtonVue>
+    <NextPageButtonVue v-if="paymentInfo && !loading" @click="confirmPayment">결제 확인</NextPageButtonVue>
   </PaymentContainerVue>
 </template>
 
 <script>
 import { useMobileStore } from '@/stores/mobilePage';
+import { useCardInfoStore } from '@/stores/cardInfo';
 import { usePaymentInfoStore } from '@/stores/paymentInfo';
+import { usePaymentResultStore } from '@/stores/paymentResult';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';
@@ -48,7 +48,7 @@ import ErrorContainerVue from '@/components/payment/ErrorContainer.vue'
 import { memberAxios } from '@/utils/axios';
 
 export default {
-  name: 'PaymentInfoView',
+  name: 'CardPaymentConfirmView',
   components: {
     PaymentContainerVue,
     DescriptionBoxVue,
@@ -58,63 +58,79 @@ export default {
     LoadingContainerVue,
     ErrorContainerVue
   },
-  data() {
-    return {
-      loading: false,
-      error: null,
-    }
-  },
   computed: {
-    ...mapStores(useMobileStore),
-    ...mapStores(usePaymentInfoStore),
+    ...mapStores(useMobileStore, useCardInfoStore, usePaymentInfoStore, usePaymentResultStore),
     invoiceId() {
       return this.$route.params.invoiceId;
     },
     paymentInfo() {
       return this.paymentInfoStore.getInfo(this.invoiceId);
+    },
+    cardInfo() {
+      return this.cardInfoStore.getInfo(this.invoiceId);
+    },
+    cardTypeValue() {
+      return this.cardInfo ? this.cardInfo.cardType : '';
+    },
+    todayDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      const day = today.getDate();
+      return `${year}년 ${month}월 ${day}일`;
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      error: null
     }
   },
   methods: {
     ...mapActions(useMobileStore, ['setPageName']),
-    ...mapActions(usePaymentInfoStore, ['setInfo']),
-    async fetchPaymentInfo() {
-      this.loading = true;
-      this.error = null;
-      try {
-        const response = await memberAxios.get(`/payments/payer-pay/invoices/${this.invoiceId}`);
-        this.setInfo(this.invoiceId, response.data.data);
-      } catch (error) {
-        this.error = error.response.data.message || '결제 정보를 불러오는데 실패했습니다.';
-      } finally {
-        this.loading = false;
-      }
-    },
     formatPrice(price) {
       return new Intl.NumberFormat('ko-KR').format(price);
     },
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
-    },
-    formatPhoneNumber(phoneNumber) {
-      if (!phoneNumber) return '';
-      const cleaned = ('' + phoneNumber).replace(/\D/g, '');
-      const match = cleaned.match(/^(\d{3})(\d{4})(\d{4})$/);
-      if (match) {
-        return `${match[1]}-${match[2]}-${match[3]}`;
+    async confirmPayment() {
+      this.loading = true;
+      this.error = null;
+      let response = null;
+
+      try {
+        response = await memberAxios.post(`/payments/payer-pay/card?invoiceId=${this.invoiceId}`, {
+          owner: this.paymentInfo.memberName,
+          company: this.cardInfo.cardType,
+          number: this.cardInfo.cardNumber.replace(/-/g, '')
+        });
+        this.paymentResultStore.setResult(this.invoiceId, response);
+      } catch (error) {
+        response = error.response;
+        this.paymentResultStore.setResult(this.invoiceId, response);
+      } finally {
+        this.$router.push({
+          name: 'paymentResult',
+          params: { invoiceId: this.invoiceId }
+        });
+        this.loading = false;
       }
-      return phoneNumber;  // 형식에 맞지 않으면 원래 번호를 반환
     },
-    goToPaymentMethod() {
-      this.$router.push({
-        name: 'paymentMethod',
-        params: { invoiceId: this.invoiceId }
-      });
+    checkInfo() {
+      if (!this.paymentInfo) {
+        this.$router.push({
+          name: 'paymentInfo',
+          params: { invoiceId: this.invoiceId }
+        });
+      } else if (!this.cardInfo) {
+        this.$router.push({
+          name: 'cardInput',
+          params: { invoiceId: this.invoiceId }
+        });
+      }
     }
   },
   mounted() {
-    this.mobilePageStore.setPageName("납부자 결제");
-    this.fetchPaymentInfo();
+    this.mobilePageStore.setPageName("결제 확인");
+    this.checkInfo();
   }
 }
 </script>

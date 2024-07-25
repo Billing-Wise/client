@@ -20,8 +20,12 @@
         <ItemContentVue>{{ formatPrice(paymentInfo.totalPrice) }}</ItemContentVue>
       </div>
       <div class="info">
-        <ItemTitleVue>카드</ItemTitleVue>
-        <ItemContentVue>{{ cardTypeValue }}</ItemContentVue>
+        <ItemTitleVue>출금은행</ItemTitleVue>
+        <ItemContentVue>{{ accountInfo.bank }}</ItemContentVue>
+      </div>
+      <div class="info">
+        <ItemTitleVue>예금주</ItemTitleVue>
+        <ItemContentVue>{{ accountInfo.accountHolder }}</ItemContentVue>
       </div>
       <div class="date info">
         <ItemTitleVue>결제일</ItemTitleVue>
@@ -34,7 +38,7 @@
 
 <script>
 import { useMobileStore } from '@/stores/mobilePage';
-import { useCardInfoStore } from '@/stores/cardInfo';
+import { useAccountInfoStore } from '@/stores/accountInfo';
 import { usePaymentInfoStore } from '@/stores/paymentInfo';
 import { usePaymentResultStore } from '@/stores/paymentResult';
 import { mapActions, mapStores } from 'pinia';
@@ -48,7 +52,7 @@ import ErrorContainerVue from '@/components/payment/ErrorContainer.vue'
 import { memberAxios } from '@/utils/axios';
 
 export default {
-  name: 'PaymentConfirmView',
+  name: 'AccountPaymentConfirmView',
   components: {
     PaymentContainerVue,
     DescriptionBoxVue,
@@ -59,18 +63,15 @@ export default {
     ErrorContainerVue
   },
   computed: {
-    ...mapStores(useMobileStore, useCardInfoStore, usePaymentInfoStore, usePaymentResultStore),
+    ...mapStores(useMobileStore, useAccountInfoStore, usePaymentInfoStore, usePaymentResultStore),
     invoiceId() {
       return this.$route.params.invoiceId;
     },
     paymentInfo() {
       return this.paymentInfoStore.getInfo(this.invoiceId);
     },
-    cardInfo() {
-      return this.cardInfoStore.getInfo(this.invoiceId);
-    },
-    cardTypeValue() {
-      return this.cardInfo ? this.cardInfo.cardType : '';
+    accountInfo() {
+      return this.accountInfoStore.getInfo(this.invoiceId);
     },
     todayDate() {
       const today = new Date();
@@ -97,10 +98,10 @@ export default {
       let response = null;
 
       try {
-        response = await memberAxios.post(`/payments/payer-pay/card?invoiceId=${this.invoiceId}`, {
-          owner: this.paymentInfo.memberName,
-          company: this.cardInfo.cardType,
-          number: this.cardInfo.cardNumber.replace(/-/g, '')
+        response = await memberAxios.post(`/payments/payer-pay/account?invoiceId=${this.invoiceId}`, {
+          owner: this.accountInfo.accountHolder,
+          bank: this.accountInfo.bank,
+          number: this.accountInfo.accountNumber
         });
         this.paymentResultStore.setResult(this.invoiceId, response);
       } catch (error) {
@@ -120,9 +121,9 @@ export default {
           name: 'paymentInfo',
           params: { invoiceId: this.invoiceId }
         });
-      } else if (!this.cardInfo) {
+      } else if (!this.accountInfo) {
         this.$router.push({
-          name: 'cardInput',
+          name: 'accountInput',
           params: { invoiceId: this.invoiceId }
         });
       }
@@ -162,10 +163,10 @@ export default {
 .item-count {
   position: absolute;
   right: 0;
-  background-color: $theme-color;
   width: 3rem;
   height: 100%;
-  color: white;
+  font-weight: bold;
+  color: $input-color;
   align-content: center;
 }
 </style>
