@@ -59,10 +59,23 @@ export default {
   font-weight: bold;
   padding: 0 2rem;
   cursor: pointer;
+  transition: all 0.3s ease; // 부드러운 전환 효과
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); // 그림자 효과
+
+  &:hover {
+    background-color: darken($theme-color, 10%); // hover 시 색상 어둡게
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // hover 시 그림자 강화
+    transform: translateY(-2px); // hover 시 살짝 위로 올라가는 효과
+  }
 
   &.disabled {
     background-color: $back-color;
     cursor: not-allowed;
+    box-shadow: none; // 비활성화 상태에서는 그림자 제거
+
+    &:hover {
+      transform: none; // 비활성화 상태에서는 hover 효과 제거
+    }
   }
 }
 

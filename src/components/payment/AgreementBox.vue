@@ -69,6 +69,8 @@ export default {
 .agreement-container {
   margin: 2rem 0;
   width: 100%;
+  font-weight: bold;
+  color: $input-color;
 }
 
 .agreement-header {
@@ -148,6 +150,7 @@ input[type="radio"]:checked + .checkmark:after {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 1rem;
+  font-weight: bold;
 }
 
 input[type="checkbox"] {
