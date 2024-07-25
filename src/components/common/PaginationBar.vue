@@ -4,7 +4,6 @@
     <PageChoiceVue :store="store"/>
     <SizeChoice :store="store"/>
   </div>
-
 </template>
 
 <script>
@@ -36,9 +35,14 @@ export default {
 
 <style lang="scss" scoped>
   .pagination-bar {
+    position: sticky;
+    bottom: 0;
+    background: white;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     width: 100%;
+    padding: 15px 30px;
+    z-index: 1;
   }
 </style>
