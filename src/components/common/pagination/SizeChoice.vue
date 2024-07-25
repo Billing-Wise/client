@@ -70,6 +70,7 @@ export default {
 
 .dropdown-box {
   position: relative;
+  min-width: 80px;
 }
 
 
@@ -77,6 +78,7 @@ export default {
   @include flex-box(row, center, 10px);
   @include base-icon();
   @include select-btn;
+  padding: 7px 15px;
 }
 
 .size-dropdown {
