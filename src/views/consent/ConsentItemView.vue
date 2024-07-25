@@ -84,7 +84,8 @@ export default {
     async fetchItems() {
       try {
         const clientId = this.$route.params.clientId;
-        this.contractStore.setClientId(clientId);
+        const contractStore = useContractStore();
+        contractStore.setClientId(clientId);
 
         const response = await memberAxios.get('easy-consent/non-member/items', {
           params: { clientId }
@@ -124,10 +125,11 @@ export default {
 
     updateProductInfo() {
       const selectedItem = this.items.find(item => item.id === this.selectedItemId);
+      const contractStore = useContractStore();
       if (selectedItem && this.itemAmount !== null && this.itemAmount > 0) {
       const totalPrice = selectedItem.price * this.itemAmount;
 
-      this.contractStore.setProductInfo({
+      contractStore.setProductInfo({
       id: selectedItem.id,
       name: selectedItem.name,
       price: selectedItem.price,
@@ -138,7 +140,7 @@ export default {
      });
     
     
-     this.contractStore.setPaymentInfo({
+      contractStore.setPaymentInfo({
        totalAmount: totalPrice
      });
     } else {
@@ -151,8 +153,9 @@ export default {
     goToNextStep() {
       if (this.selectedItemId && this.itemAmount) {
         this.updateProductInfo();
-
-      this.contractStore.setPaymentInfo({
+      
+      const contractStore = useContractStore();
+      contractStore.setPaymentInfo({
         totalAmount: this.totalPrice
       });
        

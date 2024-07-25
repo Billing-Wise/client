@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth';
-
+import { useContractStore } from '@/stores/contract';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -121,5 +121,28 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+
+router.beforeEach((to, from, next) => {
+  const contractStore = useContractStore();
+
+  // 비회원 정보가 필요한 경로에 대한 확인
+  const protectedRoutes = [
+    'consentExplanation',
+    'memberInfo',
+    'contractInfoConfirmation',
+    'accountInfo',
+    'payment'
+  ];
+
+  // 상태가 없고 보호된 경로에 접근하려고 할 때
+  if (protectedRoutes.includes(to.name) && (!contractStore.clientId )) {
+    next({ name: 'consent', params: { clientId: to.params.clientId } });
+    return;
+  } else {
+    next();
+  }
+});
+
 
 export default router

@@ -107,18 +107,29 @@ export default {
           ...this.paymentInfo,
           paymentDate: this.paymentInfo.paymentDate
         });
-        this.$router.push({ name: 'accountInfo' }); // 
+        this.$router.push({ 
+          name: 'accountInfo',
+          parma: {}
+
+        }); // 
       } 
     },
   },
   mounted() {
     this.setPageName('계약 정보 확인');
+
+    if (!this.$route.params.clientId) {
+      this.$router.push({ name: 'consent' });
+      return;
+    }
+
     const contractStore = useContractStore();
     this.memberInfo = contractStore.memberInfo || {};
     this.productInfo = contractStore.productInfo || {};
     this.paymentInfo = { 
       ...contractStore.paymentInfo, 
-      paymentDate: contractStore.paymentInfo.paymentDate || this.getTodayDay()
+      paymentDate: contractStore.paymentInfo.paymentDate || this.getTodayDay(),
+      totalAmount: contractStore.paymentInfo.totalAmount || 0
     };
   },
   watch: {
@@ -144,15 +155,14 @@ export default {
   }
 
   .section-title {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    margin: 10px 0 10px 0;
-    text-align: center;
+    margin: 15px 0 10px 0;
   
   }
 
   .info-field {
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 
     input {
       width: 100%;
@@ -160,9 +170,12 @@ export default {
       border: 1px solid #ccc;
       border-radius: 5px;
       background-color: white;
-      font-size: 15px;
-      text-align: center;
-      font-weight:500;
+      font-size: 13px;
+      font-weight:800;
+
+      &[readonly] {
+        background-color: $back-color;
+      }
     }
   }
 
@@ -175,7 +188,7 @@ export default {
   .error-message {
     color: tomato;
     font-size: 12px;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
   }
 }
 </style>
