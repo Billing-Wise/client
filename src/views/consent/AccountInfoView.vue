@@ -192,6 +192,7 @@ export default {
 
   .info-field {
     margin-bottom: 10px;
+    
 
     input, select {
       width: 100%;
@@ -200,6 +201,7 @@ export default {
       border-radius: 5px;
       background-color: white;
       font-size: 14px;
+      font-weight: 550;
     }
 
     select {

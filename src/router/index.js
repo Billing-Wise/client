@@ -101,6 +101,11 @@ const router = createRouter({
           component: () => import('@/views/consent/AccountInfoView.vue')
         },
         {
+          path: 'final-confirmation/:clientId',
+          name: 'finalConfirmation',
+          component: () => import('@/views/consent/FinalConfirmation.vue')
+        },
+        {
           path: '/m/payment',
           name: 'payment',
           component: () => import('@/views/payment/PaymentStartView.vue'),
@@ -126,16 +131,17 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   const contractStore = useContractStore();
 
-  // 비회원 정보가 필요한 경로에 대한 확인
+ 
   const protectedRoutes = [
     'consentExplanation',
     'memberInfo',
     'contractInfoConfirmation',
     'accountInfo',
-    'payment'
+    'payment',
+    'finalConfirmation'
   ];
 
-  // 상태가 없고 보호된 경로에 접근하려고 할 때
+ 
   if (protectedRoutes.includes(to.name) && (!contractStore.clientId )) {
     next({ name: 'consent', params: { clientId: to.params.clientId } });
     return;

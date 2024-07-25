@@ -86,5 +86,15 @@ export const useContractStore = defineStore('contract', {
       };
 
     }
+  },
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'contract',
+        storage: sessionStorage,
+        
+      }
+    ]
   }
 })

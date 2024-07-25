@@ -109,9 +109,8 @@ export default {
         });
         this.$router.push({ 
           name: 'accountInfo',
-          parma: {}
-
-        }); // 
+      
+        });
       } 
     },
   },

@@ -104,9 +104,7 @@ export default {
           phone: this.phone
         });
         this.$router.push({ name: 'contractInfoConfirmation', 
-        params: { 
-            clientId: this.$route.params.clientId
-          }
+        
         });
       }
     },
