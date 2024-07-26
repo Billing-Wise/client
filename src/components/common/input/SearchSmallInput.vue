@@ -26,7 +26,7 @@ export default {
   .search-input {
     @include flex-box(row, center, 10px);
     background-color: white;
-    width: 100%;
+    // width: 100%;
     padding: 5px 15px;
     border-radius: 20px;
     border: $theme-color solid 2px;

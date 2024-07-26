@@ -1,11 +1,11 @@
 <template>
   <table class="contract-table">
     <thead>
-      <TableHaeder :store="contractListStore"/>
-      <ContractTableFilterVue/>
+      <TableHaeder :store="contractListStore" :excludeColumnArr="['itemName']"/>
+      <ItemContractTableFilterVue/>
     </thead>
     <tbody>
-      <ContractTableRowVue v-for="(contract, idx) in contractListStore.contractList" :key="idx" :contractData="contract" />
+      <ItemContractTableRowVue v-for="(contract, idx) in contractListStore.contractList" :key="idx" :contractData="contract" />
     </tbody>
   </table>
 </template>
@@ -13,16 +13,16 @@
 <script>
 import { mapActions, mapStores } from 'pinia';
 import { useContractListStore } from '@/stores/contractList';
-import ContractTableFilterVue from './table/ContractTableFilter.vue';
-import ContractTableRowVue from './table/ContractTableRow.vue';
-import TableHaeder from '../common/table/TableHaeder.vue';
+import TableHaeder from '../../common/table/TableHaeder.vue';
+import ItemContractTableFilterVue from './ItemContractTableFilter.vue';
+import ItemContractTableRowVue from './ItemContractTableRow.vue';
 
 export default {
-  name: 'ContractTableVue',
+  name: 'ItemContractTableVue',
   components: {
     TableHaeder,
-    ContractTableFilterVue,
-    ContractTableRowVue
+    ItemContractTableFilterVue,
+    ItemContractTableRowVue
   },  
   computed: {
     ...mapStores(useContractListStore),

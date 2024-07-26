@@ -1,7 +1,6 @@
 <template>
   <tr class="fileter-row">
     <td class="table-column"></td>
-    <td class="table-column"><SearchSmallInputVue title="상품명을 입력하세요" v-model="itemName" :search="searchItemName"/></td>
     <td class="table-column"><SearchSmallInputVue title="회원명을 입력하세요" v-model="memberName" :search="searchMemberName"/></td>
     <td class="table-column"></td>
     <td class="table-column"></td>
@@ -21,14 +20,13 @@ import { getContractList } from '@/utils/contract';
 import { mapActions, mapStores } from 'pinia';
 
 export default {
-  name: 'ContractTableFilterVue',
+  name: 'ItemContractTableFilterVue',
   components: {
     SearchSmallInputVue,
     SmallSelectVue
   },
   data() {
     return {
-      itemName:'',
       memberName:'',
       subscribeIdx: 0,
       subscribeArr: [
@@ -58,9 +56,6 @@ export default {
     }
   },
   watch: {
-    itemName(newVal) {
-      this.contractListStore.setFilter('itemName', newVal);
-    },
     memberName(newVal) {
       this.contractListStore.setFilter('memberName', newVal);
     }

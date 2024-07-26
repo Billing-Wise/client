@@ -12,8 +12,8 @@
 <script>
 import { mapActions, mapStores } from 'pinia';
 import { useItemStore } from '@/stores/item';
-import TableHaederVue from '../common/table/TableHaeder.vue';
-import ItemTableRowVue from './ItemTableRow.vue';
+import TableHaederVue from '../../common/table/TableHaeder.vue';
+import ItemTableRowVue from '../table/ItemTableRow.vue';
 
 export default {
   name: 'ItemTableVue',
