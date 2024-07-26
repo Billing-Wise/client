@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'KeywordSelectVue',
+  name: 'SmallSelectVue',
   props: {
     selectedIdx: Number,
     keywordArr : Array,
@@ -53,20 +53,21 @@ export default {
 
   .theme-select {
     position: relative;
-    min-width: 130px;
   }
 
   .select-btn {
     @include flex-box(row, center, 10px);
     @include base-icon();
     @include select-btn;
-    padding: 7px 15px;
+    padding: 5px;
+    font-size: 12px
   }
 
   .select-list {
     @include flex-box(column, center, 10px);
     @include select-list;
-    top: calc(100% + 10px);
+    top: calc(100% + 5px);
+    font-size: 12px
   }
 
 </style>
