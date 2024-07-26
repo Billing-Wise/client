@@ -20,8 +20,9 @@
 
 .table-row {
   transition: all 0.5s;
-  cursor: pointer;
+  background: white;
   border-bottom: 1px solid #ccc;
+  cursor: pointer;
 
   &:hover {
     background-color: $back-color;
@@ -29,7 +30,7 @@
   }
 
   .table-column {
-    
+    width: 120px;
     font-weight: bold;
     padding: 25px 20px;
   }

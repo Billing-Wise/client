@@ -12,10 +12,10 @@ const authAxios = axios.create({
 
 authAxios.interceptors.response.use(
   (response) => {
-    return response;
+    return response.data;
   },
   (error) => {
-    return error.response;
+    return error.response.data;
   }
 );
 

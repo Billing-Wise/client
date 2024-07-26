@@ -26,7 +26,7 @@ import SearchInputVue from '@/components/common/input/SearchInput.vue';
 import ExcelBtnVue from '@/components/common/btn/ExcelBtn.vue';
 import KeywordSelectVue from '@/components/common/select/KeywordSelect.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
-import MemberTableVue from '@/components/member/MemberTable.vue';
+import MemberTableVue from '@/components/member/table/MemberTable.vue';
 import MemberCreateModalVue from '@/components/member/modal/MemberCreateModal.vue';
 import { mapStores } from 'pinia';
 import { useMemberStore } from '@/stores/member';
