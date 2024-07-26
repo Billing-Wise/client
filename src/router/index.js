@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth';
-
+import { useContractStore } from '@/stores/contract';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -91,10 +91,41 @@ const router = createRouter({
       },
       children: [
         {
-          path: '/m/consent',
+          path: '/m/consent/:clientId',
           name: 'consent',
           component: () => import('@/views/consent/ConsentItemView.vue'),
         },
+        {
+          path: 'explanation/:clientId',
+          name: 'consentExplanation',
+          component: () => import('@/views/consent/ConsentExplanationView.vue'),
+        },
+        {
+          path: 'member-info/:clientId',
+          name: 'memberInfo',
+          component: () => import('@/views/consent/MemberInfoView.vue'),
+        },
+        {
+          path: 'contract-confirmation/:clientId',
+          name: 'contractInfoConfirmation',
+          component: () => import('@/views/consent/ContractInfoConfirmation.vue')
+        },
+        {
+          path: 'account-info/:clientId',
+          name: 'accountInfo',
+          component: () => import('@/views/consent/AccountInfoView.vue')
+        },
+        {
+          path: 'final-confirmation/:clientId',
+          name: 'finalConfirmation',
+          component: () => import('@/views/consent/FinalConfirmation.vue')
+        },
+        {
+          path: '/signature-input/:clientId',
+          name: 'signatureInput',
+          component: () => import('@/views/consent/SignatureInput.vue')
+        },
+        
         {
           path: '/m/payment/:invoiceId/info',
           name: 'paymentInfo',
@@ -156,5 +187,29 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+
+router.beforeEach((to, from, next) => {
+  const contractStore = useContractStore();
+
+ 
+  const protectedRoutes = [
+    'consentExplanation',
+    'memberInfo',
+    'contractInfoConfirmation',
+    'accountInfo',
+    'payment',
+    'finalConfirmation'
+  ];
+
+ 
+  if (protectedRoutes.includes(to.name) && (!contractStore.clientId )) {
+    next({ name: 'consent', params: { clientId: to.params.clientId } });
+    return;
+  } else {
+    next();
+  }
+});
+
 
 export default router

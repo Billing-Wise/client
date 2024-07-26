@@ -1,7 +1,7 @@
 <template>
-  <Button class="theme-btn" @click="func">
+  <button class="theme-btn" @click="func">
     <span>{{ title }}</span>
-  </Button>
+  </button>
 </template>
 
 <script>

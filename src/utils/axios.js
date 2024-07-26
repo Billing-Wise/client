@@ -89,7 +89,7 @@ const memberAxios = axios.create({
 
 authAxios.interceptors.response.use(
   (response) => {
-    return response.data;
+    return response;
   },
   (error) => {
     return error.response;
