@@ -16,7 +16,7 @@
 <script>
 import SearchSmallInputVue from '@/components/common/input/SearchSmallInput.vue';
 import SmallSelectVue from '@/components/common/select/SmallSelect.vue';
-import { useContractStore } from '@/stores/contract';
+import { useContractListStore } from '@/stores/contractList';
 import { getContractList } from '@/utils/contract';
 import { mapActions, mapStores } from 'pinia';
 
@@ -59,17 +59,17 @@ export default {
   },
   watch: {
     itemName(newVal) {
-      this.contractStore.setFilter('itemName', newVal);
+      this.contractListStore.setFilter('itemName', newVal);
     },
     memberName(newVal) {
-      this.contractStore.setFilter('memberName', newVal);
+      this.contractListStore.setFilter('memberName', newVal);
     }
   },
   computed: {
-    ...mapStores(useContractStore)
+    ...mapStores(useContractListStore)
   },
   methods: {
-    ...mapActions(useContractStore, 'setFilter'),
+    ...mapActions(useContractListStore, 'setFilter'),
     async searchItemName() {
       await getContractList();
     },
@@ -78,19 +78,19 @@ export default {
     },
     searchSubscribe(idx) {
       this.subscribeIdx = idx;
-      this.contractStore.setFilter('isSubscription', this.subscribeArr[this.subscribeIdx].data);
+      this.contractListStore.setFilter('isSubscription', this.subscribeArr[this.subscribeIdx].data);
     },
     searchInvoiceType(idx) {
       this.invoiceTypeIdx = idx;
-      this.contractStore.setFilter('invoiceTypeId', this.invoiceTypeArr[this.invoiceTypeIdx].data);
+      this.contractListStore.setFilter('invoiceTypeId', this.invoiceTypeArr[this.invoiceTypeIdx].data);
     },
     searchContractStatus(idx) {
       this.contractStatusIdx = idx;
-      this.contractStore.setFilter('contractStatusId', this.contractStatusArr[this.contractStatusIdx].data);
+      this.contractListStore.setFilter('contractStatusId', this.contractStatusArr[this.contractStatusIdx].data);
     },
     searchPaymentType(idx) {
       this.paymentTypeIdx = idx;
-      this.contractStore.setFilter('paymentTypeId', this.paymentTypeArr[this.paymentTypeIdx].data);
+      this.contractListStore.setFilter('paymentTypeId', this.paymentTypeArr[this.paymentTypeIdx].data);
     },
   }
 }

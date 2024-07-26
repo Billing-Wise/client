@@ -8,7 +8,7 @@
     </div>
     <div class="table-box">
       <ContractTableVue/>
-      <PaginationBarVue :store="contractStore"/>
+      <PaginationBarVue :store="contractListStore"/>
     </div>
   </div>
 </template>
@@ -19,8 +19,8 @@ import ExcelBtnVue from '@/components/common/btn/ExcelBtn.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import ContractTableVue from '@/components/contract/ContractTable.vue';
 import { mapStores } from 'pinia';
-import { useContractStore } from '@/stores/contract';
 import { getContractList } from '@/utils/contract';
+import { useContractListStore } from '@/stores/contractList';
 
 export default {
   name: 'ContractListView',
@@ -35,18 +35,20 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useContractStore),
+    ...mapStores(useContractListStore),
   },
   methods: {
     async getContractList() {
       const result = await getContractList();
-      console.log(result);
+      if (result.code !== 200) {
+        console.log(result);
+      }
     },
     setupWatchers() {
-      this.$watch('contractStore.size', this.getContractList);
-      this.$watch('contractStore.page', this.getContractList);
-      this.$watch('contractStore.columns', this.getContractList, { deep: true });
-      this.contractStore.filters.forEach(filter => {
+      this.$watch('contractListStore.size', this.getContractList);
+      this.$watch('contractListStore.page', this.getContractList);
+      this.$watch('contractListStore.columns', this.getContractList, { deep: true });
+      this.contractListStore.filters.forEach(filter => {
         if (filter.data !== 'itemName' && filter.data !== 'memberName') {
           this.$watch(() => filter.value, this.getContractList);
         }
@@ -54,7 +56,7 @@ export default {
     }
   },
   async mounted() {
-    this.contractStore.$reset();
+    this.contractListStore.$reset();
     await this.getContractList();
     this.setupWatchers();
   }
