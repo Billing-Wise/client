@@ -1,6 +1,6 @@
 <template>
   <PaymentContainerVue>
-    <DescriptionBoxVue>결제 확인을 누르면 결제가 진행됩니다.</DescriptionBoxVue>
+    <DescriptionBoxVue>확인을 누르면 결제가 진행됩니다.</DescriptionBoxVue>
     <LoadingContainerVue v-if="loading" />
     <ErrorContainerVue v-else-if="error" :errorMessage="error" />
     <div v-else-if="paymentInfo" class="payment-info">
@@ -28,7 +28,15 @@
         <ItemContentVue>{{ todayDate }}</ItemContentVue>
       </div>
     </div>
-    <NextPageButtonVue v-if="paymentInfo && !loading" @click="confirmPayment">결제 확인</NextPageButtonVue>
+    <ButtonContainer 
+      v-if="paymentInfo && !loading"
+      @back-click="goBack" 
+      @next-click="confirmPayment"
+      :isFixedBottom="isFixedBottom"
+    >
+      <template #back-text>뒤로</template>
+      <template #next-text>확인</template>
+    </ButtonContainer>
   </PaymentContainerVue>
 </template>
 
@@ -40,7 +48,7 @@ import { usePaymentResultStore } from '@/stores/paymentResult';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';
-import NextPageButtonVue from '@/components/payment/NextPageButton.vue'
+import ButtonContainer from '@/components/payment/ButtonContainer.vue'
 import ItemTitleVue from '@/components/payment/ItemTitle.vue'
 import ItemContentVue from '@/components/payment/ItemContent.vue'
 import LoadingContainerVue from '@/components/payment/LoadingContainer.vue'
@@ -52,7 +60,7 @@ export default {
   components: {
     PaymentContainerVue,
     DescriptionBoxVue,
-    NextPageButtonVue,
+    ButtonContainer,
     ItemTitleVue,
     ItemContentVue,
     LoadingContainerVue,
@@ -83,7 +91,8 @@ export default {
   data() {
     return {
       loading: false,
-      error: null
+      error: null,
+      isFixedBottom: false
     }
   },
   methods: {
@@ -114,6 +123,12 @@ export default {
         this.loading = false;
       }
     },
+    goBack() {
+      this.$router.push({
+        name: 'cardInput',
+        params: { invoiceId: this.invoiceId }
+      });
+    },
     checkInfo() {
       if (!this.paymentInfo) {
         this.$router.push({
@@ -126,11 +141,22 @@ export default {
           params: { invoiceId: this.invoiceId }
         });
       }
+    },
+    checkPosition() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      this.isFixedBottom = windowHeight >= documentHeight;
     }
   },
   mounted() {
     this.mobilePageStore.setPageName("결제 확인");
     this.checkInfo();
+    this.checkPosition();
+    window.addEventListener('resize', this.checkPosition);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkPosition);
   }
 }
 </script>
