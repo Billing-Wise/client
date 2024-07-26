@@ -121,6 +121,12 @@ const router = createRouter({
           component: () => import('@/views/consent/FinalConfirmation.vue')
         },
         {
+          path: '/signature-input/:clientId',
+          name: 'signatureInput',
+          component: () => import('@/views/consent/SignatureInput.vue')
+        },
+        
+        {
           path: '/m/payment/:invoiceId/info',
           name: 'paymentInfo',
           component: () => import('@/views/payment/PaymentInfoView.vue'),

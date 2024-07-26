@@ -62,7 +62,7 @@ export default {
   justify-content: space-between;
   height: 100%;
  
-  background-color: $back-color;
+  background-color: white;
 
   h2, h3 {
     color: $theme-color;
@@ -86,7 +86,8 @@ export default {
   }
 
   p {
-      font-size: 20px;
+      text-align: center;
+      font-size: 18px;
       line-height: 1.5;
       font-weight: bold;
       
@@ -96,7 +97,7 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    background-color: $back-color;
+    background-color: white;
     padding: 20px;
   }
 }

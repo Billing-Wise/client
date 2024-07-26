@@ -121,7 +121,7 @@ export default {
 .member-info-view {
   @include flex-box(column, space-between, 20px);
   height: 100%;
-  background-color: $back-color;
+  background-color: white;
 
   .content {
     flex: 1;
@@ -174,7 +174,7 @@ export default {
   .button-container {
     display: flex;
     justify-content: space-between;
-    background-color: $back-color;
+    background-color: white;
     width: 100%;
     padding: 20px;
   }

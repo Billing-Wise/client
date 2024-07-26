@@ -146,7 +146,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $back-color;
+  background-color: white;
   padding: 20px;
 
   .info-container {
@@ -157,11 +157,13 @@ export default {
     font-size: 16px;
     font-weight: bold;
     margin: 15px 0 10px 0;
+    
   
   }
 
   .info-field {
     margin-bottom: 9px;
+    
 
     input {
       width: 100%;
@@ -173,7 +175,7 @@ export default {
       font-weight:800;
 
       &[readonly] {
-        background-color: $back-color;
+        background-color: white;
       }
     }
   }

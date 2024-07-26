@@ -194,7 +194,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $back-color;
+  background-color: white;
 }
 
 .items-container {
@@ -221,7 +221,7 @@ export default {
   }
 
   &:hover {
-    transform: translateY(-2px);
+    // transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
 }
@@ -297,7 +297,7 @@ export default {
 .footer-container {
   @include flex-box(row, space-between, 10px);
   padding: 20px;
-  background-color: $back-color;
+  background-color: white;
 }
 
 .quantity-input {

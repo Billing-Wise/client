@@ -59,7 +59,7 @@ import { useMobileStore } from '@/stores/mobilePage';
 import ThmemBtnVue from '@/components/common/btn/ThemeBtn.vue';
 
 export default {
-  name: 'FinalConfirmation',
+  name: 'finalConfirmation',
 
   components: {
     ThmemBtnVue
@@ -84,20 +84,11 @@ export default {
       this.$router.push({ name: 'accountInfo' });
     },
     goNext() {
-      this.contractStore.submitEasyConsent().then(() => {
-        this.$router.push({ name: 'payment' });
-      }).catch(error => {
-        console.error('계약 제출 실패:', error);
-        // 에러 처리 로직
-      });
-    }
+      this.$router.push({ name: 'signatureInput' });
+    },
   },
   mounted() {
-    this.setPageName('최종 확인');
-    
-    if (!this.contractStore.clientId) {
-      this.$router.push({ name: 'consent' });
-    }
+      this.setPageName('최종 확인');
   }
 }
 </script>
@@ -106,7 +97,7 @@ export default {
 .contract-confirmation {
   display: flex;
   flex-direction: column;
-  background-color: #f0f0f0;
+  background-color: white;
   min-height: 90vh;
   justify-content: space-between;
 

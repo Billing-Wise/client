@@ -155,7 +155,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: white;
   padding: 0px 20px 20px;
 
   .title {
