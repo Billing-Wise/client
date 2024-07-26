@@ -43,10 +43,8 @@ export default {
 
 <style lang="scss" scoped>
 .table-header {
+  width: 100%;
   background: $theme-color;
-  position: sticky;
-  top: 0;
-  z-index: 1;
 
   th {
     border-right: 1px solid #ccc; // Add border between columns
@@ -60,7 +58,7 @@ export default {
 .column-item {
   @include white-text(16px);
   @include flex-box(row, space-between, 0px);
-  padding: 5px 20px;
+  padding: 10px 20px;
 
   i {
     @include base-icon;
