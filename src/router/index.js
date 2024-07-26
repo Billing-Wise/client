@@ -49,6 +49,11 @@ const router = createRouter({
           component: () => import('@/views/contract/ContractListView.vue')
         },
         {
+          path : '/contract/create',
+          name:'contractCreate',
+          component: () => import('@/views/contract/ContractCreateView.vue')
+        },
+        {
           path : '/invoice',
           name:'invoice',
           component: () => import('@/views/invoice/InvoiceListView.vue')

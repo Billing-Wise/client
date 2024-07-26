@@ -7,13 +7,17 @@
         <ThemeWideBtnVue title="다음" />
       </div>
     </div>
-    <!-- <div class="right-side">
-      <div class="right-header">
-        <span class="contract-count">총 {{ memberStore.currentMember.contractCount }}건</span>
-        <span class="contract-title">현재 회원 관련 계약</span>
-        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square"/>
+    <div class="right-side" v-if="contractCreateStore.step === 0">
+      <div class="right-side-header">
+        <MemberSearchVue/>
       </div>
-    </div> -->
+      <MemberSelectTableVue/>
+    </div>
+    <div class="right-side" v-if="contractCreateStore.step === 1">
+      <div class="right-side-header">
+      </div>
+      <ItemSelectTableVue/>
+    </div>
   </div>
 </template>
 
@@ -21,13 +25,25 @@
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue'
 import ThemeWideBtnVue from '@/components/common/btn/ThemeWideBtn.vue'
 import ContractCreateInfoVue from '@/components/contract/ContractCreateInfo.vue'
+import MemberSelectTableVue from '@/components/contract/table/MemberSelectTable.vue'
+import MemberSearchVue from '@/components/member/MemberSearch.vue'
+import ItemSelectTableVue from '@/components/contract/table/ItemSelectTable.vue'
+import { mapStores } from 'pinia'
+import { useContractCreateStore } from '@/stores/contractCreate'
+
 
 export default {
   name: 'ContractCreateView',
   components: {
     WarningWideBtnVue,
     ThemeWideBtnVue,
-    ContractCreateInfoVue
+    ContractCreateInfoVue,
+    MemberSelectTableVue,
+    MemberSearchVue,
+    ItemSelectTableVue
+  },
+  computed: {
+    ...mapStores(useContractCreateStore),
   },
   methods: {
 
@@ -39,16 +55,16 @@ export default {
 @import "../../assets/scss/component/table.scss";
 
 .root-container {
-  @include flex-box(row, space-between, 20px);
+  @include flex-box(row, space-between, 100px);
   background: $back-color;
   width: 100%;
   height: 100%;
-  padding: 60px 50px
+  padding: 60px 130px;
 }
 
 .left-side {
   @include flex-box(column, space-between, 0px);
-  width: 400px;
+  width: 40%;
   height: 100%;
   padding: 40px 30px;
   border-radius: 10px;
@@ -61,29 +77,23 @@ export default {
   }
 }
 
-// .right-side {
-//   @include flex-box(column, space-between, 20px);
-//   position: relative;
-//   width: 100%;
-//   height: 100%;
+.right-side {
+  @include flex-box(column, space-between, 20px);
+  position: relative;
+  width: 60%;
+  height: 100%;
+}
 
-//   .right-header {
-//     @include flex-box(row, space-between, 20px);
-//     width: 100%;
-//     padding: 0px 20px;
+.right-side-header {
+    @include flex-box(row, space-between, 20px);
+    width: 100%;
 
-//     .contract-count {
-//       font-size: 20px;
-//       font-weight: bold;
-//     }
+    span {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 10px;
+    border: $theme-color solid 2px;
 
-//     .contract-title {
-//       position:absolute;
-//       left: 50%;
-//       transform: translateX(-50%);
-//       font-size: 24px;
-//       font-weight: bold;
-//     }
-//   }
-// }
+  }
+  }
 </style>

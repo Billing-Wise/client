@@ -2,7 +2,7 @@
   <div class="root-container">
     <div class="top-btn-box">
       <div class="btn-box">
-        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square"/>
+        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square" @click="routeCreate"/>
         <ExcelBtnVue title="대량 등록"/>
       </div>
     </div>
@@ -38,6 +38,9 @@ export default {
     ...mapStores(useContractListStore),
   },
   methods: {
+    routeCreate() {
+      this.$router.push({name: 'contractCreate'});
+    },
     async getContractList() {
       const result = await getContractList();
       if (result.code !== 200) {
