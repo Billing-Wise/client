@@ -1,18 +1,18 @@
 <template>
   <table class="contract-table">
     <thead>
-      <TableHaeder :store="contractStore"/>
+      <TableHaeder :store="contractListStore"/>
       <ContractTableFilterVue/>
     </thead>
     <tbody>
-      <ContractTableRowVue v-for="(contract, idx) in contractStore.contractList" :key="idx" :contractData="contract" />
+      <ContractTableRowVue v-for="(contract, idx) in contractListStore.contractList" :key="idx" :contractData="contract" />
     </tbody>
   </table>
 </template>
 
 <script>
 import { mapActions, mapStores } from 'pinia';
-import { useContractStore } from '@/stores/contract';
+import { useContractListStore } from '@/stores/contractList';
 import ContractTableFilterVue from './table/ContractTableFilter.vue';
 import ContractTableRowVue from './table/ContractTableRow.vue';
 import TableHaeder from '../common/table/TableHaeder.vue';
@@ -25,10 +25,10 @@ export default {
     ContractTableRowVue
   },  
   computed: {
-    ...mapStores(useContractStore),
+    ...mapStores(useContractListStore),
   },
   methods: {
-    ...mapActions(useContractStore, ['setColumnSort']),
+    ...mapActions(useContractListStore, ['setColumnSort']),
   },
 }
 </script>
