@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import ModalHeaderVue from '../common/modal/ModalHeader.vue';
-import ModalFooterVue from '../common/modal/ModalFooter.vue';
+import ModalHeaderVue from '../../common/modal/ModalHeader.vue';
+import ModalFooterVue from '../../common/modal/ModalFooter.vue';
 import { deleteItem } from '@/utils/item';
 import { mapStores } from 'pinia';
 import { useItemStore } from '@/stores/item';

@@ -18,8 +18,8 @@
 import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
 import SearchInputVue from '@/components/common/input/SearchInput.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
-import ItemTableVue from '@/components/item/ItemTable.vue';
-import ItemCreateModal from '@/components/item/ItemCreateModal.vue';
+import ItemTableVue from '@/components/item/table/ItemTable.vue';
+import ItemCreateModal from '@/components/item/modal/ItemCreateModal.vue';
 import { useItemStore } from '@/stores/item';
 import { mapActions } from 'pinia';
 import { mapStores } from 'pinia';

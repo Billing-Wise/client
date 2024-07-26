@@ -48,6 +48,7 @@ export default {
       };
 
       const result = await authAxios.post('auth/login', data)
+      console.log(result)
 
       if (result.code == 200) {
         this.authStore.login();
