@@ -39,7 +39,15 @@
         </div>
       </div>
     </div>
-    <NextPageButtonVue :disabled="!isFormValid" @click="goToNextPage">다음</NextPageButtonVue>
+    <ButtonContainer 
+      @back-click="goBack" 
+      @next-click="goToNextPage"
+      :nextDisabled="!isFormValid"
+      :isFixedBottom="isFixedBottom"
+    >
+      <template #back-text>뒤로</template>
+      <template #next-text>다음</template>
+    </ButtonContainer>
   </PaymentContainerVue>
 </template>
 
@@ -50,14 +58,14 @@ import { usePaymentInfoStore } from '@/stores/paymentInfo';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';
-import NextPageButtonVue from '@/components/payment/NextPageButton.vue'
+import ButtonContainer from '@/components/payment/ButtonContainer.vue'
 
 export default {
   name: 'AccountPaymentInputView',
   components: {
     PaymentContainerVue,
     DescriptionBoxVue,
-    NextPageButtonVue,
+    ButtonContainer,
   },
   data() {
     return {
@@ -78,6 +86,7 @@ export default {
       ssn2: '',
       accountNumber: '',
       accountPassword: '',
+      isFixedBottom: false
     }
   },
   computed: {
@@ -133,6 +142,12 @@ export default {
         });
       }
     },
+    goBack() {
+      this.$router.push({
+        name: 'accountAgreement',
+        params: { invoiceId: this.invoiceId }
+      });
+    },
     checkPaymentInfo() {
       if (!this.paymentInfo) {
         this.$router.push({
@@ -150,12 +165,23 @@ export default {
         this.accountNumber = savedAccountInfo.accountNumber;
         this.accountPassword = savedAccountInfo.accountPassword;
       }
+    },
+    checkPosition() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      this.isFixedBottom = windowHeight >= documentHeight;
     }
   },
   mounted() {
     this.mobilePageStore.setPageName("계좌 이체");
     this.checkPaymentInfo();
     this.loadAccountInfo();
+    this.checkPosition();
+    window.addEventListener('resize', this.checkPosition);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkPosition);
   }
 }
 </script>
@@ -168,14 +194,13 @@ export default {
 }
 
 .account-payment-form {
-  width: 400px;
+  width: 500px;
+  max-width: 100%;
   border: 2px solid $theme-color;
   border-radius: 10px;
   padding: 15px;
   font-size: 14px;
-  @media (max-width: 500px) {
-    width: 100%;
-  }
+
 }
 
 .form-row {

@@ -1,19 +1,25 @@
 <template>
   <PaymentContainerVue>
     <DescriptionBoxVue>결제 수단을 선택해주세요.</DescriptionBoxVue>
-    <div class="payment-options">
-      <label class="radio-button">
-        <input type="radio" name="payment" value="account" :checked="paymentMethod === 'account'" @change="setPaymentMethod('account')">
-        <span class="radio-custom"></span>
-        <span class="radio-label">계좌 이체</span>
-      </label>
-      <label class="radio-button">
-        <input type="radio" name="payment" value="card" :checked="paymentMethod === 'card'" @change="setPaymentMethod('card')">
-        <span class="radio-custom"></span>
-        <span class="radio-label">카드 결제</span>
-      </label>
+    <div class="payment-info">
+      <div class="payment-options">
+        <label class="radio-button">
+          <input type="radio" name="payment" value="account" :checked="paymentMethod === 'account'" @change="setPaymentMethod('account')">
+          <span class="radio-custom"></span>
+          <span class="radio-label">계좌 이체</span>
+        </label>
+        <label class="radio-button">
+          <input type="radio" name="payment" value="card" :checked="paymentMethod === 'card'" @change="setPaymentMethod('card')">
+          <span class="radio-custom"></span>
+          <span class="radio-label">카드 결제</span>
+        </label>
+      </div>
     </div>
-    <NextPageButtonVue @click="goToNextPage">다음</NextPageButtonVue>
+    <ButtonContainer 
+      @back-click="goBack" 
+      @next-click="goToNextPage"
+      :isFixedBottom="isFixedBottom"
+    />
   </PaymentContainerVue>
 </template>
 
@@ -23,18 +29,19 @@ import { usePaymentInfoStore } from '@/stores/paymentInfo';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';
-import NextPageButtonVue from '@/components/payment/NextPageButton.vue'
+import ButtonContainer from '@/components/payment/ButtonContainer.vue';
 
 export default {
   name: 'PaymentMethodView',
   components: {
     PaymentContainerVue,
     DescriptionBoxVue,
-    NextPageButtonVue,
+    ButtonContainer,
   },
   data() {
     return {
-      paymentMethod: 'account' 
+      paymentMethod: 'account',
+      isFixedBottom: false
     }
   },
   computed: {
@@ -64,6 +71,12 @@ export default {
         });
       }
     },
+    goBack() {
+      this.$router.push({
+          name: 'paymentInfo',
+          params: { invoiceId: this.invoiceId }
+      });    
+    },
     checkPaymentInfo() {
       if (!this.paymentInfo) {
         this.$router.push({
@@ -71,11 +84,22 @@ export default {
           params: { invoiceId: this.invoiceId }
         });
       }
+    },
+    checkPosition() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      this.isFixedBottom = windowHeight >= documentHeight;
     }
   },
   mounted() {
     this.mobilePageStore.setPageName("납부자 결제");
     this.checkPaymentInfo();
+    this.checkPosition();
+    window.addEventListener('resize', this.checkPosition);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkPosition);
   }
 }
 </script>
@@ -91,11 +115,23 @@ h2 {
   margin: 5px 0 0;
 }
 
+.payment-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .payment-options {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin: 5rem 0 5rem 0;
+  align-items: center;
+  margin-top: 20vh;
+  width: 70%;
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .radio-button {
