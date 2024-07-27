@@ -31,16 +31,16 @@
       <div class="info-section">
         <h3>결제일</h3>
         <div class="info-box">
-          <p><span>날짜</span> <span class="value">매월 {{ paymentInfo.paymentDate }} 일</span></p>
+          <p><span>날짜</span> <span class="value">매월 {{ contractInfo.contractCycle }} 일</span></p>
         </div>
       </div>
       
       <div class="info-section">
         <h3>은행</h3>
         <div class="info-box">
-          <p><span>은행명</span><span class="value">{{ paymentInfo.bankName }}</span></p>
+          <p><span>은행명</span><span class="value">{{ paymentInfo.accountBank }}</span></p>
           <p><span>계좌번호</span><span class="value">{{ paymentInfo.accountNumber }}</span></p>
-          <p><span>예금주명</span><span class="value">{{ paymentInfo.accountHolder }}</span></p>
+          <p><span>예금주명</span><span class="value">{{ paymentInfo.accountOwner }}</span></p>
         </div>
       </div>
     </div>
@@ -75,6 +75,9 @@ export default {
     },
     paymentInfo() {
       return this.contractStore.paymentInfo;
+    },
+    contractInfo() {
+      return this.contractStore.contractInfo;
     }
   },
   methods: {
