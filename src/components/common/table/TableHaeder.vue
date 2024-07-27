@@ -1,6 +1,6 @@
 <template>
   <tr class="table-header">
-    <th v-for="(column, key) in store.columns" :key="key">
+    <th v-for="(column, key) in showColumns" :key="key">
       <div class="column-item">
         <span>{{ column.name }}</span>
         <i :class="column.sort ? sortIcon[column.sort] : nonSortIcon" @click="changeSort(column)"></i>
@@ -16,7 +16,8 @@ export default {
     store: {
       type: Object,
       required: true
-    }
+    },
+    excludeColumnArr : Array
   },
   data() {
     return {
@@ -24,6 +25,19 @@ export default {
       sortIcon: {
         'asc': 'bi bi-sort-numeric-down sort-active',
         'desc': 'bi bi-sort-numeric-down-alt sort-active'
+      }
+    }
+  },
+  computed: {
+    showColumns() {
+      if (!this.excludeColumnArr) {
+        return this.store.columns;
+      } else {
+        const newArr = [];
+        this.store.columns.forEach((column) => {
+          if (!this.excludeColumnArr.includes(column.data)) newArr.push(column);
+        })
+        return newArr
       }
     }
   },

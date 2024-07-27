@@ -2,7 +2,15 @@
   <PaymentContainerVue>
     <DescriptionBoxVue>이용약관 동의를 해주세요.</DescriptionBoxVue>
     <AgreementBoxVue @agreement-changed="updateAgreementStatus"></AgreementBoxVue>
-    <NextPageButtonVue :disabled="!allAgreed" @click="goToNextPage">다음</NextPageButtonVue>
+    <ButtonContainer 
+      @back-click="goBack" 
+      @next-click="goToNextPage"
+      :nextDisabled="!allAgreed"
+      :isFixedBottom="isFixedBottom"
+    >
+      <template #back-text>뒤로</template>
+      <template #next-text>다음</template>
+    </ButtonContainer>
   </PaymentContainerVue>
 </template>
 
@@ -13,19 +21,20 @@ import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';
 import AgreementBoxVue from '@/components/payment/AgreementBox.vue';
-import NextPageButtonVue from '@/components/payment/NextPageButton.vue'
+import ButtonContainer from '@/components/payment/ButtonContainer.vue'
 
 export default {
   name: 'CardPaymentAgreementView',
   components: {
     PaymentContainerVue,
     DescriptionBoxVue,
-    NextPageButtonVue,
+    ButtonContainer,
     AgreementBoxVue
   },
   data() {
     return {
-      allAgreed: false
+      allAgreed: false,
+      isFixedBottom: false
     }
   },
   computed: {
@@ -50,6 +59,12 @@ export default {
         });
       }
     },
+    goBack() {
+      this.$router.push({
+        name: 'paymentMethod',
+        params: { invoiceId: this.invoiceId }
+      });
+    },
     checkPaymentInfo() {
       if (!this.paymentInfo) {
         this.$router.push({
@@ -57,14 +72,26 @@ export default {
           params: { invoiceId: this.invoiceId }
         });
       }
+    },
+    checkPosition() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      this.isFixedBottom = windowHeight >= documentHeight;
     }
   },
   mounted() {
     this.mobilePageStore.setPageName("카드 결제");
     this.checkPaymentInfo();
+    this.checkPosition();
+    window.addEventListener('resize', this.checkPosition);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkPosition);
   }
 }
 </script>
 
 <style scoped>
+/* 스타일이 필요한 경우 여기에 추가하세요 */
 </style>

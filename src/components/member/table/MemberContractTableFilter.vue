@@ -2,7 +2,6 @@
   <tr class="fileter-row">
     <td class="table-column"></td>
     <td class="table-column"><SearchSmallInputVue title="상품명을 입력하세요" v-model="itemName" :search="searchItemName"/></td>
-    <td class="table-column"><SearchSmallInputVue title="회원명을 입력하세요" v-model="memberName" :search="searchMemberName"/></td>
     <td class="table-column"></td>
     <td class="table-column"></td>
     <td class="table-column"><SmallSelectVue :selectedIdx="subscribeIdx" :keywordArr="subscribeArr" :choiceFunc="searchSubscribe"/></td>
@@ -21,7 +20,7 @@ import { getContractList } from '@/utils/contract';
 import { mapActions, mapStores } from 'pinia';
 
 export default {
-  name: 'ContractTableFilterVue',
+  name: 'MemberContractTableFilterVue',
   components: {
     SearchSmallInputVue,
     SmallSelectVue
@@ -29,7 +28,6 @@ export default {
   data() {
     return {
       itemName:'',
-      memberName:'',
       subscribeIdx: 0,
       subscribeArr: [
         {title: '전부', data: null},
@@ -61,9 +59,6 @@ export default {
     itemName(newVal) {
       this.contractListStore.setFilter('itemName', newVal);
     },
-    memberName(newVal) {
-      this.contractListStore.setFilter('memberName', newVal);
-    }
   },
   computed: {
     ...mapStores(useContractListStore)
@@ -71,9 +66,6 @@ export default {
   methods: {
     ...mapActions(useContractListStore, 'setFilter'),
     async searchItemName() {
-      await getContractList();
-    },
-    async searchMemberName() {
       await getContractList();
     },
     searchSubscribe(idx) {

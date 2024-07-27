@@ -206,7 +206,6 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   const contractStore = useContractStore();
 
- 
   const protectedRoutes = [
     'consentExplanation',
     'memberInfo',

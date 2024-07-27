@@ -67,7 +67,7 @@ export default {
 
 <style lang="scss" scoped>
 .agreement-container {
-  margin: 2rem 0;
+  margin-top: 10vh;
   width: 100%;
   font-weight: bold;
   color: $input-color;

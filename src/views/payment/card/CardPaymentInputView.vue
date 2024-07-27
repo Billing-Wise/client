@@ -70,7 +70,15 @@
         </div>
       </div>
     </div>
-    <NextPageButtonVue :disabled="!isFormValid" @click="goToNextPage">다음</NextPageButtonVue>
+    <ButtonContainer 
+      @back-click="goBack" 
+      @next-click="goToNextPage"
+      :nextDisabled="!isFormValid"
+      :isFixedBottom="isFixedBottom"
+    >
+      <template #back-text>뒤로</template>
+      <template #next-text>다음</template>
+    </ButtonContainer>
   </PaymentContainerVue>
 </template>
 
@@ -81,14 +89,14 @@ import { usePaymentInfoStore } from '@/stores/paymentInfo';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';
-import NextPageButtonVue from '@/components/payment/NextPageButton.vue'
+import ButtonContainer from '@/components/payment/ButtonContainer.vue'
 
 export default {
   name: 'CardPaymentInputView',
   components: {
     PaymentContainerVue,
     DescriptionBoxVue,
-    NextPageButtonVue,
+    ButtonContainer,
   },
   data() {
     return {
@@ -110,7 +118,8 @@ export default {
       expiryYear: '',
       years: [],
       cardOwnership: 'personal',
-      password: '', cvc: '', ssn1: '', ssn2: ''
+      password: '', cvc: '', ssn1: '', ssn2: '',
+      isFixedBottom: false
     }
   },
   computed: {
@@ -170,6 +179,12 @@ export default {
         });
       }
     },
+    goBack() {
+      this.$router.push({
+        name: 'cardAgreement',
+        params: { invoiceId: this.invoiceId }
+      });
+    },
     checkPaymentInfo() {
       if (!this.paymentInfo) {
         this.$router.push({
@@ -190,6 +205,12 @@ export default {
         this.cvc = savedCardInfo.cvc;
         [this.ssn1, this.ssn2] = savedCardInfo.ssn.split('-');
       }
+    },
+    checkPosition() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      this.isFixedBottom = windowHeight >= documentHeight;
     }
   },
   mounted() {
@@ -197,6 +218,11 @@ export default {
     this.generateYears();
     this.checkPaymentInfo();
     this.loadCardInfo();
+    this.checkPosition();
+    window.addEventListener('resize', this.checkPosition);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkPosition);
   }
 }
 </script>
@@ -209,14 +235,13 @@ export default {
 }
 
 .card-payment-form {
-  width: 400px;
+  width: 500px;
+  max-width: 100%;
   border: 2px solid $theme-color;
   border-radius: 10px;
   padding: 15px;
   font-size: 14px;
-  @media (max-width: 500px) {
-    width: 100%;
-  }
+
 }
 
 .form-row {
