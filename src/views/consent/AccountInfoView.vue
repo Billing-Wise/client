@@ -72,7 +72,6 @@ export default {
         { code: 'HN', name: '하나은행' },
         { code: 'NH', name: '농협은행' },
         { code: 'IBK', name: '기업은행' },
-        
       ]
     };
   },
@@ -123,8 +122,11 @@ export default {
           this.validateAccountHolder(true)) {
         const contractStore = useContractStore();
         contractStore.setPaymentInfo({
-          ...contractStore.paymentInfo,
-          ...this.accountInfo
+          accountBank: this.accountInfo.bankName,
+          accountNumber: this.accountInfo.accountNumber,
+          accountOwner: this.accountInfo.accountHolder,
+          totalAmount: contractStore.paymentInfo.totalAmount, 
+          paymentDate: contractStore.paymentInfo.paymentDate 
         });
         this.$router.push({ name: 'finalConfirmation' });
       }
@@ -136,9 +138,9 @@ export default {
     const contractStore = useContractStore();
     if (contractStore.paymentInfo) {
       this.accountInfo = {
-        bankName: contractStore.paymentInfo.bankName || '',
+        bankName: contractStore.paymentInfo.accountBank || '',
         accountNumber: contractStore.paymentInfo.accountNumber || '',
-        accountHolder: contractStore.paymentInfo.accountHolder || ''
+        accountHolder: contractStore.paymentInfo.accountOwner || ''
       };
     }
   },

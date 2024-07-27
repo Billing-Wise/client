@@ -12,8 +12,13 @@
           <InfoInputVue title="이메일" v-model="email" @blur="validateEmail" />
           <p v-if="emailError" class="error-message">{{ emailError }}</p>
         </div>
+
+        
+
+
         <div class="input-field">
           <InfoInputVue title="전화번호" v-model="phone" @blur="validatePhone" />
+          <label class="phone-guide">'-' 없이 010xxxxxxxx 형식으로 입력해주세요</label>
           <p v-if="phoneError" class="error-message">{{ phoneError }}</p>
         </div>
       </form>
@@ -83,8 +88,8 @@ export default {
     },
 
     validatePhone() {
-      const phoneRegex = /^010-\d{4}-\d{4}$/;
-      this.phoneError = !phoneRegex.test(this.phone) ? '유효한 전화번호를 입력해주세요.(형식: 010-xxxx-xxxx)' : '';
+      const phoneRegex = /^010\d{8}$/;
+      this.phoneError = !phoneRegex.test(this.phone) ? '유효한 전화번호를 입력해주세요.(형식: 010xxxxxxxx)' : '';
     },
 
     goBack() {
@@ -101,7 +106,7 @@ export default {
         contractStore.setMemberInfo({
           name: this.name,
           email: this.email,
-          phone: this.phone
+          phone: this.phone.replace(/-/g, '')
         });
         this.$router.push({ name: 'contractInfoConfirmation', 
         
@@ -168,7 +173,17 @@ export default {
       position: absolute;
       top: 50%;
       transform: translateY(120%);
+      margin-top: 5px;
+
+      
     }
+  }
+
+  .phone-guide {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 5px;
   }
 
   .button-container {

@@ -91,41 +91,55 @@ const router = createRouter({
       },
       children: [
         {
-          path: '/m/consent/:clientId',
+          path: '/m/consent/non-member/:clientId',
           name: 'consent',
           component: () => import('@/views/consent/ConsentItemView.vue'),
         },
         {
-          path: 'explanation/:clientId',
+          path: '/m/consent/non-member/explanation/:clientId',
           name: 'consentExplanation',
           component: () => import('@/views/consent/ConsentExplanationView.vue'),
         },
         {
-          path: 'member-info/:clientId',
+          path: '/m/consent/non-member/member-info/:clientId',
           name: 'memberInfo',
           component: () => import('@/views/consent/MemberInfoView.vue'),
         },
         {
-          path: 'contract-confirmation/:clientId',
+          path: '/m/consent/non-member/contract-confirmation/:clientId',
           name: 'contractInfoConfirmation',
           component: () => import('@/views/consent/ContractInfoConfirmation.vue')
         },
         {
-          path: 'account-info/:clientId',
+          path: '/m/consent/non-memberaccount-info/:clientId',
           name: 'accountInfo',
           component: () => import('@/views/consent/AccountInfoView.vue')
         },
         {
-          path: 'final-confirmation/:clientId',
+          path: '/m/consent/non-member/final-confirmation/:clientId',
           name: 'finalConfirmation',
           component: () => import('@/views/consent/FinalConfirmation.vue')
         },
         {
-          path: '/signature-input/:clientId',
+          path: '/m/consent/non-member/signature-input/:clientId',
           name: 'signatureInput',
           component: () => import('@/views/consent/SignatureInput.vue')
         },
-        
+        {
+          path: '/m/consent/non-member/upload-signature/:clientId',
+          name: 'uploadSignature',
+          component: () => import('@/views/consent/UploadSignature.vue')
+        },
+        {
+          path: '/m/consent/non-member/draw-signature/:clientId',
+          name: 'drawSignature',
+          component: () => import('@/views/consent/DrawSignature.vue')
+        },
+        {
+          path: '/m/consent/non-member/payment-completion/:clientId',
+          name: 'paymentCompletion',
+          component: () => import('@/views/consent/PaymentCompletion.vue')
+        },
         {
           path: '/m/payment/:invoiceId/info',
           name: 'paymentInfo',
