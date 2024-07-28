@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { useMemberBulkStore } from '@/stores/memberBulk';
+import { useMemberBulkStore } from '@/stores/member/memberBulk';
 import { mapActions, mapStores } from 'pinia';
 import { createMemberBulk } from '@/utils/member';
 import ExcelUploadVue from '@/components/common/ExcelUpload.vue';
@@ -24,7 +24,7 @@ import MemberCreateTableVue from '@/components/member/table/MemberCreateTable.vu
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue';
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue';
 import MemberBulkErrorModalVue from '@/components/member/modal/MemberBulkErrorModal.vue';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 
 export default {
   name: 'MemberBulkCreateView',

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { useContractCreateStore } from '@/stores/contractCreate';
+import { useContractCreateStore } from '@/stores/contract/contractCreate';
 import { mapActions, mapStores } from 'pinia';
 
 export default {

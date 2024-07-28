@@ -1,23 +1,13 @@
 <template>
   <div class="root-container">
     <div class="left-side">
-      <ContractCreateInfoVue />
+      <ContractEditInfoVue />
       <div class="warning-msg">{{warningMsg}}</div>
-      <div class="btn-box" v-if="contractCreateStore.step === 0">
-        <WarningWideBtnVue title="취소" :func="routeContratList"/>
-        <ThemeWideBtnVue title="다음" :func="() => changeStep(1)"/>
-      </div>
-      <div class="btn-box" v-if="contractCreateStore.step === 1">
-        <ThemeWideBtnVue title="이전" :func="() => changeStep(0)"/>
-        <ThemeWideBtnVue title="다음" :func="() => changeStep(2)"/>
-      </div>
       <div class="btn-box" v-if="contractCreateStore.step === 2">
-        <ThemeWideBtnVue title="이전" :func="() => changeStep(1)"/>
-        <SuccessWideBtnVue title="완료" :func="createContract"/>
+        <WarningWideBtnVue title="취소" :func="routeContratDetail"/>
+        <SuccessWideBtnVue title="완료" :func="editContract"/>
       </div>
     </div>
-    <ContractChooseMemberVue v-if="contractCreateStore.step === 0"/>
-    <ContractChooseItemVue v-if="contractCreateStore.step === 1"/>
     <ContractChooseInfoVue v-if="contractCreateStore.step === 2"/>
   </div>
 </template>
@@ -26,23 +16,21 @@
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue'
 import ThemeWideBtnVue from '@/components/common/btn/ThemeWideBtn.vue'
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue'
-import ContractCreateInfoVue from '@/components/contract/ContractCreateInfo.vue'
-import ContractChooseMemberVue from '@/components/contract/create/ContractChooseMember.vue'
 import ContractChooseItemVue from '@/components/contract/create/ContractChooseItem.vue'
 import ContractChooseInfoVue from '@/components/contract/create/ContractChooseInfo.vue'
 import { mapStores } from 'pinia'
 import { useContractCreateStore } from '@/stores/contract/contractCreate'
-import { createContract } from '@/utils/contract'
-
+import ContractEditInfoVue from '@/components/contract/ContractEditInfo.vue'
+import { useContractDetailStore } from '@/stores/contract/contractDetail'
+import { editContract, getContract } from '@/utils/contract'
 
 export default {
-  name: 'ContractCreateView',
+  name: 'ContractEditView',
   components: {
     WarningWideBtnVue,
     ThemeWideBtnVue,
     SuccessWideBtnVue,
-    ContractCreateInfoVue,
-    ContractChooseMemberVue,
+    ContractEditInfoVue,
     ContractChooseItemVue,
     ContractChooseInfoVue
   },
@@ -53,28 +41,27 @@ export default {
   },  
   computed: {
     ...mapStores(useContractCreateStore),
+    ...mapStores(useContractDetailStore)
   },
   methods: {
-    routeContratList() {
-      this.$router.push({name: 'contract'});
+    routeContratDetail() {
+      this.$router.push(`/contract/${this.$route.params.id}`);
     },
-    changeStep(step) {
-      this.contractCreateStore.setStep(step);
-    },
-    async createContract() {
-      const result = await createContract();
+    async editContract() {
+      const result = await editContract(this.$route.params.id);
       if (result.code === 200) {
-        this.$router.push(`/contract/${result.data}`);
+        this.$router.push(`/contract/${this.$route.params.id}`);
       } else {
         this.warningMsg = result.message;
       }
     }
   },
-  mounted() {
-    if (!this.contractCreateStore.dataPassed) {
-      this.contractCreateStore.$reset();
+  async created() {
+    this.contractCreateStore.setStep(2);
+    if (this.contractDetailStore.data.id !== Number(this.$route.params.id)) {
+      const result = await getContract(this.$route.params.id);
     }
-    this.contractCreateStore.setDataPassed(false);
+    this.contractCreateStore.setAllDataFromDetailStore(this.contractDetailStore.data);
   }
 }
 </script>

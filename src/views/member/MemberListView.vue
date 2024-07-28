@@ -25,7 +25,7 @@ import MemberTableVue from '@/components/member/table/MemberTable.vue';
 import MemberCreateModalVue from '@/components/member/modal/MemberCreateModal.vue';
 import MemberSearchVue from '@/components/member/MemberSearch.vue';
 import { mapStores } from 'pinia';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 import { getMemberList } from '@/utils/member';
 
 export default {
@@ -43,20 +43,12 @@ export default {
       modalVisible: false,
     }
   },
-  watch: {
-    'memberStore.size': 'getMemberList',
-    'memberStore.page': 'getMemberList',
-    'memberStore.columns': {
-      handler: 'getMemberList',
-      deep: true
-    }
-  },  
   computed: {
     ...mapStores(useMemberStore),
   },
   methods: {
     async getMemberList() {
-      const result = await getMemberList(this.keywordArr[this.selectedIdx].data, this.searchInput);
+      const result = await getMemberList();
       if (result.code !== 200) {
         // 예외 처리
       }
@@ -66,10 +58,17 @@ export default {
     },
     directCreateBulk() {
       this.$router.push({name: 'memberBulk'});
+    },
+    setupWatchers() {
+      this.$watch('memberStore.size', this.getMemberList);
+      this.$watch('memberStore.page', this.getMemberList);
+      this.$watch('memberStore.columns', this.getMemberList, { deep: true });
     }
   },
-  mounted() {
-    this.getMemberList();
+  async mounted() {
+    this.memberStore.$reset();
+    this.setupWatchers();
+    await this.getMemberList();
   }
 }
 </script>

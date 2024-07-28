@@ -14,7 +14,7 @@
 
 <script>
 import { mapActions, mapStores } from 'pinia';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 import { getMemberList } from '@/utils/member';
 import TableHaederVue from '@/components/common/table/TableHaeder.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';

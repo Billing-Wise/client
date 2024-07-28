@@ -13,7 +13,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { useMemberBulkStore } from '@/stores/memberBulk';
+import { useMemberBulkStore } from '@/stores/member/memberBulk';
 import ModalFooterVue from '@/components/common/modal/ModalFooter.vue';
 
 export default {

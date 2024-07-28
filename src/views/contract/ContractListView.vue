@@ -20,7 +20,7 @@ import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import ContractTableVue from '@/components/contract/ContractTable.vue';
 import { mapStores } from 'pinia';
 import { getContractList } from '@/utils/contract';
-import { useContractListStore } from '@/stores/contractList';
+import { useContractListStore } from '@/stores/contract/contractList';
 
 export default {
   name: 'ContractListView',

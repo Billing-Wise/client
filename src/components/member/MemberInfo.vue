@@ -15,7 +15,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 import { toDateFromDateTime } from '@/utils/date';
 import IconInfoVue from '../common/info/IconInfo.vue';
 import TitleInfoVue from '@/components/common/info/TitleInfo.vue';

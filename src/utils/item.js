@@ -4,15 +4,16 @@ import { fileAxios, mainAxios } from "./axios";
 const itemStore = useItemStore();
 
 // 아이템 목록 조회
-async function getItemList(itemName) {
+async function getItemList() {
 
   let url = `items?page=${itemStore.page}&size=${itemStore.size}`;
-  if (itemName) url += `&name=${itemName}`
+  if (itemStore.search.value) {
+    url += `&${itemStore.search.keyword}=${itemStore.search.valu}`
+  }
+
   itemStore.columns.forEach(column => {
     if (column.sort != null) url += `&sort=${column.data},${column.sort}`
   });
-
-  console.log(url)
 
   const result = await mainAxios.get(url);
   itemStore.setMaxPage(result.data.totalPages - 1);

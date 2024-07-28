@@ -8,9 +8,9 @@
 <script>
 import SearchInputVue from '@/components/common/input/SearchInput.vue'
 import KeywordSelectVue from '../common/select/KeywordSelect.vue';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 import { getMemberList } from '@/utils/member';
-import { mapStores } from 'pinia';
+import { mapActions, mapStores } from 'pinia';
 
 export default {
   name: 'MemberSearch',
@@ -33,21 +33,26 @@ export default {
     selectedIdx() {
       this.searchInput = '';
     },
+    searchInput() {
+      this.memberStore.setSearchValue(this.searchInput);
+    }
   },  
   computed: {
     ...mapStores(useMemberStore),
   },
   methods: {
+    ...mapActions(useMemberStore, ['setKeyword', 'setSearchValue']),
     keywordSelect(idx) {
-      this.selectedIdx = idx
+      this.selectedIdx = idx;
+      this.memberStore.setKeyword(this.keywordArr[this.selectedIdx].data);
     },
     async getMemberList() {
-      const result = await getMemberList(this.keywordArr[this.selectedIdx].data, this.searchInput);
+      const result = await getMemberList();
       if (result.code !== 200) {
         // 예외 처리
       }
     },
-  }
+  },
 }
 </script>
 

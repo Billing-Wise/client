@@ -12,7 +12,7 @@
 
 <script>
 import { mapActions, mapStores } from 'pinia';
-import { useContractListStore } from '@/stores/contractList';
+import { useContractListStore } from '@/stores/contract/contractList';
 import TableHaeder from '../../common/table/TableHaeder.vue';
 import MemberContractTableFilterVue from './MemberContractTableFilter.vue';
 import MemberContractTableRowVue from './MemberContractTableRow.vue';

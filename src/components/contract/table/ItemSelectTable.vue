@@ -46,7 +46,6 @@ export default {
     this.itemStore.$reset();
     await this.getItemList();
     this.setupWatchers();
-    console.log(this.itemStore.itemList)
   }
 }
 </script>
