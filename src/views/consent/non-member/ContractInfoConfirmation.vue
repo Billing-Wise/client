@@ -43,7 +43,7 @@
 
 <script>
 import { mapActions, mapStores } from 'pinia';
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/consent/non-member/contract';
 import { useMobileStore } from '@/stores/mobilePage';
 import ThmemBtnVue from '@/components/common/btn/ThemeBtn.vue';
 

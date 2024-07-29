@@ -33,7 +33,7 @@
 
 <script>
 
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/consent/non-member/contract';
 import InfoInputVue from '@/components/common/input/InfoInput.vue';
 import ThmemBtnVue from '@/components/common/btn/ThemeBtn.vue';
 
