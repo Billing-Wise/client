@@ -17,7 +17,7 @@
 import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
 import ExcelBtnVue from '@/components/common/btn/ExcelBtn.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
-import ContractTableVue from '@/components/contract/ContractTable.vue';
+import ContractTableVue from '@/components/contract/table/ContractTable.vue';
 import { mapStores } from 'pinia';
 import { getContractList } from '@/utils/contract';
 import { useContractListStore } from '@/stores/contract/contractList';
@@ -47,7 +47,7 @@ export default {
     async getContractList() {
       const result = await getContractList();
       if (result.code !== 200) {
-        console.log(result);
+        // 예외 처리
       }
     },
     setupWatchers() {

@@ -13,9 +13,9 @@
 <script>
 import { mapActions, mapStores } from 'pinia';
 import { useContractListStore } from '@/stores/contract/contractList';
-import ContractTableFilterVue from './table/ContractTableFilter.vue';
-import ContractTableRowVue from './table/ContractTableRow.vue';
-import TableHaeder from '../common/table/TableHaeder.vue';
+import ContractTableFilterVue from '@/components/contract/table/ContractTableFilter.vue';
+import ContractTableRowVue from '@/components/contract/table/ContractTableRow.vue';
+import TableHaeder from '@/components/common/table/TableHaeder.vue';
 
 export default {
   name: 'ContractTableVue',

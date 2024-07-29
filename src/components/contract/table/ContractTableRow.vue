@@ -14,7 +14,7 @@
       </div>
     </td>
     <td class="table-column"><span>{{ contractData.paymentType.name }}</span></td>
-    <td class="table-column"><div class="unpaid-sticker" :class="upPaidStatusClass">{{ upPaidStatus }}</div></td>
+    <td class="table-column"><div class="status-sticker" :class="upPaidStatusClass">{{ upPaidStatus }}</div></td>
   </tr>
 </template>
 
@@ -67,13 +67,6 @@ export default {
     height: 10px;
     border-radius: 50%;
   }
-}
-
-.unpaid-sticker {
-  @include flex-box(row, center, 0px);
-  @include white-text(14px);
-  padding: 3px 5px;
-  border-radius: 20px;
 }
 
 .waiting {

@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'FileInputtVue',
+  name: 'FileInputVue',
   props: {
     'modelValue': File,
   },
@@ -33,7 +33,6 @@ export default {
       this.$emit('update:modelValue', file);
     }
   }
-
 }
 </script>
 
