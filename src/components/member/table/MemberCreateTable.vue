@@ -21,7 +21,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { useMemberBulkStore } from '@/stores/memberBulk';
+import { useMemberBulkStore } from '@/stores/member/memberBulk';
 
 export default {
   name: 'MemberCreateTableVue',

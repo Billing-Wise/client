@@ -2,8 +2,8 @@
   <div class="root-container">
     <div class="top-btn-box">
       <div class="btn-box">
-        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square"/>
-        <ExcelBtnVue title="대량 등록"/>
+        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square" :func="routeCreate"/>
+        <ExcelBtnVue title="대량 등록" :func="routeCreateBulk"/>
       </div>
     </div>
     <div class="table-box">
@@ -20,7 +20,7 @@ import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import ContractTableVue from '@/components/contract/ContractTable.vue';
 import { mapStores } from 'pinia';
 import { getContractList } from '@/utils/contract';
-import { useContractListStore } from '@/stores/contractList';
+import { useContractListStore } from '@/stores/contract/contractList';
 
 export default {
   name: 'ContractListView',
@@ -38,6 +38,12 @@ export default {
     ...mapStores(useContractListStore),
   },
   methods: {
+    routeCreate() {
+      this.$router.push({name: 'contractCreate'});
+    },
+    routeCreateBulk(){
+      this.$router.push({name: 'contractCreateBulk'});
+    },
     async getContractList() {
       const result = await getContractList();
       if (result.code !== 200) {

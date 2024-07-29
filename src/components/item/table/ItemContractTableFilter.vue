@@ -15,7 +15,7 @@
 <script>
 import SearchSmallInputVue from '@/components/common/input/SearchSmallInput.vue';
 import SmallSelectVue from '@/components/common/select/SmallSelect.vue';
-import { useContractListStore } from '@/stores/contractList';
+import { useContractListStore } from '@/stores/contract/contractList';
 import { getContractList } from '@/utils/contract';
 import { mapActions, mapStores } from 'pinia';
 

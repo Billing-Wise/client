@@ -4,7 +4,7 @@
       {{ title }}
     </div>
     <input 
-      type="text" 
+      :type="type? type : 'text'" 
       :value="modelValue" 
       @input="$emit('update:modelValue', $event.target.value)">
   </div>
@@ -15,7 +15,8 @@ export default {
   name: 'InfoInputtVue',
   props: {
     'title' : String,
-    'modelValue': String,
+    'modelValue': [String, Number],
+    'type': String
   },
   emits: ['update:modelValue']
 

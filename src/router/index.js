@@ -49,6 +49,26 @@ const router = createRouter({
           component: () => import('@/views/contract/ContractListView.vue')
         },
         {
+          path : '/contract/create',
+          name:'contractCreate',
+          component: () => import('@/views/contract/ContractCreateView.vue')
+        },
+        {
+          path : '/contract/create/bulk',
+          name:'contractCreateBulk',
+          component: () => import('@/views/contract/ContractBulkCreateView.vue')
+        },
+        {
+          path : '/contract/:id',
+          name:'contractDetail',
+          component: () => import('@/views/contract/ContractDetailView.vue')
+        },
+        {
+          path : '/contract/:id/edit',
+          name:'contractEdit',
+          component: () => import('@/views/contract/ContractEditView.vue')
+        },
+        {
           path : '/invoice',
           name:'invoice',
           component: () => import('@/views/invoice/InvoiceListView.vue')

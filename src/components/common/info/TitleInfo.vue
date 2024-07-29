@@ -28,7 +28,7 @@ export default {
       @include flex-box(row, center, 0px);
       @include white-text(16px);
       background: $theme-color;
-      width: 140px;
+      width: 110px;
       height: 100%;
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
@@ -36,7 +36,7 @@ export default {
 
     .info-box {
       @include flex-box(row, start, 0px);
-      width: 100%;
+      flex-grow: 1;
       height: 100%;
       padding: 0px 20px;
       font-weight: bold;

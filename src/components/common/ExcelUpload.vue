@@ -82,6 +82,7 @@ export default {
       };
 
       reader.readAsArrayBuffer(this.file);
+      console.log(this.store.uploadData)
     }
   },
   mounted() { 
@@ -95,7 +96,7 @@ export default {
 <style lang="scss" scoped>
 .excel-upload {
   @include flex-box(column, space-between, 60px);
-  width: 700px;
+  width: 100%;
   padding: 0px 30px;
   border-radius: 10px;
   box-shadow: $base-shadow;
