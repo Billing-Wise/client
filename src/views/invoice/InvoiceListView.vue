@@ -27,10 +27,6 @@ export default {
     PaginationBarVue,
     InvoiceTableVue
   },
-  data() {
-    return {
-    }
-  },
   computed: {
     ...mapStores(useInvoiceListStore),
   },

@@ -14,8 +14,8 @@
 import { mapActions, mapStores } from 'pinia';
 import { useInvoiceListStore } from '@/stores/invoice/invoiceList';
 import TableHaederVue from '@/components/common/table/TableHaeder.vue';
-import InvoiceTableFilterVue from './InvoiceTableFilter.vue';
-import InvoiceTableRowVue from './InvoiceTableRow.vue';
+import InvoiceTableFilterVue from '@/components/invoice/table/InvoiceTableFilter.vue';
+import InvoiceTableRowVue from '@/components/invoice/table/InvoiceTableRow.vue';
 
 
 export default {

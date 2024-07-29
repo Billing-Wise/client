@@ -21,8 +21,10 @@ async function getInvoiceList() {
     invoiceListStore.setMaxPage(result.data.totalPages - 1);
     invoiceListStore.setInvoiceList(result.data.content);
   }
-  
-  
+
+  console.log(result);
+  console.log(url);
+
   return result;
 }
 

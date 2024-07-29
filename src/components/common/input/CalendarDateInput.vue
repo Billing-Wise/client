@@ -1,32 +1,36 @@
 <template>
-  <i class="bi bi-calendar4-range" @click="triggerFileInput"></i>
+  <i class="bi bi-calendar4-range calendar-icon" @click="triggerDateInput"></i>
   <input 
     type="date" 
     ref="dateInput"
-    @change="onDateChange" 
-    style="display: none;">
+    :value="modelValue"
+    @input="updateValue($event.target.value)"
+    style="visibility: hidden; position: absolute;"
+  >
 </template>
 
 <script>
 export default {
   name: 'CalendarDateInputVue',
   props: {
-    'modelValue': Date,
+    modelValue: String,
   },
-  emits: ['update:modelValue'],
   methods: {
-    triggerFileInput() {
-      this.$refs.dateInput.click();
+    triggerDateInput() {
+      this.$refs.dateInput.showPicker();
     },
-    onDateChange(event) {
-      const date = event.target;
-      console.log(date)
-      this.$emit('update:modelValue', date);
-    }
-  }
-}
+    updateValue(value) {
+      this.$emit('update:modelValue', value);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
+.calendar-icon {
+  @include base-icon;
+  // cursor: pointer;
+  color: white;
+  font-size: 20px;
+}
 </style>
