@@ -84,8 +84,8 @@
 
 <script>
 import { useMobileStore } from '@/stores/mobilePage';
-import { useCardInfoStore } from '@/stores/cardInfo';
-import { usePaymentInfoStore } from '@/stores/paymentInfo';
+import { useCardInfoStore } from '@/stores/payment/cardInfo';
+import { usePaymentInfoStore } from '@/stores/payment/paymentInfo';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';

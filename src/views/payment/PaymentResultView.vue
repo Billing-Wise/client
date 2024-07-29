@@ -20,9 +20,9 @@
 
 <script>
 import { useMobileStore } from '@/stores/mobilePage';
-import { usePaymentResultStore } from '@/stores/paymentResult';
-import { useAccountInfoStore } from '@/stores/accountInfo';
-import { useCardInfoStore } from '@/stores/cardInfo';
+import { usePaymentResultStore } from '@/stores/payment/paymentResult';
+import { useAccountInfoStore } from '@/stores/payment/accountInfo';
+import { useCardInfoStore } from '@/stores/payment/cardInfo';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';

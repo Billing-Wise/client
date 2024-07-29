@@ -25,7 +25,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/consent/non-member/contract';
 import ThmemBtnVue from '@/components/common/btn/ThemeBtn.vue';
 
 export default {
