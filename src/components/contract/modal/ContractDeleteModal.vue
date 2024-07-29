@@ -4,10 +4,10 @@
       <div class="modal-content">
         <ModalHeaderVue :title="title" :closeModal="closeModal"/>
         <div class="modal-main">
-          <span class="content-text">현재 {{ memberStore.currentMember.contractCount }}건의 관련된 계약이 존재합니다.</span>
+          <span class="content-text">진행 중인 계약입니다.</span>
           <span class="content-text">정말로 삭제하시겠습니까?</span>
         </div>
-        <ModalFooterVue :title="title" :errorMsg="errorMsg" :func="() => deleteMember()"/>
+        <ModalFooterVue :title="title" :errorMsg="errorMsg" :func="deleteContract"/>
       </div>
     </div>
   </transition>
@@ -16,12 +16,10 @@
 <script>
 import ModalHeaderVue from '../../common/modal/ModalHeader.vue';
 import ModalFooterVue from '../../common/modal/ModalFooter.vue';
-import { mapStores } from 'pinia';
-import { useMemberStore } from '@/stores/member/member';
-import { deleteMember } from '@/utils/member';
+import { deleteContract } from '@/utils/contract';
 
 export default {
-  name: 'MemberDeleteModalVue',
+  name: 'ContractDeleteModalVue',
   components: {
     ModalHeaderVue,
     ModalFooterVue,
@@ -32,21 +30,19 @@ export default {
   },
   data() {
     return {
-      title: '회원 삭제',
+      title: '계약 삭제',
       errorMsg: '',
       name: '',
       price: '',
       description: '',
     }
   },
-  computed: {
-    ...mapStores(useMemberStore),
-  },
   methods: {
-    async deleteMember() {
-      const result = await deleteMember(this.memberStore.currentMember.id);
+    // 상품 삭제
+    async deleteContract() {
+      const result = await deleteContract(this.$route.params.id);
       if (result.code === 200) {
-        this.$router.push({name: 'member'})
+        this.$router.push({name: 'contract'})
       }
     },
   },

@@ -5,10 +5,7 @@
         <ThemeIconBtnVue title="회원 등록" icon="bi bi-plus-square" :func="() => operateModal(true)"/>
         <ExcelBtnVue title="대량 등록" :func="directCreateBulk"/>
       </div>
-      <div  class="btn-box">
-        <SearchInputVue title="검색어 입력" v-model="searchInput" :search="getMemberList"/>
-        <KeywordSelectVue :selectedIdx="selectedIdx" :keywordArr="keywordArr" :choiceFunc="keywordSelect"/>
-      </div>
+      <MemberSearchVue/>
     </div>
     <div class="table-box">
       <MemberTableVue/>
@@ -22,59 +19,36 @@
 
 <script>
 import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
-import SearchInputVue from '@/components/common/input/SearchInput.vue';
 import ExcelBtnVue from '@/components/common/btn/ExcelBtn.vue';
-import KeywordSelectVue from '@/components/common/select/KeywordSelect.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import MemberTableVue from '@/components/member/table/MemberTable.vue';
 import MemberCreateModalVue from '@/components/member/modal/MemberCreateModal.vue';
+import MemberSearchVue from '@/components/member/MemberSearch.vue';
 import { mapStores } from 'pinia';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 import { getMemberList } from '@/utils/member';
 
 export default {
   name: 'MemberListView',
   components: {
     ThemeIconBtnVue,
-    SearchInputVue,
     ExcelBtnVue,
-    KeywordSelectVue,
     PaginationBarVue,
     MemberTableVue,
-    MemberCreateModalVue
+    MemberCreateModalVue,
+    MemberSearchVue
   },
   data() {
     return {
-      searchInput: '',
-      keywordArr: [
-        {title: '이름', data: 'name'},
-        {title: '이메일', data: 'email'},
-        {title: '전화번호', data: 'phone'},
-      ],
-      selectedIdx: 0,
       modalVisible: false,
     }
   },
-  watch: {
-    selectedIdx() {
-      this.searchInput = '';
-    },
-    'memberStore.size': 'getMemberList',
-    'memberStore.page': 'getMemberList',
-    'memberStore.columns': {
-      handler: 'getMemberList',
-      deep: true
-    }
-  },  
   computed: {
     ...mapStores(useMemberStore),
   },
   methods: {
-    keywordSelect(idx) {
-      this.selectedIdx = idx
-    },
     async getMemberList() {
-      const result = await getMemberList(this.keywordArr[this.selectedIdx].data, this.searchInput);
+      const result = await getMemberList();
       if (result.code !== 200) {
         // 예외 처리
       }
@@ -84,10 +58,17 @@ export default {
     },
     directCreateBulk() {
       this.$router.push({name: 'memberBulk'});
+    },
+    setupWatchers() {
+      this.$watch('memberStore.size', this.getMemberList);
+      this.$watch('memberStore.page', this.getMemberList);
+      this.$watch('memberStore.columns', this.getMemberList, { deep: true });
     }
   },
-  mounted() {
-    this.getMemberList();
+  async mounted() {
+    this.memberStore.$reset();
+    this.setupWatchers();
+    await this.getMemberList();
   }
 }
 </script>

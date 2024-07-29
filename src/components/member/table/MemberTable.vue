@@ -11,7 +11,7 @@
 
 <script>
 import { mapActions, mapStores } from 'pinia';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 import MemberTableRowVue from './MemberTableRow.vue';
 import TableHaederVue from '@/components/common/table/TableHaeder.vue';
 

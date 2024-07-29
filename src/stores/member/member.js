@@ -16,32 +16,39 @@ export const useMemberStore = defineStore('member', {
         { data: 'contractCount', name: '계약 건수', sort: null },
         { data: 'createdAt', name: '생성일', sort: null },
         { data: 'updatedAt', name: '수정일', sort: null }
-      ]
+      ],
+      search : {keyword: 'name', value: null},
     }
   },
   actions: {
     setSize(number) {
-      this.size = number
+      this.size = number;
     },
     setMaxPage(number) {
-      this.maxPage = number
+      this.maxPage = number;
     },
     setPage(number) {
       if (number <= this.maxPage && number >= 0) {
-        this.page = number
+        this.page = number;
       }
     },
     setMemberList(memberList) {
-      this.memberList = memberList
+      this.memberList = memberList;
     },
     setColumnSort(columnData, sortValue) {
-      const column = this.columns.find((col) => col.data === columnData)
+      const column = this.columns.find((col) => col.data === columnData);
       if (column) {
-        column.sort = sortValue
+        column.sort = sortValue;
       }
     },
     setCurrentMember(info) {
-      this.currentMember = info
+      this.currentMember = info;
+    },
+    setKeyword(keyword) {
+      this.search.keyword = keyword;
+    },
+    setSearchValue(value) {
+      this.search.value = value
     }
   }
 })

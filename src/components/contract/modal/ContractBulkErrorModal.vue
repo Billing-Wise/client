@@ -3,7 +3,7 @@
     <div v-if="isVisible" class="modal-overlay">
       <div class="modal-content">
         <div class="modal-main">
-          <span class="content-text" v-for="(value, idx) in memberBulkStore.errorList" :key="idx">{{ value }}</span>
+          <span class="content-text" v-for="(value, idx) in contractBulkStore.errorList" :key="idx">{{ value }}</span>
         </div>
         <ModalFooterVue title="확인" :func="closeModal"/>
       </div>
@@ -13,11 +13,11 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { useMemberBulkStore } from '@/stores/member/memberBulk';
+import { useContractBulkStore } from '@/stores/contract/contractBulk';
 import ModalFooterVue from '@/components/common/modal/ModalFooter.vue';
 
 export default {
-  name: 'MemberBulkErrorModalVue',
+  name: 'ContractBulkErrorModalVue',
   components: {
     ModalFooterVue
   },
@@ -35,7 +35,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useMemberBulkStore),
+    ...mapStores(useContractBulkStore),
   },
 }
 </script>
@@ -48,7 +48,6 @@ export default {
 
   .content-text{
     width: 100%;
-    // padding: 0px;
     font-size: 18px;
     font-weight: bold;
   }

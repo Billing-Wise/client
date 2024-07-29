@@ -11,7 +11,7 @@
       <div class="right-header">
         <span class="contract-count">총 {{ itemStore.currentItem.contractCount }}건</span>
         <span class="contract-title">현재 상품 관련 계약</span>
-        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square"/>
+        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square" :func="routContractCreate"/>
       </div>
       <div class="table-box">
         <ItemContractTableVue />
@@ -27,7 +27,7 @@
 import { useItemStore } from '@/stores/item';
 import { getItem } from '@/utils/item';
 import { mapActions, mapStores } from 'pinia';
-import { useContractListStore } from '@/stores/contractList';
+import { useContractListStore } from '@/stores/contract/contractList';
 import { getContractList } from '@/utils/contract';
 import ItemInfoVue from '@/components/item/ItemInfo.vue';
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue';
@@ -37,6 +37,7 @@ import ItemDeleteModalVue from '@/components/item/modal/ItemDeleteModal.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import ItemContractTableVue from '@/components/item/table/ItemContractTable.vue';
 import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
+import { useContractCreateStore } from '@/stores/contract/contractCreate';
 
 export default {
   name: 'ItemDetailView',
@@ -59,6 +60,7 @@ export default {
   computed: {
     ...mapStores(useItemStore),
     ...mapStores(useContractListStore),
+    ...mapStores(useContractCreateStore),
   },
   methods: {
     ...mapActions(useContractListStore, ['setFilter']),
@@ -67,6 +69,12 @@ export default {
     },
     operateDeleteModal(value) {
       this.deleteModalVisible = value;
+    },
+    routContractCreate() {
+      this.contractCreateStore.$reset();
+      this.contractCreateStore.setDataPassed(true);
+      this.contractCreateStore.setItem(this.itemStore.currentItem);
+      this.$router.push({name: 'contractCreate'})
     },
     async getContractList() {
       this.contractListStore.setFilter('itemId', this.$route.params.id);

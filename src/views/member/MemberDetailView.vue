@@ -11,7 +11,7 @@
       <div class="right-header">
         <span class="contract-count">총 {{ memberStore.currentMember.contractCount }}건</span>
         <span class="contract-title">현재 회원 관련 계약</span>
-        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square"/>
+        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square" :func="routContractCreate"/>
       </div>
       <div class="table-box">
         <MemberContractTableVue />
@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import { useMemberStore } from '@/stores/member';
-import { useContractListStore } from '@/stores/contractList';
+import { useMemberStore } from '@/stores/member/member';
+import { useContractListStore } from '@/stores/contract/contractList';
 import { mapStores } from 'pinia';
 import { getMember } from '@/utils/member';
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue';
@@ -37,6 +37,7 @@ import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
 import MemberContractTableVue from '@/components/member/table/MemberContractTable.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import { getContractList } from '@/utils/contract';
+import { useContractCreateStore } from '@/stores/contract/contractCreate';
 
 
 export default {
@@ -58,7 +59,8 @@ export default {
   },
   computed: {
     ...mapStores(useMemberStore),
-    ...mapStores(useContractListStore)
+    ...mapStores(useContractListStore),
+    ...mapStores(useContractCreateStore)
   },
   methods: {
     // 메서드 - 상품 수정 모달창 조작
@@ -67,6 +69,13 @@ export default {
     },
     operateDeleteModal(value) {
       this.deleteModalVisible = value;
+    },
+    routContractCreate() {
+      this.contractCreateStore.$reset();
+      this.contractCreateStore.setDataPassed(true);
+      this.contractCreateStore.setStep(1);
+      this.contractCreateStore.setMember(this.memberStore.currentMember);
+      this.$router.push({name: 'contractCreate'})
     },
     async getContractList() {
       this.contractListStore.setFilter('memberId', this.$route.params.id);

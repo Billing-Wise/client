@@ -1,13 +1,16 @@
-import { useMemberStore } from "@/stores/member";
-import { useMemberBulkStore } from "@/stores/memberBulk";
+import { useMemberStore } from "@/stores/member/member";
+import { useMemberBulkStore } from "@/stores/member/memberBulk";
 import { fileAxios, mainAxios } from "@/utils/axios";
 
 const memberStore = useMemberStore();
 const memberBulkStore = useMemberBulkStore();
 
 // 회원 목록 조회
-async function getMemberList(keyword, input) {
-  let url = `members?page=${memberStore.page}&size=${memberStore.size}&${keyword}=${input}`;
+async function getMemberList() {
+  let url = `members?page=${memberStore.page}&size=${memberStore.size}`;
+  if (memberStore.search.value) {
+    url += `&${memberStore.search.keyword}=${memberStore.search.value}`
+  }
 
   memberStore.columns.forEach(column => {
     if (column.sort != null) url += `&sort=${column.data},${column.sort}`

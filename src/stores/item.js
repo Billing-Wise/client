@@ -16,7 +16,8 @@ export const useItemStore = defineStore('item', {
         {data: 'contractCount', name:'계약 건수', sort:null},
         {data: 'createdAt', name:'생성일', sort:null},
         {data: 'updatedAt', name:'수정일', sort:null}
-      ]
+      ],
+      search: {keyword: 'name', value: null}
     }
   },
   actions: {
@@ -42,6 +43,9 @@ export const useItemStore = defineStore('item', {
     },
     setCurrentItem(info) {
       this.currentItem = info;
+    },
+    setSearchValue(value) {
+      this.search.value = value;
     }
   },
 })

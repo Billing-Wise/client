@@ -1,38 +1,38 @@
 <template>
   <div class="root-container">
     <div class="left-side">
-      <ExcelUploadVue :store="memberBulkStore" />
+      <ExcelUploadVue :store="contractBulkStore" />
       <div class="btn-box">
         <WarningWideBtnVue title="취소" :func="cancelBulk"/>
-        <SuccessWideBtnVue title="회원 등록" :func="registerBulk"/>
+        <SuccessWideBtnVue title="계약 등록" :func="registerBulk"/>
       </div>
     </div>
     <div class="right-side">
-      <span>등록할 회원 정보</span>
-      <MemberCreateTableVue />
+      <span>등록할 계약 정보</span>
+      <ContractCreateTableVue />
     </div>
   </div>
-  <MemberBulkErrorModalVue :isVisible="isInValid" :close-modal="() => operateErrorModal(false)"/>
+  <ContractBulkErrorModalVue :isVisible="isInValid" :close-modal="() => operateErrorModal(false)"/>
 </template>
 
 <script>
-import { useMemberBulkStore } from '@/stores/member/memberBulk';
 import { mapActions, mapStores } from 'pinia';
-import { createMemberBulk } from '@/utils/member';
+import { useContractBulkStore } from '@/stores/contract/contractBulk';
+import { createContractBulk } from '@/utils/contract';
 import ExcelUploadVue from '@/components/common/ExcelUpload.vue';
-import MemberCreateTableVue from '@/components/member/table/MemberCreateTable.vue';
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue';
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue';
-import MemberBulkErrorModalVue from '@/components/member/modal/MemberBulkErrorModal.vue';
+import ContractCreateTableVue from '@/components/contract/table/ContractCreateTable.vue';
+import ContractBulkErrorModalVue from '@/components/contract/modal/ContractBulkErrorModal.vue';
 
 export default {
-  name: 'MemberBulkCreateView',
+  name: 'ContractBulkCreateView',
   components: {
     ExcelUploadVue,
-    MemberCreateTableVue,
     WarningWideBtnVue,
     SuccessWideBtnVue,
-    MemberBulkErrorModalVue
+    ContractCreateTableVue,
+    ContractBulkErrorModalVue
   },
   data() {
     return {
@@ -40,31 +40,31 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useMemberBulkStore),
+    ...mapStores(useContractBulkStore),
   },
   methods: {
-    ...mapActions(useMemberBulkStore, ['setUploadData', 'setErrorList', 'setFile']),
+    ...mapActions(useContractBulkStore, ['setErrorList']),
     cancelBulk() {
-      this.$router.push({name: 'member'})
+      this.$router.push({name: 'contract'});
     },
     operateErrorModal(value) {
       this.isInValid = value;
     },
     async registerBulk() {
-      if (this.memberBulkStore.file === null) {
-        this.memberBulkStore.setErrorList(['파일이 업로드되지 않았습니다.']);
+      if (this.contractBulkStore.file === null) {
+        this.contractBulkStore.setErrorList(['파일이 업로드되지 않았습니다.']);
         this.operateErrorModal(true);
         return;
       }
 
-      const result = await createMemberBulk(this.memberBulkStore.file);
+      const result = await createContractBulk(this.contractBulkStore.file);
 
       if (result.code !== 200) {
         this.operateErrorModal(true);
         return;
       } 
       
-      this.$router.push({name: 'member'})
+      this.$router.push({name: 'contract'})
     },
   },
 }
@@ -76,12 +76,12 @@ export default {
   background: $back-color;
   width: 100%;
   height: 100%;
-  padding: 100px 50px;
+  padding: 100px 30px;
 }
 
 .left-side {
   @include flex-box(column, space-between, 20px);
-  width: 700px;
+  min-width: 700px;
   height: 100%;
 
   .btn-box {
@@ -92,7 +92,8 @@ export default {
 
 .right-side {
   @include flex-box(column, start, 30px);
-  min-width: 700px;
+  width:100%;
+  min-width: 900px;
   height: 100%;
   padding: 30px;
   border-radius: 10px;

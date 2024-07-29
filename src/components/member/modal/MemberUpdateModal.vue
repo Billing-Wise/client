@@ -22,7 +22,7 @@ import InfoInputVue from '../../common/input/InfoInput.vue';
 import TextAreaInputVue from '../../common/input/TextAreaInput.vue';
 import { updateMember } from '@/utils/member';
 import { mapStores } from 'pinia';
-import { useMemberStore } from '@/stores/member';
+import { useMemberStore } from '@/stores/member/member';
 
 export default {
   name: 'MemberUpdateModalVue',

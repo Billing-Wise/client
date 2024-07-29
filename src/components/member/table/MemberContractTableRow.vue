@@ -1,5 +1,5 @@
 <template>
-  <tr class="table-row" @click="toMemberDetail">
+  <tr class="table-row" @click="routeContractDetail">
     <td class="table-column"><span>{{ contractData.id }}</span></td>
     <td class="table-column"><span>{{ contractData.itemName }}</span></td>
     <td class="table-column"><span>{{ contractData.chargeAmount }} 원</span></td>
@@ -49,6 +49,9 @@ export default {
     },
   },
   methods: {
+    routeContractDetail() {
+      this.$router.push(`/contract/${this.contractData.id}`);
+    }
   }
 }
 </script>
