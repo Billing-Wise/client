@@ -1,6 +1,6 @@
 <template>
   <div class="loading-container">
-    <img src="@/assets/images/loading.png" alt="Loading" class="loading-image">
+    <img src="@/assets/images/loading.gif" alt="Loading" class="loading-image">
     <div class="loading-message">로딩 중</div>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30% 0;
+  margin-top: 25vh;
 }
 
 .loading-image {

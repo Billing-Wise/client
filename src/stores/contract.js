@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-
+import { fileAxios } from '@/utils/axios';
 export const useContractStore = defineStore('contract', {
 
   state: () => ({
@@ -72,7 +72,9 @@ export const useContractStore = defineStore('contract', {
 
 
     async submitEasyConsent() {
-      // API 호출 로직이 들어갈 곳
+      const formData = new FormData();
+
+
       const requestData = {
         memberName: this.memberInfo.name,
         memberEmail: this.memberInfo.email,
@@ -86,8 +88,30 @@ export const useContractStore = defineStore('contract', {
         accountNumber: this.paymentInfo.accountNumber
       };
 
+      formData.append('data', new Blob([JSON.stringify(requestData)], {type: 'application/json'}));
+      
+      if (this.signImage) {
+       
+        const signBlob = await fetch(this.signImage).then(r => r.blob());
+        formData.append('signImage', signBlob, 'signature.png');
+      }
+
+      try {
+        const response = await fileAxios.post(`/easy-consent/non-member?clientId=${this.clientId}`, formData);
+        
+        if (response.code === 200) {
+          console.log('Easy consent submitted successfully:', response.message);
+          return response;
+        } else {
+          throw new Error(response.message || 'Easy consent submission failed');
+        }
+      } catch (error) {
+        console.error('Easy consent submission failed:', error);
+        throw error;
+      }
     }
   },
+
   persist: {
     enabled: true,
     strategies: [

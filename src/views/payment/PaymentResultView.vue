@@ -8,13 +8,21 @@
       <p class="success-message">결제가 완료되었습니다.</p>
     </div>
 
-    <NextPageButtonVue v-if="!isPaymentSuccessful" @click="retryPayment">다시 시도</NextPageButtonVue>
+    <NextPageButtonVue 
+      v-if="!isPaymentSuccessful" 
+      @click="retryPayment"
+      :isFixedBottom="isFixedBottom"
+    >
+      다시 시도
+    </NextPageButtonVue>
   </PaymentContainerVue>
 </template>
 
 <script>
 import { useMobileStore } from '@/stores/mobilePage';
 import { usePaymentResultStore } from '@/stores/paymentResult';
+import { useAccountInfoStore } from '@/stores/accountInfo';
+import { useCardInfoStore } from '@/stores/cardInfo';
 import { mapActions, mapStores } from 'pinia';
 import PaymentContainerVue from '@/components/payment/PaymentContainer.vue'
 import DescriptionBoxVue from '@/components/payment/DescriptionBox.vue';
@@ -29,8 +37,13 @@ export default {
     ErrorContainerVue,
     NextPageButtonVue,
   },
+  data() {
+    return {
+      isFixedBottom: false
+    }
+  },
   computed: {
-    ...mapStores(useMobileStore, usePaymentResultStore),
+    ...mapStores(useMobileStore, usePaymentResultStore, useAccountInfoStore, useCardInfoStore),
     invoiceId() {
       return this.$route.params.invoiceId;
     },
@@ -45,25 +58,54 @@ export default {
         return this.paymentResult?.data?.message || '결제 처리 중 오류가 발생했습니다.';
       }
       return null;
+    },
+    accountInfo() {
+      return this.accountInfoStore.getInfo(this.invoiceId);
+    },
+    cardInfo() {
+      return this.cardInfoStore.getInfo(this.invoiceId);
     }
   },
   methods: {
     ...mapActions(useMobileStore, ['setPageName']),
     retryPayment() {
-      this.$router.push({
-        name: 'paymentInfo',
-        params: { invoiceId: this.invoiceId }
-      });
+      if (this.accountInfo) {
+        this.$router.push({
+          name: 'accountInput',
+          params: { invoiceId: this.invoiceId }
+        });
+      } else if (this.cardInfo) {
+        this.$router.push({
+          name: 'cardInput',
+          params: { invoiceId: this.invoiceId }
+        });
+      } else {
+        this.$router.push({
+          name: 'paymentInfo',
+          params: { invoiceId: this.invoiceId }
+        });
+      }
+    },
+    checkPosition() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      this.isFixedBottom = windowHeight >= documentHeight;
     }
   },
   mounted() {
     this.mobilePageStore.setPageName(this.isPaymentSuccessful ? "결제 완료" : "결제 실패");
     if (!this.paymentResult) {
       this.$router.push({
-        name: 'cardConfirm',
+        name: 'paymentMethod',
         params: { invoiceId: this.invoiceId }
       });
     }
+    this.checkPosition();
+    window.addEventListener('resize', this.checkPosition);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkPosition);
   }
 }
 </script>
@@ -73,7 +115,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30% 0;
+  margin-top: 25vh;
 }
 
 .success-icon {

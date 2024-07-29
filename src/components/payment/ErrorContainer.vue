@@ -22,7 +22,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30% 0;
+  margin-top: 20vh;
 }
 
 .error-image {

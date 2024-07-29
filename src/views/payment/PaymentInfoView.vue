@@ -1,7 +1,7 @@
 <template>
   <PaymentContainerVue>
     <DescriptionBoxVue>결제 정보를 확인해주세요.</DescriptionBoxVue>
-    <LoadingContainerVue v-if="loading" />
+    <LoadingContainerVue v-if=loading />
     <ErrorContainerVue v-else-if="error" :errorMessage="error" />
     <div v-else-if="paymentInfo" class="payment-info">
       <div class="member info">
@@ -30,7 +30,7 @@
         <ItemContentVue>{{ formatDate(paymentInfo.dueDate) }}</ItemContentVue>
       </div>
     </div>
-    <NextPageButtonVue v-if="paymentInfo && !error" @click="goToPaymentMethod">다음</NextPageButtonVue>
+    <NextPageButtonVue v-if="paymentInfo && !error && !loading" @click="goToPaymentMethod">다음</NextPageButtonVue>
   </PaymentContainerVue>
 </template>
 

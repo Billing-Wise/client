@@ -14,7 +14,7 @@
           <img src="@/assets/images/도장.png" alt="Signature Example 1">
         </div>
         <div class="button-container">
-          <ThmemBtnVue class="click" title="선택" @click="selectUploadOption"/>
+          <ThmemBtnVue class="click" title="선택" @click="selectUploadOption('upload')"/>
         </div>
       </div>
       <div class="draw-option">
@@ -24,7 +24,7 @@
         <p>화면에 직접 서명을 입력하고 제출하는 방식입니다.</p>
         <img class="gif" src="@/assets/images/sign0.gif" width="500" height="250">
         <div class="button-container">
-          <ThmemBtnVue class="click" title="선택" @click="selectUploadOption"/>
+          <ThmemBtnVue class="click" title="선택" @click="selectUploadOption('draw')"/>
         </div>
       </div>
     </div>
@@ -42,17 +42,18 @@ export default {
   components: {
     ThmemBtnVue
   },
-  data() {
-    return {
-      isDrawing: false,  
-      context: null      
-    };
-  },
   computed: {
     ...mapStores(useContractStore, useMobileStore)
   },
   methods: {
     ...mapActions(useMobileStore, ['setPageName']),
+    selectUploadOption(option) {
+      if (option === 'upload') {
+        this.$router.push({ name: 'uploadSignature' });
+      } else if (option === 'draw') {
+        this.$router.push({ name: 'drawSignature' });
+      }
+    }
   },
   mounted() {
     this.setPageName('서명 입력');
