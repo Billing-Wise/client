@@ -85,12 +85,12 @@ export default {
 
 <style lang="scss" scoped>
 .contract-create {
-  @include flex-box(column, center, 25px);
+  @include flex-box(column, center, 20px);
   width: 100%;
 }
 
 .info-box {
-  @include flex-box(column, space-between, 20px);
+  @include flex-box(column, space-between, 10px);
   width: 100%;
   padding: 20px;
   border: $theme-color solid 2px;

@@ -1,11 +1,13 @@
 import { useContractListStore } from "@/stores/contract/contractList";
-import { mainAxios } from "./axios";
+import { fileAxios, mainAxios } from "./axios";
 import { useContractCreateStore } from "@/stores/contract/contractCreate";
 import { useContractDetailStore } from "@/stores/contract/contractDetail";
+import { useContractBulkStore } from "@/stores/contract/contractBulk";
 
 const contractListStore = useContractListStore();
-const constractCreateStore = useContractCreateStore();
 const contractDetailStore = useContractDetailStore();
+const constractCreateStore = useContractCreateStore();
+const contractBulkStore = useContractBulkStore();
 
 // 계약 목록 조회
 async function getContractList() {
@@ -60,6 +62,24 @@ async function createContract() {
   return result;
 }
 
+// 계약 대량 등록
+async function createContractBulk(file) {
+  const formData = new FormData();
+  formData.append('file', file, 'file');
+
+  const result = await fileAxios.post('contracts/bulk-register', formData);
+
+  if (result.code !== 200) {
+    if (result.data) {
+      contractBulkStore.errorList = [...result.data];
+    } else {
+      contractBulkStore.errorList = [result.message];
+    }
+  }
+
+  return result;
+}
+
 // 계약 수정
 async function editContract(contractId) {
   const data = {
@@ -85,4 +105,4 @@ async function deleteContract(contractId) {
   return result;
 }
 
-export {getContractList, getContract, createContract, editContract, deleteContract}
+export {getContractList, getContract, createContract, createContractBulk, editContract, deleteContract}

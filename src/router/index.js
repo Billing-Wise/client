@@ -54,6 +54,11 @@ const router = createRouter({
           component: () => import('@/views/contract/ContractCreateView.vue')
         },
         {
+          path : '/contract/create/bulk',
+          name:'contractCreateBulk',
+          component: () => import('@/views/contract/ContractBulkCreateView.vue')
+        },
+        {
           path : '/contract/:id',
           name:'contractDetail',
           component: () => import('@/views/contract/ContractDetailView.vue')
