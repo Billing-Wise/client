@@ -104,5 +104,6 @@ export default {
     @include flex-box(column, center, 10px);
     @include select-list;
     top: calc(100% + 10px);
+    width:90%
   }
 </style>

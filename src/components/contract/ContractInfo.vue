@@ -50,8 +50,8 @@
 import { mapStores } from 'pinia';
 import { useContractDetailStore } from '@/stores/contract/contractDetail';
 import { getContract } from '@/utils/contract';
-import TitleInfoVue from '../common/info/TitleInfo.vue';
 import { toDateFromDateTime } from '@/utils/date';
+import TitleInfoVue from '../common/info/TitleInfo.vue';
 
 export default {
   name: 'ContractInfoVue',

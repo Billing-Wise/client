@@ -35,6 +35,14 @@
   }
 }
 
+.status-sticker {
+  @include flex-box(row, center, 0px);
+  @include white-text(14px);
+  padding: 3px 5px;
+  border-radius: 20px;
+}
+
+
 /* 웹킷 브라우저의 스크롤바 숨기기 */
 .table-box::-webkit-scrollbar {
   display: none;

@@ -3,7 +3,10 @@
     <th v-for="(column, key) in showColumns" :key="key">
       <div class="column-item">
         <span>{{ column.name }}</span>
-        <i :class="column.sort ? sortIcon[column.sort] : nonSortIcon" @click="changeSort(column)"></i>
+        <i 
+        v-if="!column.notSortable"
+        :class="column.sort ? sortIcon[column.sort] : nonSortIcon" 
+        @click="changeSort(column)"></i>
       </div>
     </th>
   </tr>
@@ -17,7 +20,7 @@ export default {
       type: Object,
       required: true
     },
-    excludeColumnArr : Array
+    excludeColumnArr: Array
   },
   data() {
     return {

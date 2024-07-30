@@ -9,16 +9,16 @@ export const useContractListStore = defineStore('contractList', {
       contractList: [],
       currentContract: {},
       columns: [
-        { data: 'id', name: '계약번호', sort: null, searchable: false, filterable: false},
-        { data: 'itemName', name: '상품명', sort: null, searchable: true, filterable: false},
-        { data: 'memberName', name: '회원명', sort: null, searchable: true, filterable: false },
-        { data: 'chargeAmount', name: '금액', sort: null, searchable: false, filterable: false},
-        { data: 'contractCycle', name: '약정일', sort: null, searchable: false, filterable: false},
-        { data: 'isSubscription', name: '구독 여부', sort: null, searchable: false, filterable: true},
-        { data: 'invoiceType', name: '청구 생성', sort: null, searchable: false, filterable: true},
-        { data: 'contractStatus', name: '계약 상태', sort: null, searchable: false, filterable: true},
-        { data: 'paymentType', name: '결제 수단', sort: null, searchable: false, filterable: true},
-        { data: 'totalUnpaidCount', name: '미납 여부', sort: null, searchable: false, filterable: false}
+        { data: 'id', name: '계약번호',},
+        { data: 'itemName', name: '상품명', },
+        { data: 'memberName', name: '회원명',  },
+        { data: 'chargeAmount', name: '금액',},
+        { data: 'contractCycle', name: '약정일',},
+        { data: 'isSubscription', name: '구독 여부',},
+        { data: 'invoiceType', name: '청구 생성',},
+        { data: 'contractStatus', name: '계약 상태',},
+        { data: 'paymentType', name: '결제 수단',},
+        { data: 'totalUnpaidCount', name: '미납 여부',}
       ],
       filters: [
         {data: 'itemId', value: null},

@@ -29,6 +29,7 @@ export default {
   border-top: $theme-color solid 2px;
   p {
     color: tomato;
+    font-size: 14px;
     font-weight: bold;
   }
 }
