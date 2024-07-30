@@ -49,6 +49,7 @@ async function getInvoice(invoiceId) {
 
 // 청구 생성
 async function createInvoice() {
+  console.log(invoiceCreateStore.data)
   const result = await mainAxios.post(`invoices`, invoiceCreateStore.data);
 
   return result;

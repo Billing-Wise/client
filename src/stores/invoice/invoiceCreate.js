@@ -29,7 +29,7 @@ export const useInvoiceCreateStore = defineStore('invoiceCreate', {
     },
     setPaymentTypeIdx(idx) {
       this.paymentTypeIdx = idx;
-      this.paymentTypeId = this.paymentType[this.paymentTypeIdx].value;
+      this.data.paymentTypeId = this.paymentType[this.paymentTypeIdx].value;
     }
   }
 })

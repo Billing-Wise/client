@@ -10,8 +10,8 @@
     <div class="right-side">
       <div class="right-header">
         <span class="contract-count">총 {{ invoiceListStore.invoiceList.length }} 건</span>
-        <span class="contract-title">현재 회원 관련 계약</span>
-        <ThemeIconBtnVue title="청구 생성" icon="bi bi-plus-square" :func="routeInvoiceCreate"/>
+        <span class="contract-title">현재 계약 관련 청구</span>
+        <ThemeIconBtnVue title="청구 생성" icon="bi bi-plus-square" :func="() => operateCreaeteInvoiceModal(true)"/>
       </div>
       <div class="table-box">
         <ContractInvoiceTableVue/>
@@ -20,6 +20,7 @@
     </div>
   </div>
   <ContractDeleteModalVue :is-visible="deleteModalVisible" :close-modal="() => operateDeleteModal(false)"/>
+  <InvoiceCreateModalVue :is-visible="creaeteInvoiceModalVisible" :close-modal="() => operateCreaeteInvoiceModal(false)"/>
 </template>
 
 <script>
@@ -30,6 +31,7 @@ import ContractDeleteModalVue from '@/components/contract/modal/ContractDeleteMo
 import ContractInvoiceTableVue from '@/components/contract/table/ContractInvoiceTable.vue'
 import PaginationBarVue from '@/components/common/PaginationBar.vue'
 import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue'
+import InvoiceCreateModalVue from '@/components/contract/modal/InvoiceCreateModal.vue'
 import { mapStores } from 'pinia'
 import { useContractCreateStore } from '@/stores/contract/contractCreate'
 import { useInvoiceListStore } from '@/stores/invoice/invoiceList'
@@ -44,12 +46,14 @@ export default {
     ContractDeleteModalVue,
     ContractInvoiceTableVue,
     PaginationBarVue,
-    ThemeIconBtnVue
+    ThemeIconBtnVue,
+    InvoiceCreateModalVue
   },
   data() {
     return {
       warningMsg: '',
       deleteModalVisible: false,
+      creaeteInvoiceModalVisible: false,
     }
   },  
   computed: {
@@ -60,12 +64,12 @@ export default {
     operateDeleteModal(value) {
       this.deleteModalVisible = value;
     },
+    operateCreaeteInvoiceModal(value) {
+      this.creaeteInvoiceModalVisible = value;
+    },
     routeContractEdit() {
       this.$router.push(`/contract/${this.$route.params.id}/edit`)
     },
-    routeInvoiceCreate() {
-
-    }
   },
 }
 </script>
