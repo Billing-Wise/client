@@ -46,7 +46,7 @@
 <script>
 import { mapActions, mapStores } from 'pinia';
 import { useMobileStore } from '@/stores/mobilePage';
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/consent/non-member/contract';
 import ThmemBtnVue from '@/components/common/btn/ThemeBtn.vue';
 
 export default {

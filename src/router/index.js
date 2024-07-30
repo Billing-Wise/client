@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth';
-import { useContractStore } from '@/stores/contract';
+import { useContractStore } from '@/stores/consent/non-member/contract';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -123,52 +123,87 @@ const router = createRouter({
         {
           path: '/m/consent/non-member/:clientId',
           name: 'consent',
-          component: () => import('@/views/consent/ConsentItemView.vue'),
+          component: () => import('@/views/consent/non-member/ConsentItemView.vue'),
         },
         {
           path: '/m/consent/non-member/explanation/:clientId',
           name: 'consentExplanation',
-          component: () => import('@/views/consent/ConsentExplanationView.vue'),
+          component: () => import('@/views/consent/non-member/ConsentExplanationView.vue'),
         },
         {
           path: '/m/consent/non-member/member-info/:clientId',
           name: 'memberInfo',
-          component: () => import('@/views/consent/MemberInfoView.vue'),
+          component: () => import('@/views/consent/non-member/MemberInfoView.vue'),
         },
         {
           path: '/m/consent/non-member/contract-confirmation/:clientId',
           name: 'contractInfoConfirmation',
-          component: () => import('@/views/consent/ContractInfoConfirmation.vue')
+          component: () => import('@/views/consent/non-member/ContractInfoConfirmation.vue')
         },
         {
-          path: '/m/consent/non-memberaccount-info/:clientId',
+          path: '/m/consent/non-member/account-info/:clientId',
           name: 'accountInfo',
-          component: () => import('@/views/consent/AccountInfoView.vue')
+          component: () => import('@/views/consent/non-member/AccountInfoView.vue')
         },
         {
           path: '/m/consent/non-member/final-confirmation/:clientId',
           name: 'finalConfirmation',
-          component: () => import('@/views/consent/FinalConfirmation.vue')
+          component: () => import('@/views/consent/non-member/FinalConfirmation.vue')
         },
         {
           path: '/m/consent/non-member/signature-input/:clientId',
           name: 'signatureInput',
-          component: () => import('@/views/consent/SignatureInput.vue')
+          component: () => import('@/views/consent/non-member/SignatureInput.vue')
         },
         {
           path: '/m/consent/non-member/upload-signature/:clientId',
           name: 'uploadSignature',
-          component: () => import('@/views/consent/UploadSignature.vue')
+          component: () => import('@/views/consent/non-member/UploadSignature.vue')
         },
         {
           path: '/m/consent/non-member/draw-signature/:clientId',
           name: 'drawSignature',
-          component: () => import('@/views/consent/DrawSignature.vue')
+          component: () => import('@/views/consent/non-member/DrawSignature.vue')
         },
         {
           path: '/m/consent/non-member/payment-completion/:clientId',
           name: 'paymentCompletion',
-          component: () => import('@/views/consent/PaymentCompletion.vue')
+          component: () => import('@/views/consent/non-member/PaymentCompletion.vue')
+        },
+        {
+          path: '/m/consent/member/contract-confirmation/:contractId',
+          name: 'memberContractInfoConfirmation',
+          component: () => import('@/views/consent/member/ContractInfoConfirmation.vue')
+        },
+        {
+          path: '/m/consent/member/account-info/:contractId',
+          name: 'memberAccountInfo',
+          component: () => import('@/views/consent/member/AccountInfoView.vue')
+        },
+        {
+          path: '/m/consent/member/final-confirmation/:contractId',
+          name: 'memberFinalConfirmation',
+          component: () => import('@/views/consent/member/FinalConfirmation.vue')
+        },
+        {
+          path: '/m/consent/member/signature-input/:contractId',
+          name: 'memberSignatureInput',
+          component: () => import('@/views/consent/member/SignatureInput.vue')
+        },
+        {
+          path: '/m/consent/member/upload-signature/:contractId',
+          name: 'memberUploadSignature',
+          component: () => import('@/views/consent/member/UploadSignature.vue')
+        },
+        {
+          path: '/m/consent/member/draw-signature/:contractId',
+          name: 'memberDrawSignature',
+          component: () => import('@/views/consent/member/DrawSignature.vue')
+        },
+        {
+          path: '/m/consent/member/payment-completion/:contractId',
+          name: 'memberPaymentCompletion',
+          component: () => import('@/views/consent/member/PaymentCompletion.vue')
         },
         {
           path: '/m/payment/:invoiceId/info',
@@ -242,7 +277,11 @@ router.beforeEach((to, from, next) => {
     'contractInfoConfirmation',
     'accountInfo',
     'payment',
-    'finalConfirmation'
+    'finalConfirmation',
+    'signatureInput',
+    'uploadSignature', 
+    'drawSignature', 
+    'paymentCompletion'
   ];
 
  
