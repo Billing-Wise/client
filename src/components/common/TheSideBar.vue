@@ -6,7 +6,7 @@
       <side-bar-item-vue title="회원" icon="bi bi-person-fill" link="member" :page="nowPage"/>
       <side-bar-item-vue title="계약" icon="bi bi-cash-stack" link="contract" :page="nowPage"/>
       <side-bar-item-vue title="청구" icon="bi bi-receipt-cutoff" link="invoice" :page="nowPage"/>
-      <side-bar-item-vue title="설정" icon="bi bi-gear-fill" link="setting" :page="nowPage"/>
+      <side-bar-item-vue title="설정" icon="bi bi-gear-fill" link="setting/Item" :page="nowPage"/>
     </div>
     <side-bar-logout-vue/>
   </div>
