@@ -1,7 +1,9 @@
 import { useInvoiceListStore } from "@/stores/invoice/invoiceList";
 import { mainAxios } from "./axios";
+import { useInvoiceDetailStore } from "@/stores/invoice/invoiceDetail";
 
 const invoiceListStore = useInvoiceListStore();
+const invoiceDetailStore = useInvoiceDetailStore();
 
 // 계약 목록 조회
 async function getInvoiceList() {
@@ -22,10 +24,18 @@ async function getInvoiceList() {
     invoiceListStore.setInvoiceList(result.data.content);
   }
 
-  console.log(result);
-  console.log(url);
+  return result;
+}
+
+// 계약 상세 조회
+async function getInvoice(invoiceId) {
+  const result = await mainAxios.get(`invoices/${invoiceId}`);
+  
+  if (result.code === 200) {
+    invoiceDetailStore.setData(result.data);
+  }
 
   return result;
 }
 
-export {getInvoiceList}
+export {getInvoiceList, getInvoice}

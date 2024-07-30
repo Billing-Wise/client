@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     routeInvoiceDetail() {
-      // this.$router.push(`/invoice/${this.invoiceData.id}`);
+      this.$router.push(`/invoice/${this.invoiceData.invoiceId}`);
     }
   }
 }
