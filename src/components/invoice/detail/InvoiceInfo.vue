@@ -74,6 +74,7 @@ export default {
     },
   },
   async created() {
+    this.invoiceDetailStore.$reset();
     const result = await getInvoice(this.$route.params.id);
 
     if (result.code !== 200) {

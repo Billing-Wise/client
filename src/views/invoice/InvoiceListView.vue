@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     routeCreate() {
-      
+      this.$router.push({name: 'invoiceCreate'})
     },
     async getInvoiceList() {
       const result = await getInvoiceList();

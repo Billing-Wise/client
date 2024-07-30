@@ -6,14 +6,21 @@
     <div class="right-side">
       <PaymentStatusBarVue/>
       <PaymentInfoVue/>
-      <div class="btn-box" v-if="!paymentStore.paid">
-        <ThemeWideBtnVue title="청구서 발송"/>
-        <SuccessWideBtnVue title="수정"/>
-        <WarningWideBtnVue title="삭제"/>
+      <div class="btn-box" v-if="invoiceDetailStore.data.paymentStatus.id !== 2">
+        <ThemeWideBtnVue title="청구서 발송" 
+        v-if="invoiceDetailStore.data.paymentType.id === 1"
+          :func="sendInvoice" />
+        <SuccessWideBtnVue title="수정" :func="() => operateEditModal(true)"/>
+        <WarningWideBtnVue title="삭제" :func="() => operateDeleteModal(true)"/>
       </div>
-      <ThemeWideBtnVue title="청구서 발송 취소" v-if="paymentStore.paid"/>
+      <ThemeWideBtnVue title="결제 취소" 
+        v-if="invoiceDetailStore.data.paymentStatus.id === 2"
+        :func="() => operateDeletePaymentModal(true)"/>
     </div>
   </div>
+  <InvoiceUpdateModalVue :isVisible="editModalVisible" :closeModal="() => operateEditModal(false)" />
+  <InvoiceDeleteModalVue :isVisible="deleteModalVisible" :closeModal="() => operateDeleteModal(false)" />
+  <PaymentDeleteModalVue :isVisible="deletePaymentModalVisible" :closeModal="() => operateDeletePaymentModal(false)" />
 </template>
 
 <script>
@@ -23,9 +30,13 @@ import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue'
 import InvoiceInfoVue from '@/components/invoice/detail/InvoiceInfo.vue'
 import PaymentInfoVue from '@/components/invoice/detail/PaymentInfo.vue'
 import PaymentStatusBarVue from '@/components/invoice/detail/PaymentStatusBar.vue'
+import InvoiceUpdateModalVue from '@/components/invoice/modal/InvoiceUpdateModal.vue'
+import InvoiceDeleteModalVue from '@/components/invoice/modal/InvoiceDeleteModal.vue'
+import PaymentDeleteModalVue from '@/components/invoice/modal/PaymentDeleteModal .vue'
 import { mapStores } from 'pinia'
-import { useInvoiceListStore } from '@/stores/invoice/invoiceList'
 import { usePaymentStore } from '@/stores/invoice/payment'
+import { sendInvoice } from '@/utils/invoice'
+import { useInvoiceDetailStore } from '@/stores/invoice/invoiceDetail'
 
 
 export default {
@@ -36,16 +47,20 @@ export default {
     SuccessWideBtnVue,
     InvoiceInfoVue,
     PaymentInfoVue,
-    PaymentStatusBarVue
+    PaymentStatusBarVue,
+    InvoiceUpdateModalVue,
+    InvoiceDeleteModalVue,
+    PaymentDeleteModalVue
   },
   data() {
     return {
       deleteModalVisible: false,
-      editModalVisable: false,
+      editModalVisible: false,
+      deletePaymentModalVisible: false,
     }
   },  
   computed: {
-    ...mapStores(useInvoiceListStore),
+    ...mapStores(useInvoiceDetailStore),
     ...mapStores(usePaymentStore),
   },
   methods: {
@@ -53,11 +68,17 @@ export default {
       this.deleteModalVisible = value;
     },
     operateEditModal(value) {
-      this.editModalVisable = value;
+      this.editModalVisible = value;
     },
-    sendPayment() {
-
-    }
+    operateDeletePaymentModal(value) {
+      this.deletePaymentModalVisible = value;
+    },
+    async sendInvoice() {
+      const result = await sendInvoice(this.$route.params.id);
+      if (result.code !== 200) {
+        // 예외 처리
+      }
+    },
   },
 }
 </script>
@@ -65,7 +86,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/component/table.scss";
 .root-container {
-  @include flex-box(row, space-between, 100px);
+  @include flex-box(row, center, 100px);
   background: $back-color;
   width: 100%;
   height: 100%;
@@ -86,8 +107,7 @@ export default {
 
 .right-side {
   @include flex-box(column, space-between, 20px);
-  position: relative;
-  width: 100%;
+  width: 700px;
   height: 100%;
   padding: 30px 0;
 

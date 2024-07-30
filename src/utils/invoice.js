@@ -1,11 +1,20 @@
 import { useInvoiceListStore } from "@/stores/invoice/invoiceList";
 import { mainAxios } from "./axios";
 import { useInvoiceDetailStore } from "@/stores/invoice/invoiceDetail";
+import { useInvoiceCreateStore } from "@/stores/invoice/invoiceCreate";
 
 const invoiceListStore = useInvoiceListStore();
 const invoiceDetailStore = useInvoiceDetailStore();
+const invoiceCreateStore = useInvoiceCreateStore();
 
-// 계약 목록 조회
+// 청구서 전송
+async function sendInvoice(invoiceId) {
+  const result = await mainAxios.get(`invoices/${invoiceId}/send`);
+
+  return result;
+}
+
+// 청구 목록 조회
 async function getInvoiceList() {
   let url = `invoices?page=${invoiceListStore.page}&size=${invoiceListStore.size}`;
 
@@ -27,7 +36,7 @@ async function getInvoiceList() {
   return result;
 }
 
-// 계약 상세 조회
+// 청구 상세 조회
 async function getInvoice(invoiceId) {
   const result = await mainAxios.get(`invoices/${invoiceId}`);
   
@@ -38,4 +47,33 @@ async function getInvoice(invoiceId) {
   return result;
 }
 
-export {getInvoiceList, getInvoice}
+// 청구 생성
+async function createInvoice() {
+  const result = await mainAxios.post(`invoices`, invoiceCreateStore.data);
+
+  return result;
+}
+
+// 청구 수정
+async function editInvoice(invoiceId, data) {
+  const result = await mainAxios.put(`invoices/${invoiceId}`, data);
+  
+  if (result.code === 200) {
+    invoiceDetailStore.setData(result.data);
+  }
+
+  return result;
+}
+
+// 청구 삭제
+async function deleteInvoice(invoiceId) {
+  const result = await mainAxios.delete(`invoices/${invoiceId}`);
+
+  if (result.code === 200) {
+    invoiceDetailStore.$reset();
+  }
+
+  return result;
+}
+
+export {sendInvoice, getInvoiceList, getInvoice, createInvoice, editInvoice, deleteInvoice}

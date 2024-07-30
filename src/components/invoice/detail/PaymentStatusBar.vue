@@ -21,16 +21,13 @@ export default {
   computed: {
     ...mapStores(useInvoiceDetailStore),
   },
-  mounted(){
-    console.log(this.invoiceDetailStore.data.paymentStatus)
-  }
 }
 </script>
 
 <style lang="scss" scoped>
 .payment-status-bar {
   @include flex-box(row, space-between, 0px);
-  width: 80%;
+  width: 100%;
   height: 50px;
   background-color: white;
   border-radius: 30px;

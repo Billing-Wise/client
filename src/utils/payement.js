@@ -3,6 +3,7 @@ import { mainAxios } from "./axios";
 
 const paymentStore = usePaymentStore();
 
+// 납부 조회
 async function getPayment(invoiceId) {
   const result = await mainAxios.get(`payments/${invoiceId}`);
 
@@ -16,4 +17,11 @@ async function getPayment(invoiceId) {
   return result;
 }
 
-export {getPayment}
+// 납부 취소
+async function deletePayment(invoiceId) {
+  const result = await mainAxios.delete(`payments/${invoiceId}`);
+
+  return result;
+}
+
+export {getPayment, deletePayment}
