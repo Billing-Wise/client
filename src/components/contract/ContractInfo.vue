@@ -49,7 +49,6 @@
 <script>
 import { mapStores } from 'pinia';
 import { useContractDetailStore } from '@/stores/contract/contractDetail';
-import { getContract } from '@/utils/contract';
 import { toDateFromDateTime } from '@/utils/date';
 import TitleInfoVue from '../common/info/TitleInfo.vue';
 
@@ -73,13 +72,6 @@ export default {
       return toDateFromDateTime(this.contractDetailStore.data.updatedAt);
     },
   },
-  async created() {
-    const result = await getContract(this.$route.params.id);
-    if (result.code !== 200) {
-      // 예외 처리
-    }
-  }
-
 }
 </script>
 

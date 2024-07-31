@@ -19,22 +19,26 @@ export const useContractCreateStore = defineStore('contractCreate', {
       },
       contractCycle: 1,
       paymentDueCycle: 0,
-      isSubscription: {
-        value: null,
-        name: null
-      },
-      invoiceType: {
-        value: null,
-        name: null
-      },
-      paymentType: {
-        value: null,
-        name: null
-      },
-      isEasyConsent: {
-        value: null,
-        name: null
-      }
+      isSubscriptionIdx: 0,
+      isSubscription: [
+        { name: '정기', value: true },
+        { name: '단기', value: false },
+      ],
+      invoiceTypeIdx: 0,
+      invoiceType: [
+        { name: '자동 청구', value: 1 },
+        { name: '수동 청구', value: 2 },
+      ],
+      paymentTypeIdx: 0,
+      paymentType: [
+        { name: '납부자 결제', value: 1 },
+        { name: '실시간 CMS', value: 2 },
+      ],
+      isEasyConsentIdx: 0,
+      isEasyConsent: [
+        { name: '미사용', value: false },
+        { name: '사용', value: true },
+      ]
     }
   },
   actions: {
@@ -62,31 +66,53 @@ export const useContractCreateStore = defineStore('contractCreate', {
     setPaymentDueCycle(info) {
       this.paymentDueCycle = info
     },
-    setIsSubscription(info) {
-      this.isSubscription.value = info.value
-      this.isSubscription.name = info.name
+    setIsSubscription(idx) {
+      this.isSubscriptionIdx = idx
     },
-    setInvoiceType(info) {
-      this.invoiceType.value = info.value
-      this.invoiceType.name = info.name
+    setInvoiceType(idx) {
+      this.invoiceTypeIdx = idx
     },
-    setPaymentType(info) {
-      this.paymentType.value = info.value
-      this.paymentType.name = info.name
+    setPaymentType(idx) {
+      this.paymentTypeIdx = idx;
     },
-    setIsEasyConsent(info) {
-      this.isEasyConsent.value = info.value
-      this.isEasyConsent.name = info.name
+    setIsEasyConsent(idx) {
+      this.isEasyConsentIdx = idx
     },
     setAllDataFromDetailStore(data) {
       this.setMember(data.member);
       this.setItem(data.item);
       this.setContractCycle(data.contractCycle);
       this.setPaymentDueCycle(data.paymentDueCycle);
-      this.setIsSubscription({ value: data.subscription, name: data.subscription? '정기' : '단기' });
-      this.setInvoiceType({ value: data.invoiceType.id, name: data.invoiceType.name });
-      this.setPaymentType({ value: data.paymentType.id, name: data.paymentType.name });
-      this.setIsEasyConsent({ value: data.easyConsent, name: data.easyConsent? '사용' : '미사용' });
+      this.setIsSubscription(this.isSubscription.findIndex(i => i.value === data.subscription));
+      this.setInvoiceType(this.invoiceType.findIndex(i => i.value === data.invoiceType.id));
+      this.setPaymentType(this.paymentType.findIndex(i => i.value === data.paymentType.id));
+      this.setIsEasyConsent(this.isEasyConsent.findIndex(i => i.value === data.easyConsent));
     }
+  },
+  getters: {
+    isSubscriptionName(state) {
+      return state.isSubscription[state.isSubscriptionIdx].name;
+    },
+    invoiceTypeName(state) {
+      return state.invoiceType[state.invoiceTypeIdx].name;
+    },
+    paymentTypeName(state) {
+      return state.paymentType[state.paymentTypeIdx].name;
+    },
+    isEasyConsentName(state) {
+      return state.isEasyConsent[state.isEasyConsentIdx].name;
+    },
+    isSubscriptionValue(state) {
+      return state.isSubscription[state.isSubscriptionIdx].value;
+    },
+    invoiceTypeValue(state) {
+      return state.invoiceType[state.invoiceTypeIdx].value;
+    },
+    paymentTypeValue(state) {
+      return state.paymentType[state.paymentTypeIdx].value;
+    },
+    isEasyConsentValue(state) {
+      return state.isEasyConsent[state.isEasyConsentIdx].value;
+    },
   }
 })

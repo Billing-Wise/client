@@ -8,37 +8,25 @@
           <InfoInputVue title="납부 기한" type="number" v-model="paymentDueCycle"/>
         </div>
         <div class="info-part-row">
-          <TitleSelectVue title="구독 여부" :selectedIdx="isSubscriptionIdx" :keywordArr="isSubscription"
+          <TitleSelectVue title="구독 여부" 
+            :selectedIdx="contractCreateStore.isSubscriptionIdx" 
+            :keywordArr="contractCreateStore.isSubscription"
             :choiceFunc="setSubscription" />
-          <TitleSelectVue title="청구 생성" :selectedIdx="invoiceTypeIdx" :keywordArr="invoiceType"
+          <TitleSelectVue title="청구 생성" 
+            :selectedIdx="contractCreateStore.invoiceTypeIdx" 
+            :keywordArr="contractCreateStore.invoiceType"
             :choiceFunc="setInvoiceType" />
         </div>
         <div class="info-part-row">
-          <TitleSelectVue title="결제 수단" :selectedIdx="paymentTypeIdx" :keywordArr="paymentType"
+          <TitleSelectVue title="결제 수단" 
+            :selectedIdx="contractCreateStore.paymentTypeIdx" 
+            :keywordArr="contractCreateStore.paymentType"
             :choiceFunc="setPaymentType" />
-          <TitleSelectVue title="간편 동의" :selectedIdx="isEasyConsentIdx" :keywordArr="isEasyConsent"
-            :choiceFunc="setEasyConsent" aria-disabled="true"/>
+          <TitleSelectVue title="간편 동의" 
+            :selectedIdx="contractCreateStore.isEasyConsentIdx" 
+            :keywordArr="contractCreateStore.isEasyConsent"
+            :choiceFunc="setEasyConsent"/>
         </div>
-      </div>
-    </div>
-    <div class="info-part-box">
-      <span class="part-title">실시간 CMS 계좌 정보 입력</span>
-      <span class="info-guide" v-if="paymentTypeIdx === 0" >※ 실시간 CMS 결제를 사용하지 않는 계약입니다.</span>
-      <span class="info-guide" v-if="paymentTypeIdx === 1 && isEasyConsentIdx === 1">※ 간편동의를 사용 중입니다.</span>
-      <div class="info-part" v-if="paymentTypeIdx === 1 && isEasyConsentIdx === 0">
-        <div class="info-part-row">
-          <InfoInputVue title="계좌주" v-model="consentOwner"/>
-          <InfoInputVue title="은행명" v-model="consentBank"/>
-        </div>
-        <InfoInputVue title="계좌 번호" v-model="consentNumber"/>
-      </div>
-    </div>
-    <div class="info-part-box">
-      <span class="part-title">자동 결제 동의서 등록</span>
-      <span class="info-guide" v-if="paymentTypeIdx === 0" >※ 실시간 CMS 결제를 사용하지 않는 계약입니다.</span>
-      <span class="info-guide" v-if="paymentTypeIdx === 1 && isEasyConsentIdx === 1">※ 간편동의를 사용 중입니다.</span>
-      <div class="info-part" v-if="paymentTypeIdx === 1 && isEasyConsentIdx === 0">
-        <span class="info-guide">※ 서명 정보가 포함된 동의서를 등록해주세요 (서명 이미지 파일만 등록 가능)</span>
       </div>
     </div>
   </div>
@@ -49,13 +37,12 @@ import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
 import InfoInputVue from '@/components/common/input/InfoInput.vue';
 import { useContractCreateStore } from '@/stores/contract/contractCreate';
 import { mapStores } from 'pinia';
-import { useConsentStore } from '@/stores/contract/consent';
 
 export default {
   name: 'ContractChooseInfoVue',
   components: {
     TitleSelectVue,
-    InfoInputVue
+    InfoInputVue,
   },
   data() {
     return {
@@ -83,7 +70,6 @@ export default {
   },
   computed: {
     ...mapStores(useContractCreateStore),
-    ...mapStores(useConsentStore),
     contractCycle: {
       get() {
         return this.contractCreateStore.contractCycle;
@@ -100,67 +86,21 @@ export default {
         this.contractCreateStore.paymentDueCycle = value;
       }
     },
-    consentOwner: {
-      get() {
-        return this.consentStore.owner;
-      },
-      set(value) {
-        this.consentStore.owner = value;
-      }
-    },
-    consentBank: {
-      get() {
-        return this.consentStore.bank;
-      },
-      set(value) {
-        this.consentStore.bank = value;
-      }
-    },
-    consentNumber: {
-      get() {
-        return this.consentStore.number;
-      },
-      set(value) {
-        this.consentStore.number = value;
-      }
-    }
   },
   methods: {
     setSubscription(idx) {
-      this.isSubscriptionIdx = idx;
-      this.contractCreateStore.setIsSubscription(this.isSubscription[this.isSubscriptionIdx]);
+      this.contractCreateStore.setIsSubscription(idx);
     },
     setInvoiceType(idx) {
-      this.invoiceTypeIdx = idx;
-      this.contractCreateStore.setInvoiceType(this.invoiceType[this.invoiceTypeIdx]);
+      this.contractCreateStore.setInvoiceType(idx);
     },
     setPaymentType(idx) {
-      this.paymentTypeIdx = idx;
-      this.contractCreateStore.setPaymentType(this.paymentType[this.paymentTypeIdx]);
-      if (this.paymentTypeIdx === 0) {
-        this.isEasyConsentIdx = 0;
-        this.isEasyConsent = [
-          { name: '미사용', value: false },
-        ]
-      } else if (this.paymentTypeIdx === 1) {
-        this.isEasyConsentIdx = 1;
-        this.isEasyConsent = [
-          { name: '직접 등록', value: false },
-          { name: '사용', value: true },
-        ]
-      }
+      this.contractCreateStore.setPaymentType(idx);
     },
     setEasyConsent(idx) {
-      this.isEasyConsentIdx = idx;
-      this.contractCreateStore.setIsEasyConsent(this.isEasyConsent[this.isEasyConsentIdx]);
+      this.contractCreateStore.setIsEasyConsent(idx);
     }
   },
-  mounted() {
-    this.setSubscription(0);
-    this.setInvoiceType(0);
-    this.setPaymentType(0);
-    this.setEasyConsent(0);
-  }
 }
 </script>
 
@@ -169,7 +109,7 @@ export default {
 
 .right-side {
   background-color: white;
-  padding: 80px;
+  padding: 50px;
   border-radius: 10px;
   box-shadow: $base-shadow;
 }

@@ -49,10 +49,10 @@ async function createContract() {
     "itemId": constractCreateStore.item.id,
     "itemPrice": constractCreateStore.item.price,
     "itemAmount": constractCreateStore.item.count,
-    "isSubscription": constractCreateStore.isSubscription.value,
-    "invoiceTypeId": constractCreateStore.invoiceType.value,
-    "paymentTypeId": constractCreateStore.paymentType.value,
-    "isEasyConsent": constractCreateStore.isEasyConsent.value,
+    "isSubscription": constractCreateStore.isSubscriptionValue,
+    "invoiceTypeId": constractCreateStore.invoiceTypeValue,
+    "paymentTypeId": constractCreateStore.paymentTypeValue,
+    "isEasyConsent": constractCreateStore.isEasyConsentValue,
     "contractCycle": constractCreateStore.contractCycle,
     "paymentDueCycle": constractCreateStore.paymentDueCycle
   }
@@ -85,13 +85,15 @@ async function editContract(contractId) {
   const data = {
     "itemPrice": constractCreateStore.item.price,
     "itemAmount": constractCreateStore.item.count,
-    "isSubscription": constractCreateStore.isSubscription.value,
-    "invoiceTypeId": constractCreateStore.invoiceType.value,
-    "paymentTypeId": constractCreateStore.paymentType.value,
-    "isEasyConsent": constractCreateStore.isEasyConsent.value,
+    "isSubscription": constractCreateStore.isSubscriptionValue,
+    "invoiceTypeId": constractCreateStore.invoiceTypeValue,
+    "paymentTypeId": constractCreateStore.paymentTypeValue,
+    "isEasyConsent": constractCreateStore.isEasyConsentValue,
     "contractCycle": constractCreateStore.contractCycle,
     "paymentDueCycle": constractCreateStore.paymentDueCycle
   }
+
+  console.log(data)
 
   const result = await mainAxios.put(`contracts/${contractId}`, data);
 
