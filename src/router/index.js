@@ -84,7 +84,7 @@ const router = createRouter({
           component: () => import('@/views/invoice/InvoiceCreateView.vue')
         },
         {
-          path : '/setting/item',
+          path : '/setting',
           name:'settingItem',
           component: () => import('@/views/setting/SettingItemView.vue')
         },
