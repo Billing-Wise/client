@@ -14,13 +14,11 @@
 
 <script>
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue'
-import ThemeWideBtnVue from '@/components/common/btn/ThemeWideBtn.vue'
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue'
-import ContractChooseItemVue from '@/components/contract/create/ContractChooseItem.vue'
 import ContractChooseInfoVue from '@/components/contract/create/ContractChooseInfo.vue'
+import ContractEditInfoVue from '@/components/contract/ContractEditInfo.vue'
 import { mapStores } from 'pinia'
 import { useContractCreateStore } from '@/stores/contract/contractCreate'
-import ContractEditInfoVue from '@/components/contract/ContractEditInfo.vue'
 import { useContractDetailStore } from '@/stores/contract/contractDetail'
 import { editContract, getContract } from '@/utils/contract'
 
@@ -28,10 +26,8 @@ export default {
   name: 'ContractEditView',
   components: {
     WarningWideBtnVue,
-    ThemeWideBtnVue,
     SuccessWideBtnVue,
     ContractEditInfoVue,
-    ContractChooseItemVue,
     ContractChooseInfoVue
   },
   data() {
@@ -59,7 +55,7 @@ export default {
   async created() {
     this.contractCreateStore.setStep(2);
     if (this.contractDetailStore.data.id !== Number(this.$route.params.id)) {
-      const result = await getContract(this.$route.params.id);
+      await getContract(this.$route.params.id);
     }
     this.contractCreateStore.setAllDataFromDetailStore(this.contractDetailStore.data);
   }

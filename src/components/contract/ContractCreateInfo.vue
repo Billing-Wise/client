@@ -27,12 +27,12 @@
         <TitleInfoVue title="납부 기한" :info="`${contractCreateStore.paymentDueCycle} 일`" />
       </div>
       <div class="double-info">
-        <TitleInfoVue title="구독 여부" :info="contractCreateStore.isSubscription.name" />
-        <TitleInfoVue title="청구 생성" :info="contractCreateStore.invoiceType.name" />
+        <TitleInfoVue title="구독 여부" :info="contractCreateStore.isSubscriptionName" />
+        <TitleInfoVue title="청구 생성" :info="contractCreateStore.invoiceTypeName" />
       </div>
       <div class="double-info">
-        <TitleInfoVue title="결제 수단" :info="contractCreateStore.paymentType.name" />
-        <TitleInfoVue title="간편 동의" :info="contractCreateStore.isEasyConsent.name" />
+        <TitleInfoVue title="결제 수단" :info="contractCreateStore.paymentTypeName" />
+        <TitleInfoVue title="간편 동의" :info="contractCreateStore.isEasyConsentName" />
       </div>
     </div>
   </div>
