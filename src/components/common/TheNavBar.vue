@@ -33,11 +33,11 @@ export default {
   .nav-bar {
     @include flex-box(row, space-between, 0px);
     background-color: $theme-color;
-    position: fixed;
+    position: absolute;
     top: 0px;
     left: 0px;
     height: $nav-bar-height;
-    width: 100vw;
+    width: 100%;
     padding: 0px 20px;
     z-index: 2;
     .nav-info {

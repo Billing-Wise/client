@@ -18,7 +18,6 @@
     </div>
     <div class="info-box">
       <span class="title">계약 정보</span>
-
       <div class="double-info">
         <TitleInfoVue title="계약ID" :info="String(invoiceDetailStore.data.contractId)" />
         <TitleInfoVue title="청구ID" :info="String(invoiceDetailStore.data.invoiceId)" />
@@ -87,7 +86,7 @@ export default {
 
 <style lang="scss" scoped>
 .invoice-info {
-  @include flex-box(column, space-between, 20px);
+  @include flex-box(column, center, 20px);
   width: 100%;
   height: 100%;
 }

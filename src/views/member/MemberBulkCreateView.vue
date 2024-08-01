@@ -73,10 +73,9 @@ export default {
 <style lang="scss" scoped>
 .root-container {
   @include flex-box(row, center, 100px);
-  background: $back-color;
-  width: 100%;
+  @include root-container;
   height: 100%;
-  padding: 100px 50px;
+  padding: 40px;
 }
 
 .left-side {

@@ -64,11 +64,10 @@ export default {
 
 <style lang="scss" scoped>
 .root-container {
-  @include flex-box(row, space-between, 100px);
-  background: $back-color;
-  width: 100%;
-  height: 100%;
-  padding: 60px 130px;
+  @include flex-box(row, center, 50px);
+  @include root-container;
+  height: auto;
+  padding: 30px 30px;
 }
 
 .left-side {

@@ -117,9 +117,8 @@ export default {
 
 .root-container {
   @include flex-box(row, space-between, 100px);
-  background: $back-color;
-  width: 100%;
-  height: 100%;
+  @include root-container;
+  height: auto;
   padding: 60px 130px;
 }
 

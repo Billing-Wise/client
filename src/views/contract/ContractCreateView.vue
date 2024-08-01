@@ -2,23 +2,23 @@
   <div class="root-container">
     <div class="left-side">
       <ContractCreateInfoVue />
-      <div class="warning-msg">{{warningMsg}}</div>
+      <div class="warning-msg">{{ warningMsg }}</div>
       <div class="btn-box" v-if="contractCreateStore.step === 0">
-        <WarningWideBtnVue title="취소" :func="routeContratList"/>
-        <ThemeWideBtnVue title="다음" :func="() => changeStep(1)"/>
+        <WarningWideBtnVue title="취소" :func="routeContratList" />
+        <ThemeWideBtnVue title="다음" :func="() => changeStep(1)" />
       </div>
       <div class="btn-box" v-if="contractCreateStore.step === 1">
-        <ThemeWideBtnVue title="이전" :func="() => changeStep(0)"/>
-        <ThemeWideBtnVue title="다음" :func="() => changeStep(2)"/>
+        <ThemeWideBtnVue title="이전" :func="() => changeStep(0)" />
+        <ThemeWideBtnVue title="다음" :func="() => changeStep(2)" />
       </div>
       <div class="btn-box" v-if="contractCreateStore.step === 2">
-        <ThemeWideBtnVue title="이전" :func="() => changeStep(1)"/>
-        <SuccessWideBtnVue title="완료" :func="createContract"/>
+        <ThemeWideBtnVue title="이전" :func="() => changeStep(1)" />
+        <SuccessWideBtnVue title="완료" :func="createContract" />
       </div>
     </div>
-    <ContractChooseMemberVue v-if="contractCreateStore.step === 0"/>
-    <ContractChooseItemVue v-if="contractCreateStore.step === 1"/>
-    <ContractChooseInfoVue v-if="contractCreateStore.step === 2"/>
+    <ContractChooseMemberVue v-if="contractCreateStore.step === 0" />
+    <ContractChooseItemVue v-if="contractCreateStore.step === 1" />
+    <ContractChooseInfoVue v-if="contractCreateStore.step === 2" />
   </div>
 </template>
 
@@ -50,13 +50,13 @@ export default {
     return {
       warningMsg: ''
     }
-  },  
+  },
   computed: {
     ...mapStores(useContractCreateStore),
   },
   methods: {
     routeContratList() {
-      this.$router.push({name: 'contract'});
+      this.$router.push({ name: 'contract' });
     },
     changeStep(step) {
       this.contractCreateStore.setStep(step);
@@ -81,18 +81,17 @@ export default {
 
 <style lang="scss" scoped>
 .root-container {
-  @include flex-box(row, space-between, 100px);
-  background: $back-color;
-  width: 100%;
-  height: 100%;
-  padding: 60px 130px;
+  @include flex-box(row, center, 100px);
+  @include root-container;
+  height: auto;
+  padding: 30px 30px;
 }
 
 .left-side {
   @include flex-box(column, space-between, 20px);
   min-width: 700px;
   width: 40%;
-  min-height: 100%;
+  height: 100%;
   padding: 40px 50px;
   border-radius: 10px;
   box-shadow: $base-shadow;
