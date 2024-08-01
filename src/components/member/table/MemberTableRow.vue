@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { toDateFromDateTime } from '@/utils/date';
+import { toDateFromDateTime } from '@/utils/formatter';
 
 export default {
   name: 'MemberTableRowVue',

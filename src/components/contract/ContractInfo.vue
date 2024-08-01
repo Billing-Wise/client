@@ -49,7 +49,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useContractDetailStore } from '@/stores/contract/contractDetail';
-import { toDateFromDateTime } from '@/utils/date';
+import { toDateFromDateTime } from '@/utils/formatter';
 import TitleInfoVue from '../common/info/TitleInfo.vue';
 
 export default {

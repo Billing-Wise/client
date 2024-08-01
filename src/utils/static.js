@@ -4,7 +4,7 @@ import { mainAxios } from "./axios"
 const staticStore = useStaticStore();
 
 async function getAllStatic() {
-  const result = mainAxios('stats/1');
+  const result = await mainAxios('stats/1');
 
   if (result.code === 200) {
     staticStore.setAllDataList(result.data);
@@ -14,7 +14,7 @@ async function getAllStatic() {
 }
 
 async function getYearStatic(year) {
-  const result = mainAxios(`stats/2?year=${year}`);
+  const result = await mainAxios(`stats/2?year=${year}`);
 
   if (result.code === 200) {
     staticStore.setMonthDataList(result.data);
@@ -24,7 +24,7 @@ async function getYearStatic(year) {
 }
 
 async function getMonthStatic(year, month) {
-  const result = mainAxios(`stats/1?year=${year}&month=${month}`);
+  const result = await mainAxios(`stats/1?year=${year}&month=${month}`);
 
   if (result.code === 200) {
     staticStore.setWeekDataList(result.data);
@@ -34,11 +34,7 @@ async function getMonthStatic(year, month) {
 }
 
 async function getThisMonthStatic(year, month) {
-  const result = mainAxios(`stats/2?year=${year}&month=${month}`);
-
-  if (result.code === 200) {
-    staticStore.setThisMonthData(result.data[0]);
-  }
+  const result = await mainAxios(`stats/2?year=${year}&month=${month}`);
 
   return result;
 }

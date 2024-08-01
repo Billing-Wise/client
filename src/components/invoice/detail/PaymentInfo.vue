@@ -33,7 +33,7 @@ import { usePaymentStore } from '@/stores/invoice/payment';
 import { getPayment } from '@/utils/payement';
 import { mapStores } from 'pinia';
 import TitleInfoVue from '../../common/info/TitleInfo.vue';
-import { toDateFromDateTime } from '@/utils/date';
+import { toDateFromDateTime } from '@/utils/formatter';
 
 export default {
   name: 'PaymentInfoVue',

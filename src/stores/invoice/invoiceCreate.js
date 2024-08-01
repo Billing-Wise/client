@@ -1,4 +1,4 @@
-import { toInputDateFromDateTime } from '@/utils/date'
+import { toInputDateFromDateTime } from '@/utils/formatter'
 import { defineStore } from 'pinia'
 
 const today = toInputDateFromDateTime(new Date());
