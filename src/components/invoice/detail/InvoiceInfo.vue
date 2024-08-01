@@ -45,7 +45,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { toDateFromDateTime } from '@/utils/date';
+import { toDateFromDateTime } from '@/utils/formatter';
 import { getInvoice } from '@/utils/invoice';
 import TitleInfoVue from '../../common/info/TitleInfo.vue';
 import { useInvoiceDetailStore } from '@/stores/invoice/invoiceDetail';

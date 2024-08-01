@@ -23,7 +23,7 @@ import InfoInputVue from '@/components/common/input/InfoInput.vue';
 import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
 import { mapStores } from 'pinia';
 import { useInvoiceDetailStore } from '@/stores/invoice/invoiceDetail';
-import { toInputDateFromDateTime } from '@/utils/date';
+import { toInputDateFromDateTime } from '@/utils/formatter';
 import { editInvoice } from '@/utils/invoice';
 
 export default {

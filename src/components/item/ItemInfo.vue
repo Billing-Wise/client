@@ -12,7 +12,7 @@
 <script>
 import { useItemStore } from '@/stores/item';
 import { mapStores } from 'pinia';
-import { toDateFromDateTime } from '@/utils/date';
+import { toDateFromDateTime } from '@/utils/formatter';
 import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
 import DescriptionInfoVue from '../common/info/DescriptionInfo.vue';
 
