@@ -96,7 +96,10 @@ export default {
     }
   },
   async mounted() {
-    await getMember(this.$route.params.id);
+    const result = await getMember(this.$route.params.id);
+    if (result.code === 404) {
+      this.$router.push({name: 'noData'});
+    }
     this.contractListStore.$reset();
     await this.getContractList();
     this.setupWatchers();

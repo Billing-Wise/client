@@ -10,7 +10,7 @@ const router = createRouter({
       component: () => import('@/views/MainView.vue'),
       meta: { 
         requiresAuth: true,
-        nonMember: false,  
+        forMember: false,  
       },
       children: [
         {
@@ -93,6 +93,11 @@ const router = createRouter({
           name:'settingPayment',
           component: () => import('@/views/setting/SettingPaymentView.vue')
         },
+        {
+          path : '/no-data',
+          name: 'noData',
+          component: () => import('@/views/error/NoDataView.vue')
+        }
       ]
     },
     {
@@ -101,7 +106,7 @@ const router = createRouter({
       component: () => import('@/views/auth/AuthView.vue'),
       meta: { 
         requiresAuth: false,
-        nonMember: false, 
+        forMember: false, 
       },
       children: [
         {
@@ -122,7 +127,7 @@ const router = createRouter({
       component: () => import('@/views/MobileView.vue'),
       meta: { 
         requiresAuth: false,
-        nonMember: true,
+        forMember: true,
       },
       children: [
         {
@@ -257,6 +262,23 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: "/notFound",
+      name: "notFound",
+      meta: { 
+        requiresAuth: false,
+        forMember: true,
+      },
+      component: () => import('@/views/error/NotFoundView.vue')
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: "/notFound",
+      meta: { 
+        requiresAuth: false,
+        forMember: true,
+      },
+    }
   ]
 });
 
@@ -265,7 +287,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
     next('/login');
-  } else if (!to.meta.nonMember && !to.meta.requiresAuth && authStore.isLoggedIn) {
+  } else if (!to.meta.forMember && !to.meta.requiresAuth && authStore.isLoggedIn) {
     next('');
   } else {
     next();

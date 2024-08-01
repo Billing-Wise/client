@@ -109,6 +109,7 @@ export default {
 
 .right-side {
   background-color: white;
+  max-width: 800px;
   padding: 50px;
   border-radius: 10px;
   box-shadow: $base-shadow;

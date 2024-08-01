@@ -3,11 +3,13 @@ import { fileAxios, mainAxios } from "./axios";
 import { useContractCreateStore } from "@/stores/contract/contractCreate";
 import { useContractDetailStore } from "@/stores/contract/contractDetail";
 import { useContractBulkStore } from "@/stores/contract/contractBulk";
+import { useLoadingStore } from "@/stores/loading";
 
 const contractListStore = useContractListStore();
 const contractDetailStore = useContractDetailStore();
 const constractCreateStore = useContractCreateStore();
 const contractBulkStore = useContractBulkStore();
+const loadingStore = useLoadingStore();
 
 // 계약 목록 조회
 async function getContractList() {
@@ -37,6 +39,8 @@ async function getContract(contractId) {
   
   if (result.code === 200) {
     contractDetailStore.setData(result.data);
+  } if (result.code === 404) {
+    
   }
 
   return result;
@@ -44,6 +48,8 @@ async function getContract(contractId) {
 
 // 계약 생성
 async function createContract() {
+  loadingStore.setIsLoading(true);
+
   const data = {
     "memberId": constractCreateStore.member.id,
     "itemId": constractCreateStore.item.id,
@@ -59,11 +65,15 @@ async function createContract() {
 
   const result = await mainAxios.post('contracts', data);
 
+  loadingStore.setIsLoading(false);
+
   return result;
 }
 
 // 계약 대량 등록
 async function createContractBulk(file) {
+  loadingStore.setIsLoading(true);
+
   const formData = new FormData();
   formData.append('file', file, 'file');
 
@@ -77,11 +87,15 @@ async function createContractBulk(file) {
     }
   }
 
+  loadingStore.setIsLoading(false);
+
   return result;
 }
 
 // 계약 수정
 async function editContract(contractId) {
+  loadingStore.setIsLoading(true);
+
   const data = {
     "itemPrice": constractCreateStore.item.price,
     "itemAmount": constractCreateStore.item.count,
@@ -93,9 +107,9 @@ async function editContract(contractId) {
     "paymentDueCycle": constractCreateStore.paymentDueCycle
   }
 
-  console.log(data)
-
   const result = await mainAxios.put(`contracts/${contractId}`, data);
+
+  loadingStore.setIsLoading(false);
 
   return result;
 }

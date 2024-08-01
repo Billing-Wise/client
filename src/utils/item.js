@@ -3,6 +3,8 @@ import { fileAxios, mainAxios } from "./axios";
 
 const itemStore = useItemStore();
 
+
+
 // 아이템 목록 조회
 async function getItemList() {
 

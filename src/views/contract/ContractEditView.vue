@@ -2,13 +2,13 @@
   <div class="root-container">
     <div class="left-side">
       <ContractEditInfoVue />
-      <div class="warning-msg">{{warningMsg}}</div>
+      <div class="warning-msg">{{ warningMsg }}</div>
       <div class="btn-box" v-if="contractCreateStore.step === 2">
-        <WarningWideBtnVue title="취소" :func="routeContratDetail"/>
-        <SuccessWideBtnVue title="완료" :func="editContract"/>
+        <WarningWideBtnVue title="취소" :func="routeContratDetail" />
+        <SuccessWideBtnVue title="완료" :func="editContract" />
       </div>
     </div>
-    <ContractChooseInfoVue v-if="contractCreateStore.step === 2"/>
+    <ContractChooseInfoVue v-if="contractCreateStore.step === 2" />
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
     return {
       warningMsg: ''
     }
-  },  
+  },
   computed: {
     ...mapStores(useContractCreateStore),
     ...mapStores(useContractDetailStore)
@@ -55,7 +55,11 @@ export default {
   async created() {
     this.contractCreateStore.setStep(2);
     if (this.contractDetailStore.data.id !== Number(this.$route.params.id)) {
-      await getContract(this.$route.params.id);
+      const result = await getContract(this.$route.params.id);
+      if (result.code === 404) {
+        this.$router.push({ name: 'noData' });
+        return;
+      }
     }
     this.contractCreateStore.setAllDataFromDetailStore(this.contractDetailStore.data);
   }

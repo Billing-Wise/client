@@ -106,7 +106,11 @@ export default {
   },
   async created() {
     this.consentDetailStore.$reset();
-    await getContract(this.$route.params.id);
+    const result = await getContract(this.$route.params.id);
+    if (result.code === 404) {
+      this.$router.push({name: 'noData'});
+      return;
+    }
     await getConsent(this.contractDetailStore.data.member.id);
   }
 }

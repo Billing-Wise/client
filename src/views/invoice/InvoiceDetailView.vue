@@ -37,6 +37,7 @@ import { mapStores } from 'pinia'
 import { usePaymentStore } from '@/stores/invoice/payment'
 import { sendInvoice } from '@/utils/invoice'
 import { useInvoiceDetailStore } from '@/stores/invoice/invoiceDetail'
+import { getInvoice } from '@/utils/invoice';
 
 
 export default {
@@ -80,6 +81,14 @@ export default {
       }
     },
   },
+  async created() {
+    this.invoiceDetailStore.$reset();
+    const result = await getInvoice(this.$route.params.id);
+    if (result.code === 404) {
+      this.$router.push({ name: 'noData' });
+      return;
+    }
+  }
 }
 </script>
 
