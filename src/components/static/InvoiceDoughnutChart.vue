@@ -64,7 +64,7 @@ export default {
     }
   },
   // 생성시 통계 데이터 불러오기
-  async created() {
+  async mounted() {
     const result = await getAllStatic();
 
     if (result.code !== 200) {

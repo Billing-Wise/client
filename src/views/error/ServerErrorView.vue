@@ -1,7 +1,7 @@
 <template>
   <div class="root-container">
-    <img src="@/assets/images/warn.png" alt="warning">
-    <span>요청하신 페이지를 찾을 수 없습니다.</span>
+    <i class="bi bi-exclamation-diamond-fill"></i>
+    <span>서버와의 통신에 오류가 발생하였습니다.</span>
     <div class="btn-box">
       <WhiteIconBtnVue title="뒤로 가기" icon="bi bi-caret-left-fill" :func="goBack"/>
     </div>
@@ -10,15 +10,21 @@
 
 <script>
 import WhiteIconBtnVue from '@/components/common/btn/WhiteIconBtn.vue';
+import { useErrorHandleStore } from '@/stores/error/errorHandle';
+import { mapStores } from 'pinia';
 
 export default {
-  name: 'NotFoundView',
+  name: 'ServerErrorView',
   components: {
     WhiteIconBtnVue
+  },
+  computed: {
+    ...mapStores(useErrorHandleStore),
   },
   methods: {
     goBack() {
       this.$router.go(-1);
+      this.errorHandleStore.$reset();
     }
   }
 }
@@ -29,10 +35,10 @@ export default {
   @include flex-box(column, center, 20px);
   width: 100vw;
   height: 100vh;
-  img {
-    width: 150px;
+  i {
+    font-size: 120px;
+    color: $theme-color
   }
-
 
   span {
     font-weight: bold;

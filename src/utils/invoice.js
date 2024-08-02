@@ -2,7 +2,7 @@ import { useInvoiceListStore } from "@/stores/invoice/invoiceList";
 import { mainAxios } from "./axios";
 import { useInvoiceDetailStore } from "@/stores/invoice/invoiceDetail";
 import { useInvoiceCreateStore } from "@/stores/invoice/invoiceCreate";
-import { useLoadingStore } from "@/stores/loading";
+import { useLoadingStore } from "@/stores/error/loading";
 
 const invoiceListStore = useInvoiceListStore();
 const invoiceDetailStore = useInvoiceDetailStore();

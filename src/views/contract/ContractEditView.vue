@@ -56,12 +56,10 @@ export default {
     this.contractCreateStore.setStep(2);
     if (this.contractDetailStore.data.id !== Number(this.$route.params.id)) {
       const result = await getContract(this.$route.params.id);
-      if (result.code === 404) {
-        this.$router.push({ name: 'noData' });
-        return;
+      if (result.code === 200) {
+        this.contractCreateStore.setAllDataFromDetailStore(this.contractDetailStore.data);
       }
     }
-    this.contractCreateStore.setAllDataFromDetailStore(this.contractDetailStore.data);
   }
 }
 </script>

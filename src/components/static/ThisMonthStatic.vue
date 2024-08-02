@@ -1,7 +1,7 @@
 <template>
   <div class="static-box">
     <div class="title-box">
-      {{ staticStore.thisMonthData.month }}월 청구 상태
+      {{ month }}월 청구 상태
     </div>
     <div class="info-box">
       <div class="data-box">
@@ -40,31 +40,43 @@ import { formatNumber } from '@/utils/formatter';
 
 export default {
   name: 'ThisMonthStaticvue',
+  data() {
+    return {
+      today: new Date()
+    }
+  },
   computed: {
     ...mapStores(useStaticStore),
     // 이번 달 청구액 통화 표시
     thisMonthTotal() {
       return formatNumber(this.staticStore.thisMonthData.totalInvoiced);
     },
+    year() {
+      return this.today.getFullYear();
+    },
+    month() {
+      return this.today.getMonth();
+    }
   },
   async mounted() {
     // 지난 달 데이터 불러오기
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
 
     const prevMonthResult = await getThisMonthStatic(
-      month - 1 === 0 ? year - 1 : year,
-      month - 1 === 0 ? 12 : month - 1);
+      this.month - 1 === 0 ? this.year - 1 : this.year,
+      this.month - 1 === 0 ? 12 : this.month - 1);
 
-    this.staticStore.setPrevMonthData(prevMonthResult.data[0]);
+    if (prevMonthResult.code === 200 && prevMonthResult.data[0]) {
+      this.staticStore.setPrevMonthData(prevMonthResult.data[0]);
+    }
 
     // 지난 해 데이터 불러오기
     const prevYearResult = await getThisMonthStatic(
-      month === 0 ? year - 2 : year - 1,
-      month === 0 ? 12 : month - 1);
+      this.month === 0 ? this.year - 2 : this.year - 1,
+      this.month === 0 ? 12 : this.month - 1);
 
-    this.staticStore.setPrevYearData(prevYearResult.data[0]);
+    if (prevYearResult.code === 200 && prevYearResult.data[0]) {
+      this.staticStore.setPrevYearData(prevYearResult.data[0]);
+    }
   }
 }
 </script>

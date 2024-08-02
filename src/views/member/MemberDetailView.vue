@@ -96,12 +96,18 @@ export default {
     }
   },
   async mounted() {
-    const result = await getMember(this.$route.params.id);
-    if (result.code === 404) {
-      this.$router.push({name: 'noData'});
+    const result1 = await getMember(this.$route.params.id);
+    if (result1.code !== 200 && result1.code !== 400) {
+      return;
     }
+
     this.contractListStore.$reset();
-    await this.getContractList();
+    
+    const result2 = await this.getContractList();
+    if (result2.code !== 200 && result2.code !== 400) {
+      return;
+    }
+
     this.setupWatchers();
   }
 }

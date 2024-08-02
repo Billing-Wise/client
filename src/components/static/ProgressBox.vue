@@ -1,7 +1,7 @@
 <template>
   <div class="static-box">
     <div class="title-box">
-      {{ staticStore.thisMonthData.month }}월 납부 상태
+      {{ month }}월 납부 상태
     </div>
     <div class="info-box">
       <div class="data-box">
@@ -28,28 +28,36 @@ import { formatNumber } from '@/utils/formatter';
 
 export default {
   name: 'ProgressBoxvue',
+  data() {
+    return {
+      today: new Date()
+    }
+  },
   computed: {
     ...mapStores(useStaticStore),
     // 납부금 통화 표시
     totalCollected() {
-      return formatNumber(this.staticStore.thisMonthData.totalCollected);
+      return this.staticStore.thisMonthData? formatNumber(this.staticStore.thisMonthData.totalCollected) : 0;
     },
     // 미납금 통화 표시
     outstanding() {
       return formatNumber(this.staticStore.thisMonthData.outstanding);
     },
+    year() {
+      return this.today.getFullYear();
+    },
+    month() {
+      return this.today.getMonth();
+    }
   },
   async mounted() {
     // 이번 달 데이터 불러오기
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-
     const result = await getThisMonthStatic(
-      month === 0 ? year - 1 : year,
-      month === 0 ? 12 : month);
-
-    this.staticStore.setThisMonthData(result.data[0]);
+      this.month === 0 ? this.year - 1 : this.year,
+      this.month === 0 ? 12 : this.month);
+    if (result.code === 200 && result.data[0]) {
+      this.staticStore.setThisMonthData(result.data[0]);
+    }
   }
 }
 </script>
