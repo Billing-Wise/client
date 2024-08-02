@@ -39,8 +39,8 @@ export default {
   @include flex-box(column, center, 20px);
   width: 100%;
   img {
-    width: 320px;
-    height: 320px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
     border: $theme-color solid 3px;
     border-radius: 10px;

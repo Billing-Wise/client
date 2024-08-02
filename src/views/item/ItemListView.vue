@@ -16,7 +16,6 @@
 
 <script>
 import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
-import SearchInputVue from '@/components/common/input/SearchInput.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import ItemTableVue from '@/components/item/table/ItemTable.vue';
 import ItemCreateModalVue from '@/components/item/modal/ItemCreateModal.vue';
@@ -30,7 +29,6 @@ export default {
   name : 'ItemListView',
   components: {
     ThemeIconBtnVue,
-    SearchInputVue,
     PaginationBarVue,
     ItemTableVue,
     ItemCreateModalVue,
@@ -84,9 +82,7 @@ export default {
 
 .root-container {
   @include flex-box(column, space-between, 20px);
-  background: $back-color;
-  width: 100%;
-  height: 100%;
+  @include root-container;
   padding: 30px 40px
 }
 

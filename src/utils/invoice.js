@@ -2,14 +2,20 @@ import { useInvoiceListStore } from "@/stores/invoice/invoiceList";
 import { mainAxios } from "./axios";
 import { useInvoiceDetailStore } from "@/stores/invoice/invoiceDetail";
 import { useInvoiceCreateStore } from "@/stores/invoice/invoiceCreate";
+import { useLoadingStore } from "@/stores/loading";
 
 const invoiceListStore = useInvoiceListStore();
 const invoiceDetailStore = useInvoiceDetailStore();
 const invoiceCreateStore = useInvoiceCreateStore();
+const loadingStore = useLoadingStore();
+
 
 // 청구서 전송
 async function sendInvoice(invoiceId) {
+  loadingStore.setIsLoading(true);
   const result = await mainAxios.get(`invoices/${invoiceId}/send`);
+
+  loadingStore.setIsLoading(false);
 
   return result;
 }

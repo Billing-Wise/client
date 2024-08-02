@@ -18,7 +18,6 @@
     </div>
     <div class="info-box">
       <span class="title">계약 정보</span>
-
       <div class="double-info">
         <TitleInfoVue title="계약ID" :info="String(invoiceDetailStore.data.contractId)" />
         <TitleInfoVue title="청구ID" :info="String(invoiceDetailStore.data.invoiceId)" />
@@ -46,7 +45,6 @@
 <script>
 import { mapStores } from 'pinia';
 import { toDateFromDateTime } from '@/utils/formatter';
-import { getInvoice } from '@/utils/invoice';
 import TitleInfoVue from '../../common/info/TitleInfo.vue';
 import { useInvoiceDetailStore } from '@/stores/invoice/invoiceDetail';
 
@@ -73,21 +71,12 @@ export default {
       return toDateFromDateTime(this.invoiceDetailStore.data.updatedAt);
     },
   },
-  async created() {
-    this.invoiceDetailStore.$reset();
-    const result = await getInvoice(this.$route.params.id);
-
-    if (result.code !== 200) {
-      // 예외 처리
-    }
-  }
-
 }
 </script>
 
 <style lang="scss" scoped>
 .invoice-info {
-  @include flex-box(column, space-between, 20px);
+  @include flex-box(column, center, 20px);
   width: 100%;
   height: 100%;
 }

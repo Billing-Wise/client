@@ -28,6 +28,7 @@ const mainAxios = axios.create({
   withCredentials: true
 })
 
+
 mainAxios.interceptors.response.use(
   (response) => {
     return response.data;
@@ -37,12 +38,13 @@ mainAxios.interceptors.response.use(
     if (error.response.data.code === 401) {
       const authStore = useAuthStore();
       authStore.logout();
-    // 만료된 엑세스 토큰
+      // 만료된 엑세스 토큰
     } else if (error.response.data.code === 419) {
       await mainAxios.post('auth/reissue')
       return await mainAxios(error.config);
-    // 그 외의 예외
+      // 존재하지 않는 데이터
     } else {
+    // 그 외의 예외
       return error.response.data;
     }
   }

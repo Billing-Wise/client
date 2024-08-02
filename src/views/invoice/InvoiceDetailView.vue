@@ -37,6 +37,7 @@ import { mapStores } from 'pinia'
 import { usePaymentStore } from '@/stores/invoice/payment'
 import { sendInvoice } from '@/utils/invoice'
 import { useInvoiceDetailStore } from '@/stores/invoice/invoiceDetail'
+import { getInvoice } from '@/utils/invoice';
 
 
 export default {
@@ -80,6 +81,14 @@ export default {
       }
     },
   },
+  async created() {
+    this.invoiceDetailStore.$reset();
+    const result = await getInvoice(this.$route.params.id);
+    if (result.code === 404) {
+      this.$router.push({ name: 'noData' });
+      return;
+    }
+  }
 }
 </script>
 
@@ -87,14 +96,13 @@ export default {
 @import "../../assets/scss/component/table.scss";
 .root-container {
   @include flex-box(row, center, 100px);
-  background: $back-color;
-  width: 100%;
-  height: 100%;
-  padding: 60px 130px;
+  @include root-container;
+  padding: 60px 50px;
 }
 
 .left-side {
   @include flex-box(column, center, 20px);
+  box-sizing: border-box;
   min-width: 700px;
   width: 40%;
   min-height: 100%;
@@ -102,13 +110,13 @@ export default {
   border-radius: 10px;
   box-shadow: $base-shadow;
   background-color: white;
-
 }
 
 .right-side {
   @include flex-box(column, space-between, 20px);
   width: 700px;
   height: 100%;
+  min-height: 700px;
   padding: 30px 0;
 
   .btn-box {

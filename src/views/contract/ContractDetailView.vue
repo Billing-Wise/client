@@ -106,7 +106,11 @@ export default {
   },
   async created() {
     this.consentDetailStore.$reset();
-    await getContract(this.$route.params.id);
+    const result = await getContract(this.$route.params.id);
+    if (result.code === 404) {
+      this.$router.push({name: 'noData'});
+      return;
+    }
     await getConsent(this.contractDetailStore.data.member.id);
   }
 }
@@ -117,9 +121,8 @@ export default {
 
 .root-container {
   @include flex-box(row, space-between, 100px);
-  background: $back-color;
-  width: 100%;
-  height: 100%;
+  @include root-container;
+  height: auto;
   padding: 60px 130px;
 }
 
