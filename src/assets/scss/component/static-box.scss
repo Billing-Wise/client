@@ -1,0 +1,14 @@
+.static-box {
+  @include flex-box(column, space-between, 30px);
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  border: $theme-color 4px solid;
+
+  .title-box {
+    @include flex-box(row, center, 0px);
+    width: 100%;
+    font-size: 20px;
+    font-weight: bolder;
+  }
+}

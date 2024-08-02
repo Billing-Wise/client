@@ -40,11 +40,11 @@ export default {
 
 <style lang="scss" scoped>
   .side-bar {
-    position: fixed;
+    position: absolute;
     left: 0;
-    top:60px;
+    top: $nav-bar-height;
     width: $side-bar-width;
-    height: calc(100vh - $nav-bar-height);;
+    height: calc(100% - $nav-bar-height);;
     box-shadow: 3px 0px 4px 0px rgb(0, 0, 0, 0.25);
     z-index: 1;
     @include flex-box(column, space-between, 0px);

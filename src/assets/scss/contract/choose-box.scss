@@ -1,0 +1,17 @@
+.right-side {
+  @include flex-box(column, space-between, 20px);
+  position: relative;
+  width: 100%;
+  min-width: 800px;
+}
+
+.right-side-header {
+  @include flex-box(row, space-between, 20px);
+  width: 100%;
+
+  .input-box{
+    @include flex-box(row, space-between, 20px);
+    width: 50%;
+  }
+
+}

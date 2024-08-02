@@ -1,0 +1,59 @@
+@mixin base-table() {
+  width: 100%;
+  thead{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+}
+
+.table-box {
+  @include flex-box(column, space-between, 0px);
+  position:relative;
+  box-shadow: $base-shadow;
+  background: white;
+  width: 100%;
+  flex-grow: 1;
+  overflow:auto;
+  border-radius: 5px;
+}
+
+.table-row {
+  transition: all 0.3s;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $back-color;
+    opacity: 0.5;
+  }
+
+  .table-column {
+    // width: 100px;
+    font-weight: bold;
+    padding: 25px 20px;
+  }
+}
+
+.status-sticker {
+  @include flex-box(row, center, 0px);
+  @include white-text(14px);
+  padding: 3px 5px;
+  border-radius: 20px;
+}
+
+
+/* 웹킷 브라우저의 스크롤바 숨기기 */
+.table-box::-webkit-scrollbar {
+  display: none;
+}
+
+/* 파이어폭스의 스크롤바 숨기기 */
+.table-box {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Edge, IE 10+, 및 최신 브라우저의 스크롤바 숨기기 */
+.table-box {
+  -ms-overflow-style: none;  /* IE 10+ */
+}

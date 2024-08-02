@@ -51,7 +51,7 @@ export default {
 
       if (result.code == 200) {
         this.authStore.login();
-        this.$router.push({ name: 'home' });
+        this.$router.push({ name: 'home' })
       } else {
         this.invalidMsg = result.message;
         this.invalidInput = true;
@@ -60,7 +60,7 @@ export default {
     signup() {
       this.$router.push({ name: 'signup' })
     }
-  }
+  },
 }
 </script>
 
