@@ -9,7 +9,7 @@ import piniaPersist from 'pinia-plugin-persist'
 
 import App from './App.vue'
 import router from './router'
-import { useLoadingStore } from './stores/loading'
+import { useLoadingStore } from './stores/error/loading'
 
 const app = createApp(App)
 const pinia = createPinia();

@@ -3,7 +3,7 @@ import { fileAxios, mainAxios } from "./axios";
 import { useContractCreateStore } from "@/stores/contract/contractCreate";
 import { useContractDetailStore } from "@/stores/contract/contractDetail";
 import { useContractBulkStore } from "@/stores/contract/contractBulk";
-import { useLoadingStore } from "@/stores/loading";
+import { useLoadingStore } from "@/stores/error/loading";
 
 const contractListStore = useContractListStore();
 const contractDetailStore = useContractDetailStore();
@@ -39,8 +39,6 @@ async function getContract(contractId) {
   
   if (result.code === 200) {
     contractDetailStore.setData(result.data);
-  } if (result.code === 404) {
-    
   }
 
   return result;

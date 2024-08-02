@@ -84,8 +84,7 @@ export default {
   async created() {
     this.invoiceDetailStore.$reset();
     const result = await getInvoice(this.$route.params.id);
-    if (result.code === 404) {
-      this.$router.push({ name: 'noData' });
+    if (result.code !== 200 && result.code !== 400) {
       return;
     }
   }

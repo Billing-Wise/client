@@ -72,6 +72,9 @@ export default {
       link.click();
       document.body.removeChild(link);
     }
+  },
+  created() {
+    this.staticStore.$reset();
   }
 }
 </script>

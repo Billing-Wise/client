@@ -93,11 +93,6 @@ const router = createRouter({
           name:'settingPayment',
           component: () => import('@/views/setting/SettingPaymentView.vue')
         },
-        {
-          path : '/no-data',
-          name: 'noData',
-          component: () => import('@/views/error/NoDataView.vue')
-        }
       ]
     },
     {
@@ -263,7 +258,25 @@ const router = createRouter({
       ]
     },
     {
-      path: "/notFound",
+      path: "/server-error",
+      name: "serverError",
+      meta: { 
+        requiresAuth: false,
+        forMember: true,
+      },
+      component: () => import('@/views/error/ServerErrorView.vue')
+    },
+    {
+      path: "/access-denied",
+      name: "accessDenied",
+      meta: { 
+        requiresAuth: false,
+        forMember: true,
+      },
+      component: () => import('@/views/error/AccessDeniedView.vue')
+    },
+    {
+      path: "/not-found",
       name: "notFound",
       meta: { 
         requiresAuth: false,
@@ -273,7 +286,7 @@ const router = createRouter({
     },
     {
       path: "/:pathMatch(.*)*",
-      redirect: "/notFound",
+      redirect: "/not-found",
       meta: { 
         requiresAuth: false,
         forMember: true,

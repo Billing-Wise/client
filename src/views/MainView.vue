@@ -13,14 +13,12 @@
 import TheNavBarVue from "@/components/common/TheNavBar.vue";
 import TheSideBarVue from "@/components/common/TheSideBar.vue";
 import LoadingVue from "@/components/common/Loading.vue";
-import { useLoadingStore } from "@/stores/loading";
+import { useLoadingStore } from "@/stores/error/loading";
 import { mapStores } from "pinia";
+import { useErrorHandleStore } from "@/stores/error/errorHandle";
 
 export default {
   name: 'MainView',
-  watch: {
-
-  },
   data() {
     return {
       width: window.innerWidth,
@@ -34,6 +32,30 @@ export default {
   },
   computed: {
     ...mapStores(useLoadingStore),
+    ...mapStores(useErrorHandleStore),
+  },
+  watch: {
+    'errorHandleStore.notFound'(newValue) {
+      // 404 에러 발생
+      if (newValue) {
+        this.$router.replace({name: 'notFound'});
+        this.errorHandleStore.$reset();
+      }
+    },
+    'errorHandleStore.notAuthorized'(newValue) {
+      // 403 에러 발생
+      if (newValue) {
+        this.$router.replace({name: 'accessDenied'});
+        this.errorHandleStore.$reset();
+      }
+    },
+    'errorHandleStore.serverError'(newValue) {
+      // 서버 에러 발생
+      if (newValue) {
+        this.$router.push({name: 'serverError'});
+        this.errorHandleStore.$reset();
+      }
+    }
   }
 }
 </script>

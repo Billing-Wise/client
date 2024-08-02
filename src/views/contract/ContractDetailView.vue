@@ -106,12 +106,14 @@ export default {
   },
   async created() {
     this.consentDetailStore.$reset();
-    const result = await getContract(this.$route.params.id);
-    if (result.code === 404) {
-      this.$router.push({name: 'noData'});
+    const result1 = await getContract(this.$route.params.id);
+    if (result1.code !== 200 && result1.code !== 400) {
       return;
     }
-    await getConsent(this.contractDetailStore.data.member.id);
+    const result2 = await getConsent(this.contractDetailStore.data.member.id);
+    if (result2.code !== 200 && result2.code !== 400) {
+      return;
+    }
   }
 }
 </script>

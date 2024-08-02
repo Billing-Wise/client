@@ -1,7 +1,7 @@
 <template>
   <div class="root-container">
-    <img src="@/assets/images/warn.png" alt="warning">
-    <span>요청하신 페이지를 찾을 수 없습니다.</span>
+    <i class="bi bi-x-circle-fill"></i>
+    <span>접근 권한이 없는 페이지입니다.</span>
     <div class="btn-box">
       <WhiteIconBtnVue title="뒤로 가기" icon="bi bi-caret-left-fill" :func="goBack"/>
     </div>
@@ -12,7 +12,7 @@
 import WhiteIconBtnVue from '@/components/common/btn/WhiteIconBtn.vue';
 
 export default {
-  name: 'NotFoundView',
+  name: 'AccessDeniedView',
   components: {
     WhiteIconBtnVue
   },
@@ -29,10 +29,10 @@ export default {
   @include flex-box(column, center, 20px);
   width: 100vw;
   height: 100vh;
-  img {
-    width: 150px;
+  i {
+    font-size: 120px;
+    color: $theme-color
   }
-
 
   span {
     font-weight: bold;
