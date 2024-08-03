@@ -2,14 +2,16 @@
   <nav class="nav-bar">
     <img src="@/assets/images/name_white.png" alt="">
     <div class="nav-info">
-      <div class="nav-info-item">{{ clientName }}</div>
-      <div class="nav-info-item">{{ userName }} 님</div>
+      <div class="nav-info-item">{{ authStore.clientName }}</div>
+      <div class="nav-info-item">{{ authStore.userName }} 님</div>
     </div>
   </nav>
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/auth';
 import { mainAxios } from '@/utils/axios';
+import { mapStores } from 'pinia';
 
 export default {
   name: 'TheNavBarVue',
@@ -19,12 +21,14 @@ export default {
       userName: String,
     };
   },
+  computed: {
+    ...mapStores(useAuthStore)
+  },
   async mounted() {
     const result = await mainAxios.get('users/current');
-    this.clientName = result.data.clientName
-    this.userName = result.data.userName
-  },
-  method: {
+    if (result.code === 200) {
+      this.authStore.setUserData(result.data)
+    }
   },
 }
 </script>

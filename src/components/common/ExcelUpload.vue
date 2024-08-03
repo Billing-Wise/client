@@ -18,8 +18,8 @@
       <div class="error-box">{{ errorMsg }}</div>
     </footer>
   </div>
-  <a ref="hiddenLink" style="display: none;" :href="`/src/assets/excels/${store.download}`"
-    :download="store.download"></a>
+  <a ref="hiddenLink" style="display: none;" :href="store.download"
+    :download="store.fileName"></a>
 </template>
 
 <script>
@@ -52,6 +52,7 @@ export default {
       const link = this.$refs.hiddenLink;
       link.click();
     },
+    // 엑셀 파일 리드 후 사용자에게 데이터 표시
     readExel() {
       if (this.file === null) {
         this.errorMsg = '파일을 업로드해주세요.';
@@ -82,7 +83,6 @@ export default {
       };
 
       reader.readAsArrayBuffer(this.file);
-      console.log(this.store.uploadData)
     }
   },
   mounted() { 

@@ -125,7 +125,7 @@ export default {
   @include flex-box(row, space-between, 100px);
   @include root-container;
   height: auto;
-  padding: 60px 130px;
+  padding: 30px 130px;
 }
 
 .left-side {
@@ -146,7 +146,7 @@ export default {
 
 .right-side {
   @include flex-box(column, space-between, 20px);
-  position: relative;
+  // position: relative;
   width: 100%;
   height: 100%;
 
