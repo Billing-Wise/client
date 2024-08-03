@@ -14,7 +14,7 @@ export const useInvoiceListStore = defineStore('invoiceList', {
         { data: 'itemName', name: '상품명', notSortable: true},
         { data: 'memberName', name: '회원명', notSortable: true},
         { data: 'chargeAmount', name: '금액',},
-        { data: 'contractDate', name: '약정일',},
+        { data: 'contractDate', name: '결제일',},
         { data: 'dueDate', name: '납부 기한',},
         { data: 'createdAt', name: '생성일',},
         { data: 'paymentType', name: '결제 수단',},

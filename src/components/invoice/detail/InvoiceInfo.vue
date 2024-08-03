@@ -31,7 +31,7 @@
         <TitleInfoVue title="청구액" :info="`${invoiceDetailStore.data.chargeAmount} 원`" />
       </div>
       <div class="double-info">
-        <TitleInfoVue title="약정일" :info="contractDate" />
+        <TitleInfoVue title="결제일" :info="contractDate" />
         <TitleInfoVue title="납부 기한" :info="dueDate" />
       </div>
       <div class="double-info">

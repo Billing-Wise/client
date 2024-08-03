@@ -5,7 +5,7 @@
       <TitleSelectVue title="결제 수단" :selectedIdx="invoiceCreateStore.paymentTypeIdx" :keywordArr="invoiceCreateStore.paymentType"
       :choiceFunc="setPaymentType" />
       <InfoInputVue title="청구금" v-model="chargeAmount" type="number" />
-      <InfoInputVue title="약정일" type="date" v-model="contractDate" />
+      <InfoInputVue title="결제일" type="date" v-model="contractDate" />
       <InfoInputVue title="납부기한" type="date" v-model="dueDate" />
     </div>
     <div class="table-box">
@@ -15,7 +15,7 @@
     <div class="btn-box">
       <WarningBtnVue title="취소" :func="routeInvoice"/>
       <span>{{ warningMsg }}</span>
-      <ThemeBtnVue title="계약 등록" :func="createInvoice"/>
+      <ThemeBtnVue title="청구 등록" :func="createInvoice"/>
     </div>
   </div>
 </template>

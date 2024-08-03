@@ -7,7 +7,7 @@
           <TitleSelectVue title="결제 수단" :selectedIdx="paymentTypeIdx" :keywordArr="paymentType"
             :choiceFunc="setPaymentType" />
           <InfoInputVue title="청구금" v-model="chargeAmount" type="number" />
-          <InfoInputVue title="약정일" type="date" v-model="contractDate" />
+          <InfoInputVue title="결제일" type="date" v-model="contractDate" />
           <InfoInputVue title="납부기한" type="date" v-model="dueDate" />
         </div>
         <ModalFooterVue :title="title" :errorMsg="errorMsg" :func="() => updateInvoice()" />
