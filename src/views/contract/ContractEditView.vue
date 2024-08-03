@@ -3,12 +3,11 @@
     <div class="left-side">
       <ContractEditInfoVue />
       <div class="warning-msg">{{ warningMsg }}</div>
-      <div class="btn-box" v-if="contractCreateStore.step === 2">
+      <div class="btn-box">
         <WarningWideBtnVue title="취소" :func="routeContratDetail" />
         <SuccessWideBtnVue title="완료" :func="editContract" />
       </div>
     </div>
-    <ContractChooseInfoVue v-if="contractCreateStore.step === 2" />
   </div>
 </template>
 

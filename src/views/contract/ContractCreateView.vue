@@ -18,7 +18,6 @@
     </div>
     <ContractChooseMemberVue v-if="contractCreateStore.step === 0" />
     <ContractChooseItemVue v-if="contractCreateStore.step === 1" />
-    <ContractChooseInfoVue v-if="contractCreateStore.step === 2" />
   </div>
 </template>
 
@@ -96,6 +95,7 @@ export default {
   border-radius: 10px;
   box-shadow: $base-shadow;
   background-color: white;
+  transition: all 0.5s;
 
   .btn-box {
     @include flex-box(row, center, 60px);

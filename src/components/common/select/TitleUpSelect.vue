@@ -6,7 +6,7 @@
     <div class="select-box">
       <button class="select-btn" @click="opreateSelect">
         <span>{{ keywordArr[selectedIdx].name }}</span>
-        <i class="bi bi-caret-down-fill"></i>
+        <i class="bi bi-caret-up-fill"></i>
       </button>
       <transition name="fade">
         <ul class="select-list" v-if="selectVisible">
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'TitleSelecttVue',
+  name: 'TitleUpSelecttVue',
   props: {
     title: String,
     selectedIdx: Number,
@@ -76,7 +76,7 @@ export default {
   .select-box {
     width: 100%;
     height: 100%;
-    padding: 0px 10px;
+    padding: 0px 5px;
     font-weight: bold;
     font-size: 14px;
     border: $theme-color solid;
@@ -103,7 +103,7 @@ export default {
   .select-list {
     @include flex-box(column, center, 10px);
     @include select-list;
-    top: calc(100% + 10px);
+    bottom: calc(100%);
     width:90%;
   }
 </style>
