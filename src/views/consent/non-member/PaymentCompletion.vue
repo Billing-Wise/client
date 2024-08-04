@@ -17,9 +17,6 @@
         <p class="thank-you">이용해주셔서 감사합니다.</p>
       </div>
     </div>
-    <div class="button-container">
-      <ThmemBtnVue class="confirm-button" title="확인" @click="goHome" />
-    </div>
   </div>
 </template>
 
