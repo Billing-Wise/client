@@ -5,7 +5,7 @@
     <td class="table-column"><span>{{ contractData.memberName }}</span></td>
     <td class="table-column"><span>{{ contractData.chargeAmount }} 원</span></td>
     <td class="table-column"><span>매월 {{ contractData.contractCycle }}일</span></td>
-    <td class="table-column"><span>{{ contractData.subscription? '구독' : '단기' }}</span></td>
+    <td class="table-column"><span>{{ contractData.subscription ? '구독' : '단기' }}</span></td>
     <td class="table-column"><span>{{ contractData.invoiceType.name }}</span></td>
     <td class="table-column">
       <div class="contract-status">
@@ -14,7 +14,9 @@
       </div>
     </td>
     <td class="table-column"><span>{{ contractData.paymentType.name }}</span></td>
-    <td class="table-column"><div class="status-sticker" :class="upPaidStatusClass">{{ upPaidStatus }}</div></td>
+    <td class="table-column">
+      <div class="status-sticker" :class="upPaidStatusClass">{{ upPaidStatus }}</div>
+    </td>
   </tr>
 </template>
 
@@ -26,7 +28,7 @@ export default {
   },
   data() {
     return {
-      contractStatusClass : ['pending', 'progress', 'end']
+      contractStatusClass: ['pending', 'progress', 'end']
     }
   },
   computed: {
@@ -62,6 +64,7 @@ export default {
 
 .contract-status {
   @include flex-box(row, start, 10px);
+
   div {
     width: 10px;
     height: 10px;
@@ -70,14 +73,14 @@ export default {
 }
 
 .waiting {
-    background-color: $waiting-color;
-  }
+  background-color: $waiting-color;
+}
 
-  .success {
-    background-color: $success-color;
-  }
+.success {
+  background-color: $success-color;
+}
 
-  .warning {
-    background-color: $warning-color;
-  }
+.warning {
+  background-color: $warning-color;
+}
 </style>

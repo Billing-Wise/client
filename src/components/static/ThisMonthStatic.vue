@@ -84,20 +84,6 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/component/static-box.scss";
 
-.progress {
-  height: 40px;
-  width: 250px;
-  border: $theme-color 3px solid;
-  background-color: white;
-  box-shadow: $base-shadow;
-
-  .progress-bar {
-    background-color: $theme-color;
-    font-size: 15px;
-    font-weight: bold;
-  }
-}
-
 .info-box {
   @include flex-box(row, center, 30px);
   width: 100%;

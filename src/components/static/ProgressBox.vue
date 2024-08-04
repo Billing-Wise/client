@@ -65,10 +65,6 @@ export default {
 <style lang="scss" scoped>
 
 @import "@/assets/scss/component/static-box.scss";
-.static-box {
-  flex-grow: 1;
-}
-
 .progress {
   height: 40px;
   width: 250px;

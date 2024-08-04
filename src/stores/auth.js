@@ -6,8 +6,15 @@ export const useAuthStore = defineStore('auth', {
   state() {
     return {
       isLoggedIn: false,
-      clientName: '',
-      userName: ''
+      data: {
+        clientId: 0,
+        clientName : '',
+        clientPhone : '',
+        userEmail : '',
+        userId : 0,
+        userName : '홍길동',
+        userPhone : '01011111111'
+      },
     }
   },
   actions: {
@@ -21,8 +28,7 @@ export const useAuthStore = defineStore('auth', {
       router.push({name: 'login'})
     },
     setUserData(data) {
-      this.clientName = data.clientName
-      this.userName = data.userName
+      this.data = data
     }
   },
   persist: {

@@ -29,6 +29,7 @@ import { getItem } from '@/utils/item';
 import { mapActions, mapStores } from 'pinia';
 import { useContractListStore } from '@/stores/contract/contractList';
 import { getContractList } from '@/utils/contract';
+import { useContractCreateStore } from '@/stores/contract/contractCreate';
 import ItemInfoVue from '@/components/item/ItemInfo.vue';
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue';
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue';
@@ -37,7 +38,6 @@ import ItemDeleteModalVue from '@/components/item/modal/ItemDeleteModal.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import ItemContractTableVue from '@/components/item/table/ItemContractTable.vue';
 import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue';
-import { useContractCreateStore } from '@/stores/contract/contractCreate';
 
 export default {
   name: 'ItemDetailView',
@@ -116,16 +116,18 @@ export default {
 @import "../../assets/scss/component/table.scss";
 
 .root-container {
-  @include flex-box(row, space-between, 20px);
+  @include flex-box(row, center, 60px);
   @include root-container;
   height: 100%;
+  width: fit-content;
   padding: 20px 50px
 }
 
 .left-side {
-  @include flex-box(column, space-between, 0px);
-  width: 400px;
-  height: 100%;
+  @include flex-box(column, space-between, 30px);
+  width: 330px;
+  min-height: 100%;
+  height: auto;
   padding: 40px 30px;
   border-radius: 10px;
   box-shadow: $base-shadow;
@@ -140,7 +142,7 @@ export default {
 .right-side {
   @include flex-box(column, space-between, 20px);
   position: relative;
-  width: 100%;
+  width: 1200px;
   height: 100%;
 
   .right-header {

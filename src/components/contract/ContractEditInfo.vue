@@ -55,6 +55,7 @@ import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
 import NumberInputVue from '@/components/common/input/NumberInput.vue';
 import InfoInputVue from '@/components/common/input/InfoInput.vue';
 import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
+import { useContractDetailStore } from '@/stores/contract/contractDetail';
 
 export default {
   name: 'ContractEditInfoVue',
@@ -66,6 +67,7 @@ export default {
   },
   computed: {
     ...mapStores(useContractCreateStore),
+    ...mapStores(useContractDetailStore),
     item: {
       get() {
         return this.contractCreateStore.item;
@@ -106,6 +108,9 @@ export default {
       this.contractCreateStore.setIsEasyConsent(idx);
     }
   },
+  created() {
+    this.contractCreateStore.setAllDataFromDetailStore(this.contractDetailStore.data)
+  }
 }
 </script>
 

@@ -26,7 +26,6 @@ export default {
 <style lang='scss' scoped>
   .info-input {
     @include flex-box(row, center, 0px);
-    background-color: white;
     width: 100%;
     height: 40px;
 
@@ -49,6 +48,7 @@ export default {
       border: $theme-color solid;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
+      background-color: white;
       &:focus {
         outline: none;
       }

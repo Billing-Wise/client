@@ -1,22 +1,26 @@
 <template>
   <div class="root-container">
-    <div class="inner-container">
-      <div class="left-container">
-        <div class="left-header">
+    <div class="main-container">
+      <div class="top-container">
+        <div class="top-left">
           <ThisMonthStatic />
           <ProgressBoxVue />
         </div>
-        <InvoiceAreaChartVue />
-      </div>
-      <div class="right-container">
         <div class="btn-container">
-          <ThemeWideBtnVue title="CSV 다운로드" :func="downloadCsvData"/>
-          <ThemeWideBtnVue title="엑셀 다운로드" :func="downloadExcelData"/>
+          <div class="btn-row">
+            <ExcelBtnVue title="CSV" :func="downloadCsvData" />
+            <ExcelBtnVue title="엑셀" :func="downloadExcelData" />
+          </div>
+          <ThemeWideBtnVue title="비회원 접속 링크" @click="() => operationLinkModal(true)"/>
         </div>
+      </div>
+      <div class="bottom-container">
+        <InvoiceAreaChartVue />
         <InvoiceDoughnutChartVue />
       </div>
     </div>
   </div>
+  <NonMemberLinkModalVue :is-visible="linkModalVisible" :close-modal="() => operationLinkModal(false)" />
 </template>
 
 <script>
@@ -29,6 +33,8 @@ import ThisMonthStatic from '@/components/static/ThisMonthStatic.vue';
 import InvoiceDoughnutChartVue from '@/components/static/InvoiceDoughnutChart.vue';
 import InvoiceAreaChartVue from '@/components/static/InvoiceAreaChart.vue';
 import ThemeWideBtnVue from '@/components/common/btn/ThemeWideBtn.vue';
+import ExcelBtnVue from '@/components/common/btn/ExcelBtn.vue';
+import NonMemberLinkModalVue from '@/components/static/modal/NonMemberLinkModal.vue';
 
 export default {
   name: 'HomeView',
@@ -38,11 +44,22 @@ export default {
     InvoiceDoughnutChartVue,
     InvoiceAreaChartVue,
     ThemeWideBtnVue,
+    ExcelBtnVue,
+    NonMemberLinkModalVue
+  },
+  data() {
+    return {
+      linkModalVisible: false
+    }
   },
   computed: {
-    ...mapStores(useStaticStore)
+    ...mapStores(useStaticStore),
   },
   methods: {
+    // 모달창 제어
+    operationLinkModal(value) {
+      this.linkModalVisible = value
+    },
     // 엑셀 파일 다운로드
     async downloadExcelData() {
       const result = await getAllStatic();
@@ -51,7 +68,7 @@ export default {
       const worksheet = XLSX.utils.json_to_sheet(data);
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-      
+
       XLSX.writeFile(workbook, "data.xlsx");
     },
     // CSV 파일 다운로드
@@ -81,38 +98,41 @@ export default {
 
 <style lang="scss" scoped>
 .root-container {
-  @include flex-box(row, center, 0px);
+  @include flex-box(column, center, 0px);
   @include root-container;
   height: auto;
-  padding: 30px 50px
-}
+  width: fit-content;
+  padding: 30px 50px;
 
-.inner-container {
-  @include flex-box(row, space-between, 0px);
-  width: 1620px;
-  height: 850px
-}
-
-.left-container {
-  @include flex-box(column, space-between, 40px);
-  width: 1100px;
-  min-width: 1100px;
-  height: 100%;
-
-  .left-header {
-    @include flex-box(row, space-between, 30px);
-    width: 100%;
+  .main-container {
+    @include flex-box(column, center, 50px);
+    width: 1400px;
   }
 }
 
-.right-container {
-  @include flex-box(column, space-between, 30px);
-  height: 100%;
+.top-container {
+  @include flex-box(row, space-between, 40px);
+  width: 100%;
+
+  .top-left {
+    @include flex-box(row, space-between, 30px);
+    min-width: 1000px;
+  }
 
   .btn-container {
     @include flex-box(column, center, 20px);
-    flex-grow: 1;
-    width: 100%;
+    width: 250px;
+
+    .btn-row {
+      @include flex-box(row, space-between, 20px);
+      width: 100%;
+    }
   }
+}
+
+.bottom-container {
+  @include flex-box(row, space-between, 30px);
+  width: 100%;
+  height: 600px;
 }
 </style>
