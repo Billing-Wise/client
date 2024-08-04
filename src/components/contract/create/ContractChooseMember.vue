@@ -24,6 +24,7 @@ export default {
 @import '@/assets/scss/contract/choose-box.scss';
 
 .right-side {
+  width: 800px;
   height: 100%;
 }
 </style>

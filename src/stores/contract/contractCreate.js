@@ -36,8 +36,7 @@ export const useContractCreateStore = defineStore('contractCreate', {
       ],
       isEasyConsentIdx: 0,
       isEasyConsent: [
-        { name: '미사용', value: false },
-        { name: '사용', value: true },
+        { name: '불필요', value: false },
       ]
     }
   },
@@ -74,6 +73,17 @@ export const useContractCreateStore = defineStore('contractCreate', {
     },
     setPaymentType(idx) {
       this.paymentTypeIdx = idx;
+      if (idx === 0) {
+        this.isEasyConsentIdx = 0;
+        this.isEasyConsent = [
+          { name: '불필요', value: false },
+        ]
+      } else {
+        this.isEasyConsent = [
+          { name: '미사용', value: false },
+          { name: '사용', value: true },
+        ]
+      }
     },
     setIsEasyConsent(idx) {
       this.isEasyConsentIdx = idx
