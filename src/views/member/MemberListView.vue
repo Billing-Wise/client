@@ -1,20 +1,20 @@
 <template>
   <div class="root-container">
-    <div class="top-btn-box">
-      <div class="btn-box">
-        <ThemeIconBtnVue title="회원 등록" icon="bi bi-plus-square" :func="() => operateModal(true)"/>
-        <ExcelBtnVue title="대량 등록" :func="directCreateBulk"/>
+    <div class="main-container">
+      <div class="top-btn-box">
+        <div class="btn-box">
+          <ThemeIconBtnVue title="회원 등록" icon="bi bi-plus-square" :func="() => operateModal(true)" />
+          <ExcelBtnVue title="대량 등록" :func="directCreateBulk" />
+        </div>
+        <MemberSearchVue />
       </div>
-      <MemberSearchVue/>
-    </div>
-    <div class="table-box">
-      <MemberTableVue/>
-      <PaginationBarVue :store="memberStore"/>
+      <div class="table-box">
+        <MemberTableVue />
+        <PaginationBarVue :store="memberStore" />
+      </div>
     </div>
   </div>
-  <MemberCreateModalVue 
-    :isVisible="modalVisible" 
-    :closeModal="() => operateModal(false)"/>
+  <MemberCreateModalVue :isVisible="modalVisible" :closeModal="() => operateModal(false)" />
 </template>
 
 <script>
@@ -57,7 +57,7 @@ export default {
       this.modalVisible = value;
     },
     directCreateBulk() {
-      this.$router.push({name: 'memberBulk'});
+      this.$router.push({ name: 'memberBulk' });
     },
     setupWatchers() {
       this.$watch('memberStore.size', this.getMemberList);
@@ -77,19 +77,26 @@ export default {
 @import "../../assets/scss/component/table.scss";
 
 .root-container {
-  @include flex-box(column, space-between, 20px);
+  @include flex-box(column, center, 20px);
+  @include root-container;
   background: $back-color;
-  width: 100%;
+  width: fit-content;
   height: 100%;
-  padding: 30px 40px
+  padding: 30px 40px;
+
+  .main-container {
+    @include flex-box(column, center, 30px);
+    width: 1200px;
+    height: 100%;
+  }
 }
 
 .top-btn-box {
   @include flex-box(row, space-between, 0px);
   width: 100%;
+
   .btn-box {
     @include flex-box(row, space-between, 20px);
   }
 }
-
 </style>

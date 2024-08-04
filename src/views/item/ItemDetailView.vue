@@ -114,13 +114,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/scss/component/table.scss";
+$root-margin: 20px;
 
 .root-container {
   @include flex-box(row, center, 60px);
   @include root-container;
   height: 100%;
   width: fit-content;
-  padding: 20px 50px
+  padding: $root-margin 50px
 }
 
 .left-side {
@@ -128,6 +129,7 @@ export default {
   width: 330px;
   min-height: 100%;
   height: auto;
+  margin: $root-margin 0;
   padding: 40px 30px;
   border-radius: 10px;
   box-shadow: $base-shadow;

@@ -102,8 +102,7 @@ export default {
 .left-side {
   @include flex-box(column, center, 20px);
   box-sizing: border-box;
-  min-width: 700px;
-  width: 40%;
+  width: 650px;
   min-height: 100%;
   padding: 40px 50px;
   border-radius: 10px;

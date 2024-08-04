@@ -1,13 +1,15 @@
 <template>
   <div class="root-container">
-    <div class="top-btn-box">
-      <div class="btn-box">
-        <ThemeIconBtnVue title="청구 수동 생성" icon="bi bi-plus-square" :func="routeCreate"/>
+    <div class="main-container">
+      <div class="top-btn-box">
+        <div class="btn-box">
+          <ThemeIconBtnVue title="청구 수동 생성" icon="bi bi-plus-square" :func="routeCreate" />
+        </div>
       </div>
-    </div>
-    <div class="table-box">
-      <InvoiceTableVue/>
-      <PaginationBarVue :store="invoiceListStore"/>
+      <div class="table-box">
+        <InvoiceTableVue />
+        <PaginationBarVue :store="invoiceListStore" />
+      </div>
     </div>
   </div>
 </template>
@@ -32,7 +34,7 @@ export default {
   },
   methods: {
     routeCreate() {
-      this.$router.push({name: 'invoiceCreate'})
+      this.$router.push({ name: 'invoiceCreate' })
     },
     async getInvoiceList() {
       const result = await getInvoiceList();
@@ -65,15 +67,23 @@ export default {
 .root-container {
   @include flex-box(column, space-between, 20px);
   @include root-container;
-  padding: 30px 40px
+  width: fit-content;
+  height: 100%;
+  padding: 30px 40px;
+
+  .main-container {
+    @include flex-box(column, center, 30px);
+    width: 1600px;
+    height: 100%;
+  }
 }
 
 .top-btn-box {
   @include flex-box(row, space-between, 0px);
   width: 100%;
+
   .btn-box {
     @include flex-box(row, space-between, 20px);
   }
 }
-
 </style>

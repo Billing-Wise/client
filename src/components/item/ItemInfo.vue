@@ -38,6 +38,7 @@ export default {
 .info-container {
   @include flex-box(column, center, 20px);
   width: 100%;
+
   img {
     width: 250px;
     height: 250px;

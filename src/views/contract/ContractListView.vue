@@ -1,14 +1,16 @@
 <template>
   <div class="root-container">
-    <div class="top-btn-box">
-      <div class="btn-box">
-        <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square" :func="routeCreate"/>
-        <ExcelBtnVue title="대량 등록" :func="routeCreateBulk"/>
+    <div class="main-container">
+      <div class="top-btn-box">
+        <div class="btn-box">
+          <ThemeIconBtnVue title="계약 등록" icon="bi bi-plus-square" :func="routeCreate" />
+          <ExcelBtnVue title="대량 등록" :func="routeCreateBulk" />
+        </div>
       </div>
-    </div>
-    <div class="table-box">
-      <ContractTableVue/>
-      <PaginationBarVue :store="contractListStore"/>
+      <div class="table-box">
+        <ContractTableVue />
+        <PaginationBarVue :store="contractListStore" />
+      </div>
     </div>
   </div>
 </template>
@@ -39,10 +41,10 @@ export default {
   },
   methods: {
     routeCreate() {
-      this.$router.push({name: 'contractCreate'});
+      this.$router.push({ name: 'contractCreate' });
     },
-    routeCreateBulk(){
-      this.$router.push({name: 'contractCreateBulk'});
+    routeCreateBulk() {
+      this.$router.push({ name: 'contractCreateBulk' });
     },
     async getContractList() {
       const result = await getContractList();
@@ -75,16 +77,23 @@ export default {
 .root-container {
   @include flex-box(column, space-between, 20px);
   @include root-container;
+  width: fit-content;
   height: 100%;
-  padding: 30px 40px
+  padding: 30px 40px;
+
+  .main-container {
+    @include flex-box(column, center, 30px);
+    width: 1600px;
+    height: 100%;
+  }
 }
 
 .top-btn-box {
   @include flex-box(row, space-between, 0px);
   width: 100%;
+
   .btn-box {
     @include flex-box(row, space-between, 20px);
   }
 }
-
 </style>
