@@ -8,7 +8,7 @@
       <PaymentInfoVue/>
       <div class="btn-box" v-if="invoiceDetailStore.data.paymentStatus.id !== 2">
         <ThemeWideBtnVue title="청구서 발송" 
-        v-if="invoiceDetailStore.data.paymentType.id === 1"
+          v-if="invoiceDetailStore.data.paymentType.id === 1 || invoiceDetailStore.data.paymentStatus.id === 1"
           :func="sendInvoice" />
         <SuccessWideBtnVue title="수정" :func="() => operateEditModal(true)"/>
         <WarningWideBtnVue title="삭제" :func="() => operateDeleteModal(true)"/>

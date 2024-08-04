@@ -37,7 +37,7 @@ export default {
       @include flex-box(row, start, 0px);
       flex-grow: 1;
       height: 100%;
-      padding: 0px 20px;
+      padding: 0px 10px;
       font-weight: bold;
       border: $theme-color solid;
       border-top-right-radius: 5px;

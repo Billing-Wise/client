@@ -142,7 +142,7 @@ export default {
 .right-side {
   @include flex-box(column, space-between, 20px);
   position: relative;
-  width: 1200px;
+  width: 1400px;
   height: 100%;
 
   .right-header {

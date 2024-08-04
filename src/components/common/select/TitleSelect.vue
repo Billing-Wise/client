@@ -94,7 +94,7 @@ export default {
     @include flex-box(row, space-between, 10px);
     @include base-icon();
     width: 100%;
-    padding: 7px 15px;
+    padding: 7px 0px;
     background: none;
     border: none;
     font-weight: bold
