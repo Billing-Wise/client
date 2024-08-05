@@ -44,30 +44,6 @@ export default {
     TitleSelectVue,
     InfoInputVue,
   },
-  data() {
-    return {
-      isSubscriptionIdx: 0,
-      isSubscription: [
-        { name: '정기', value: 'true' },
-        { name: '단기', value: 'false' },
-      ],
-      invoiceTypeIdx: 0,
-      invoiceType: [
-        { name: '자동 청구', value: 1 },
-        { name: '수동 청구', value: 2 },
-      ],
-      paymentTypeIdx: 0,
-      paymentType: [
-        { name: '납부자 결제', value: 1 },
-        { name: '실시간 CMS', value: 2 },
-      ],
-      isEasyConsentIdx: 0,
-      isEasyConsent: [
-        { name: '미사용', value: false },
-        { name: '사용', value: true },
-      ]
-    }
-  },
   computed: {
     ...mapStores(useContractCreateStore),
     contractCycle: {

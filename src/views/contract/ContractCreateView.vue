@@ -18,7 +18,6 @@
     </div>
     <ContractChooseMemberVue v-if="contractCreateStore.step === 0" />
     <ContractChooseItemVue v-if="contractCreateStore.step === 1" />
-    <ContractChooseInfoVue v-if="contractCreateStore.step === 2" />
   </div>
 </template>
 
@@ -89,13 +88,13 @@ export default {
 
 .left-side {
   @include flex-box(column, space-between, 20px);
-  min-width: 700px;
-  width: 40%;
+  width: 700px;
   height: 100%;
   padding: 40px 50px;
   border-radius: 10px;
   box-shadow: $base-shadow;
   background-color: white;
+  transition: all 0.5s;
 
   .btn-box {
     @include flex-box(row, center, 60px);

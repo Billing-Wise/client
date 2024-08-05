@@ -1,5 +1,5 @@
 <template>
-  <div class="main-view" :style="{ width: width + 'px', height: height + 'px'}">
+  <div class="main-view">
     <TheNavBarVue/>
     <TheSideBarVue/>
     <div class="main-content">
@@ -61,15 +61,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .main-view {
-    position:relative;
-  }
   .main-content {
-    position: absolute;
-    top: $nav-bar-height;
-    left: $side-bar-width;
+    background: $back-color;
+    padding-top: $nav-bar-height;
+    padding-left: $side-bar-width;
+    width: 100vw;
+    height: 100vh;
     overflow: auto;
-    width: calc(100% - $side-bar-width);
-    height: calc(100% - $nav-bar-height);
   }
 </style>

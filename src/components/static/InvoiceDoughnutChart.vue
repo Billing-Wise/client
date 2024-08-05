@@ -95,13 +95,16 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/component/static-box.scss";
 
+.static-box {
+  height: 100%
+}
 
 
-  .info-box {
-    @include flex-box(row, space-between, 50px);
-    height: 100%;
-    padding: 30px 0px;
-  }
+.info-box {
+  @include flex-box(row, space-between, 50px);
+  height: 100%;
+  padding: 30px 0px;
+}
 
 
 

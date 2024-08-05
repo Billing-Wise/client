@@ -119,4 +119,24 @@ async function deleteContract(contractId) {
   return result;
 }
 
-export {getContractList, getContract, createContract, createContractBulk, editContract, deleteContract}
+// 계약 상태 변경
+async function editContractStatus(contractId, statusId) {
+  const result = await mainAxios.put(`contracts/${contractId}/status`, statusId);
+
+  if (result.code === 200) {
+    let contractName = null;
+
+    if (statusId === 3) {
+      contractName = '종료'
+    } else if (statusId === 2) {
+      contractName = '진행'
+    }
+    
+    const data = { id: statusId, name: contractName };
+    contractDetailStore.setContractStatus(data);
+  }
+
+  return result;
+}
+
+export {getContractList, getContract, createContract, createContractBulk, editContract, deleteContract, editContractStatus}

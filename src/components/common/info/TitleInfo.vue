@@ -12,7 +12,7 @@ export default {
   name: 'TitleInfoVue',
   props: {
     'title' : String,
-    'info': String,
+    'info': [String, Number],
   },
 }
 </script>
@@ -20,7 +20,6 @@ export default {
 <style lang='scss' scoped>
   .info-input {
     @include flex-box(row, center, 0px);
-    background-color: white;
     width: 100%;
     height: 40px;
 
@@ -38,11 +37,12 @@ export default {
       @include flex-box(row, start, 0px);
       flex-grow: 1;
       height: 100%;
-      padding: 0px 20px;
+      padding: 0px 10px;
       font-weight: bold;
       border: $theme-color solid;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
+      background-color: white;
     }
   }
 </style>

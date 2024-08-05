@@ -21,16 +21,28 @@
     :class="{ 'info-box': true, 'active': contractCreateStore.step === 2 }">
       <span class="title">계약 정보</span>
       <div class="double-info">
-        <TitleInfoVue title="약정일" :info="`매월 ${contractCreateStore.contractCycle} 일`" />
-        <TitleInfoVue title="납부 기한" :info="`${contractCreateStore.paymentDueCycle} 일`" />
+        <NumberInputVue title="약정일" unit="일" v-model="contractCycle"/>
+        <NumberInputVue title="납부 기한" unit="일" v-model="paymentDueCycle"/>
       </div>
       <div class="double-info">
-        <TitleInfoVue title="구독 여부" :info="contractCreateStore.isSubscriptionName" />
-        <TitleInfoVue title="청구 생성" :info="contractCreateStore.invoiceTypeName" />
+        <TitleSelectVue title="구독 여부" 
+            :selectedIdx="contractCreateStore.isSubscriptionIdx" 
+            :keywordArr="contractCreateStore.isSubscription"
+            :choiceFunc="setSubscription" />
+          <TitleSelectVue title="청구 생성" 
+            :selectedIdx="contractCreateStore.invoiceTypeIdx" 
+            :keywordArr="contractCreateStore.invoiceType"
+            :choiceFunc="setInvoiceType" />
       </div>
       <div class="double-info">
-        <TitleInfoVue title="결제 수단" :info="contractCreateStore.paymentTypeName" />
-        <TitleInfoVue title="간편 동의" :info="contractCreateStore.isEasyConsentName" />
+        <TitleSelectVue title="결제 수단" 
+            :selectedIdx="contractCreateStore.paymentTypeIdx" 
+            :keywordArr="contractCreateStore.paymentType"
+            :choiceFunc="setPaymentType" />
+          <TitleSelectVue title="간편 동의" 
+            :selectedIdx="contractCreateStore.isEasyConsentIdx" 
+            :keywordArr="contractCreateStore.isEasyConsent"
+            :choiceFunc="setEasyConsent"/>
       </div>
     </div>
   </div>
@@ -39,17 +51,23 @@
 <script>
 import { useContractCreateStore } from '@/stores/contract/contractCreate';
 import { mapStores } from 'pinia';
-import TitleInfoVue from '../common/info/TitleInfo.vue';
-import InfoInputVue from '../common/input/InfoInput.vue';
+import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
+import NumberInputVue from '@/components/common/input/NumberInput.vue';
+import InfoInputVue from '@/components/common/input/InfoInput.vue';
+import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
+import { useContractDetailStore } from '@/stores/contract/contractDetail';
 
 export default {
   name: 'ContractEditInfoVue',
   components: {
     TitleInfoVue,
-    InfoInputVue
+    InfoInputVue,
+    NumberInputVue,
+    TitleSelectVue
   },
   computed: {
     ...mapStores(useContractCreateStore),
+    ...mapStores(useContractDetailStore),
     item: {
       get() {
         return this.contractCreateStore.item;
@@ -58,8 +76,41 @@ export default {
         this.contractCreateStore.item.price = value.price;
         this.contractCreateStore.item.count = value.count;
       }
+    },
+    contractCycle: {
+      get() {
+        return this.contractCreateStore.contractCycle;
+      },
+      set(value) {
+        this.contractCreateStore.contractCycle = value;
+      }
+    },
+    paymentDueCycle: {
+      get() {
+        return this.contractCreateStore.paymentDueCycle;
+      },
+      set(value) {
+        this.contractCreateStore.paymentDueCycle = value;
+      }
+    },
+  },
+  methods: {
+    setSubscription(idx) {
+      this.contractCreateStore.setIsSubscription(idx);
+    },
+    setInvoiceType(idx) {
+      this.contractCreateStore.setInvoiceType(idx);
+    },
+    setPaymentType(idx) {
+      this.contractCreateStore.setPaymentType(idx);
+    },
+    setEasyConsent(idx) {
+      this.contractCreateStore.setIsEasyConsent(idx);
     }
   },
+  created() {
+    this.contractCreateStore.setAllDataFromDetailStore(this.contractDetailStore.data)
+  }
 }
 </script>
 

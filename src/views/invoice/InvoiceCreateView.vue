@@ -1,21 +1,23 @@
 <template>
   <div class="root-container">
-    <div class="btn-box">
-      <TitleInfoVue title="계약ID" :info="invoiceCreateStore.data.contractId"/>
-      <TitleSelectVue title="결제 수단" :selectedIdx="invoiceCreateStore.paymentTypeIdx" :keywordArr="invoiceCreateStore.paymentType"
-      :choiceFunc="setPaymentType" />
-      <InfoInputVue title="청구금" v-model="chargeAmount" type="number" />
-      <InfoInputVue title="약정일" type="date" v-model="contractDate" />
-      <InfoInputVue title="납부기한" type="date" v-model="dueDate" />
-    </div>
-    <div class="table-box">
-      <InvoiceCreateTableVue />
-      <PaginationBarVue :store="contractListStore" />
-    </div>
-    <div class="btn-box">
-      <WarningBtnVue title="취소" :func="routeInvoice"/>
-      <span>{{ warningMsg }}</span>
-      <ThemeBtnVue title="계약 등록" :func="createInvoice"/>
+    <div class="main-container">
+      <div class="btn-box">
+        <TitleInfoVue title="계약ID" :info="invoiceCreateStore.data.contractId" />
+        <TitleSelectVue title="결제 수단" :selectedIdx="invoiceCreateStore.paymentTypeIdx"
+          :keywordArr="invoiceCreateStore.paymentType" :choiceFunc="setPaymentType" />
+        <InfoInputVue title="청구금" v-model="chargeAmount" type="number" />
+        <InfoInputVue title="결제일" type="date" v-model="contractDate" />
+        <InfoInputVue title="납부기한" type="date" v-model="dueDate" />
+      </div>
+      <div class="table-box">
+        <InvoiceCreateTableVue />
+        <PaginationBarVue :store="contractListStore" />
+      </div>
+      <div class="btn-box">
+        <WarningBtnVue title="취소" :func="routeInvoice" />
+        <span>{{ warningMsg }}</span>
+        <ThemeBtnVue title="청구 등록" :func="createInvoice" />
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +49,7 @@ export default {
   },
   data() {
     return {
-      warningMsg:''
+      warningMsg: ''
     }
   },
   computed: {
@@ -80,11 +82,11 @@ export default {
   },
   methods: {
     routeInvoice() {
-      this.$router.push({name: 'invoice'})
+      this.$router.push({ name: 'invoice' })
     },
     async createInvoice() {
       const result = await createInvoice();
-      
+
       if (result.code === 200) {
         this.$router.push(`/invoice/${result.data}`);
       } else {
@@ -126,16 +128,25 @@ export default {
 .root-container {
   @include flex-box(column, space-between, 30px);
   @include root-container;
-  padding: 30px 40px
+  padding: 30px 40px;
+  height: 100%;
+  width: fit-content;
+
+  .main-container {
+    @include flex-box(column, center, 30px);
+    width: 1400px;
+    height: 100%;
+  }
 }
 
 .btn-box {
-    @include flex-box(row, space-between, 20px);
-    width: 100%;
-    span {
-      font-size: 18px;
-      font-weight: bold;
-      color: $warning-color
-    }
+  @include flex-box(row, space-between, 20px);
+  width: 100%;
+
+  span {
+    font-size: 18px;
+    font-weight: bold;
+    color: $warning-color
   }
+}
 </style>
