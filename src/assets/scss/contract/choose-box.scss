@@ -1,8 +1,7 @@
 .right-side {
   @include flex-box(column, space-between, 20px);
   position: relative;
-  width: 100%;
-  min-width: 800px;
+  height: 100%;
 }
 
 .right-side-header {

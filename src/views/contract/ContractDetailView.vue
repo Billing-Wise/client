@@ -9,7 +9,13 @@
     </div>
     <div class="right-side">
       <div class="right-header">
-        <span class="contract-title">현재 계약 관련 청구</span>
+        <div class="haeder-left">
+          <div class="contract-status">
+            <span>{{ contractDetailStore.data.contractStatus.name }}</span>
+            <div :class="contractStatsClass"></div>
+          </div>
+          <span class="contract-title">현재 계약 관련 청구</span>
+        </div>
         <div class="right-btn-box">
           <ThemeIconBtnVue title="동의서 등록" icon="bi bi-plus-square" :func="() => operationConsentModal(true)"
             v-if="!canCreateInvoice()" />
@@ -17,6 +23,8 @@
             v-if="canCreateInvoice()" />
           <ThemeIconBtnVue title="동의서 수정" icon="bi bi-pencil-square" :func="() => operationConsentEditModal(true)"
             v-if="canEditConsent()" />
+          <WarningBtnVue title="계약 종료" :func="() => editContractStatus(3)" v-if="contractDetailStore.data.contractStatus.id === 2"/>
+          <SuccessBtnVue title="계약 재개" :func="() => editContractStatus(2)" v-if="contractDetailStore.data.contractStatus.id === 3"/>
         </div>
       </div>
       <div class="table-box">
@@ -26,7 +34,7 @@
     </div>
   </div>
   <ContractDeleteModalVue :is-visible="deleteModalVisible" :close-modal="() => operateDeleteModal(false)" />
-    <InvoiceCreateModalVue :is-visible="creaeteInvoiceModalVisible"
+  <InvoiceCreateModalVue :is-visible="creaeteInvoiceModalVisible"
     :close-modal="() => operateCreaeteInvoiceModal(false)" />
   <ConsentCreateModalVue :is-visible="consentModalVisible" :close-modal="() => operationConsentModal(false)" />
   <ConsentUpdateModalVue :is-visible="consentEditModalVisible" :close-modal="() => operationConsentEditModal(false)" />
@@ -43,13 +51,15 @@ import ThemeIconBtnVue from '@/components/common/btn/ThemeIconBtn.vue'
 import InvoiceCreateModalVue from '@/components/contract/modal/InvoiceCreateModal.vue'
 import ConsentCreateModalVue from '@/components/consent/modal/ConsentCreateModal.vue'
 import ConsentUpdateModalVue from '@/components/consent/modal/ConsentUpdateModal.vue'
+import WarningBtnVue from '@/components/common/btn/WarningBtn.vue'
+import SuccessBtnVue from '@/components/common/btn/SuccessBtn.vue'
 import { mapStores } from 'pinia'
 import { useContractCreateStore } from '@/stores/contract/contractCreate'
 import { useInvoiceListStore } from '@/stores/invoice/invoiceList'
 import { useConsentDetailStore } from '@/stores/contract/consentDetail'
 import { useContractDetailStore } from '@/stores/contract/contractDetail'
 import { getConsent } from '@/utils/consent'
-import { getContract } from '@/utils/contract'
+import { editContractStatus, getContract } from '@/utils/contract'
 
 
 export default {
@@ -64,7 +74,9 @@ export default {
     ThemeIconBtnVue,
     InvoiceCreateModalVue,
     ConsentCreateModalVue,
-    ConsentUpdateModalVue
+    ConsentUpdateModalVue,
+    WarningBtnVue,
+    SuccessBtnVue
   },
   data() {
     return {
@@ -79,7 +91,20 @@ export default {
     ...mapStores(useContractDetailStore),
     ...mapStores(useContractCreateStore),
     ...mapStores(useInvoiceListStore),
-    ...mapStores(useConsentDetailStore)
+    ...mapStores(useConsentDetailStore),
+    contractstatus() {
+      const stats = this.contractDetailStore.data.contrac
+    },
+    contractStatsClass() {
+      const id = this.contractDetailStore.data.contractStatus.id
+      if (id === 1) {
+        return 'waiting';
+      } else if (id === 2) {
+        return 'success';
+      } else {
+        return 'warning';
+      }
+    },
   },
   methods: {
     operateDeleteModal(value) {
@@ -103,6 +128,13 @@ export default {
     canEditConsent() {
       return this.contractDetailStore.data.paymentType.id === 2 && this.consentDetailStore.isExist;
     },
+    // 계약 상태 변경
+    async editContractStatus(statusId) {
+      const result = await editContractStatus(this.$route.params.id, statusId);
+      if (result.code !== 200) {
+        // 예외 처리
+      }
+    }
   },
   async created() {
     this.consentDetailStore.$reset();
@@ -122,16 +154,15 @@ export default {
 @import "../../assets/scss/component/table.scss";
 
 .root-container {
-  @include flex-box(row, space-between, 100px);
+  @include flex-box(row, center, 60px);
   @include root-container;
-  height: auto;
-  padding: 60px 130px;
+  height: 100%;
+  padding: 30px 50px;
 }
 
 .left-side {
   @include flex-box(column, space-between, 20px);
-  min-width: 700px;
-  width: 40%;
+  width: 650px;
   min-height: 100%;
   padding: 40px 50px;
   border-radius: 10px;
@@ -146,23 +177,54 @@ export default {
 
 .right-side {
   @include flex-box(column, space-between, 20px);
-  position: relative;
-  width: 100%;
+  width: 900px;
   height: 100%;
 
   .right-header {
     @include flex-box(row, space-between, 20px);
     width: 100%;
 
-    .contract-title {
-      left: 50%;
-      font-size: 24px;
+    .haeder-left {
+      @include flex-box(row, start, 15px);
       font-weight: bold;
+
+      .contract-title {
+        left: 50%;
+        font-size: 22px;
+
+      }
+
+      .contract-status {
+        @include flex-box(row, start, 5px);
+        padding: 5px 7px;
+        background: white;
+        border-radius: 20px;
+        border: solid 2px $theme-color;
+
+        div {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+        }
+      }
+
     }
 
     .right-btn-box {
       @include flex-box(row, center, 20px);
     }
   }
+}
+
+.waiting {
+  background-color: $waiting-color;
+}
+
+.success {
+  background-color: $success-color;
+}
+
+.warning {
+  background-color: $warning-color;
 }
 </style>

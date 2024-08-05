@@ -10,7 +10,7 @@ async function getItemList() {
 
   let url = `items?page=${itemStore.page}&size=${itemStore.size}`;
   if (itemStore.search.value) {
-    url += `&${itemStore.search.keyword}=${itemStore.search.valu}`
+    url += `&${itemStore.search.keyword}=${itemStore.search.value}`
   }
 
   itemStore.columns.forEach(column => {

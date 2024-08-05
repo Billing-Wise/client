@@ -18,7 +18,7 @@ export const useContractListStore = defineStore('contractList', {
         { data: 'invoiceType', name: '청구 생성',},
         { data: 'contractStatus', name: '계약 상태',},
         { data: 'paymentType', name: '결제 수단',},
-        { data: 'totalUnpaidCount', name: '미납 여부',}
+        { data: 'totalUnpaidCount', name: '미납 건수',}
       ],
       filters: [
         {data: 'itemId', value: null},

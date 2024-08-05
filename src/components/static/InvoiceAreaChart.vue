@@ -1,7 +1,7 @@
 <template>
   <div class="static-box">
     <div class="title-box">연간 청구 상태 변화</div>
-    <LineChart :chartData="invoiceData" :width="1000" />
+    <LineChart :chartData="invoiceData" :width="900" />
     <div class="year-box">
       <i class="bi bi-caret-left-fill" @click="minusYear"></i>
       <span>{{ year }}년</span>
@@ -122,7 +122,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/component/static-box.scss";
 .static-box {
-  width: 100%
+  height: 100%
 }
 
 .year-box {

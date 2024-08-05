@@ -1,17 +1,17 @@
 <template>
   <div class="root-container">
-    <div class="top-btn-box">
-      <ThemeIconBtnVue title="상품 등록" icon="bi bi-plus-square" :func="() => operateModal(true)"/>
-      <ItemSearchVue/>
-    </div>
-    <div class="table-box">
-      <ItemTableVue/>
-      <PaginationBarVue :store="itemStore"/>
+    <div class="main-container">
+      <div class="top-btn-box">
+        <ThemeIconBtnVue title="상품 등록" icon="bi bi-plus-square" :func="() => operateModal(true)" />
+        <ItemSearchVue />
+      </div>
+      <div class="table-box">
+        <ItemTableVue />
+        <PaginationBarVue :store="itemStore" />
+      </div>
     </div>
   </div>
-  <ItemCreateModalVue 
-    :isVisible="modalVisible" 
-    :closeModal="() => operateModal(false)"/>
+  <ItemCreateModalVue :isVisible="modalVisible" :closeModal="() => operateModal(false)" />
 </template>
 
 <script>
@@ -26,7 +26,7 @@ import { mapStores } from 'pinia';
 import { getItemList } from '@/utils/item';
 
 export default {
-  name : 'ItemListView',
+  name: 'ItemListView',
   components: {
     ThemeIconBtnVue,
     PaginationBarVue,
@@ -51,7 +51,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useItemStore, ['setPage','setItemList']),
+    ...mapActions(useItemStore, ['setPage', 'setItemList']),
     // 메서드 - 상품 목록 조회
     async getItemList() {
       const result = await getItemList();
@@ -81,9 +81,17 @@ export default {
 @import "../../assets/scss/component/table.scss";
 
 .root-container {
-  @include flex-box(column, space-between, 20px);
+  @include flex-box(column, center, 0px);
   @include root-container;
-  padding: 30px 40px
+  padding: 30px 40px;
+  width: fit-content;
+  height: 100%;
+
+  .main-container {
+    @include flex-box(column, center, 30px);
+    width: 1200px;
+    height: 100%;
+  }
 }
 
 .top-btn-box {

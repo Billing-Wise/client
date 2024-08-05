@@ -36,7 +36,7 @@
       </div>
       <div class="double-info">
         <TitleInfoVue title="구독 여부" :info="subscription" />
-        <TitleInfoVue title="간편 동의" :info="easyConsent" />
+        <TitleInfoVue title="동의서 등록" :info="isConsentExist" />
       </div>
       <div class="double-info">
         <TitleInfoVue title="생성일" :info="createdAt" />
@@ -50,6 +50,7 @@
 import { mapStores } from 'pinia';
 import { useContractDetailStore } from '@/stores/contract/contractDetail';
 import { toDateFromDateTime } from '@/utils/formatter';
+import { useConsentDetailStore } from '@/stores/contract/consentDetail';
 import TitleInfoVue from '../common/info/TitleInfo.vue';
 
 export default {
@@ -58,6 +59,7 @@ export default {
     TitleInfoVue
   },
   computed: {
+    ...mapStores(useConsentDetailStore),
     ...mapStores(useContractDetailStore),
     subscription() {
       return this.contractDetailStore.data.subscription? '정기': '단기';
@@ -71,6 +73,15 @@ export default {
     updatedAt() {
       return toDateFromDateTime(this.contractDetailStore.data.updatedAt);
     },
+    isConsentExist() {
+      if (this.contractDetailStore.data.paymentType.id === 1) {
+        return '불필요';
+      } else if (this.consentDetailStore.isExist) {
+        return '등록 완료';
+      } else {
+        return '등록 대기'
+      }
+    }
   },
 }
 </script>

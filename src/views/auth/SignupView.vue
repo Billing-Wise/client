@@ -63,8 +63,10 @@
 import AuthBtnInputVue from '@/components/auth/AuthBtnInput.vue';
 import AuthButtonVue from '@/components/auth/AuthButton.vue'
 import AuthInputVue from '@/components/auth/AuthInput.vue'
+import { useLoadingStore } from '@/stores/error/loading';
 import { InputValue, ValidationTimer } from '@/utils/auth';
 import { authAxios } from '@/utils/axios';
+import { mapStores } from 'pinia';
 
 export default {
   name: 'LoginView',
@@ -122,6 +124,9 @@ export default {
       this.clientCode.errorMsg = '';
     }
   },
+  computed: {
+    ...mapStores(useLoadingStore),
+  },
   methods: {
     // 메서드 : 이메일 중복 검사
     async emailDuplicationCheck() {
@@ -141,7 +146,9 @@ export default {
       // 전송 로직
       if (!this.emailCodeSend) {
         const data = { "email": this.email.value };
+        this.loadingStore.setIsLoading(true);
         const result = await authAxios.post('auth/email/code', data);
+        this.loadingStore.setIsLoading(false);
         if (result.code === 200) {
           this.emailCodeSend = true;
           this.emailCodeTimer = new ValidationTimer(this.emailCode);
@@ -166,7 +173,9 @@ export default {
       // 전송 로직
       if (!this.phoneCodeSend) {
       const data = { 'phone': this.phone.value };
+      this.loadingStore.setIsLoading(true);
       const result = await authAxios.post('auth/phone/code', data);
+      this.loadingStore.setIsLoading(false);
       if (result.code === 200) {
         this.phoneCodeSend = true;
         this.phoneCodeTimer = new ValidationTimer(this.phoneCode);

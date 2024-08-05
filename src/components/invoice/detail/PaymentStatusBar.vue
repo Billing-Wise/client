@@ -1,9 +1,9 @@
 <template>
   <div class="payment-status-bar">
-    <div :class="{ 'bar-item': true, 'waiting-bar': invoiceDetailStore.data.paymentStatus.id === 3 }">
+    <div :class="{ 'bar-item': true, 'theme-bar': invoiceDetailStore.data.paymentStatus.id === 3 }">
       수납 대기
     </div>
-    <div :class="{ 'bar-item': true, 'success-bar': invoiceDetailStore.data.paymentStatus.id === 2 }">
+    <div :class="{ 'bar-item': true, 'theme-bar': invoiceDetailStore.data.paymentStatus.id === 2 }">
       수납 완료
     </div>
     <div :class="{ 'bar-item': true, 'warning-bar': invoiceDetailStore.data.paymentStatus.id === 1 }">
@@ -40,7 +40,6 @@ export default {
     height: 100%;
     font-size: 20px;
     font-weight: bold;
-    color: white;
   }
 
   .bar-item:first-child {
@@ -52,15 +51,13 @@ export default {
   }
 }
 
-.waiting-bar {
+.theme-bar {
   background-color: $theme-color;
-}
-
-.success-bar {
-  background-color: $theme-color;
+  color: white;
 }
 
 .warning-bar {
   background-color: $warning-color;
+  color: white;
 }
 </style>

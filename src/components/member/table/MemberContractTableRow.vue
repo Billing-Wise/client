@@ -45,7 +45,7 @@ export default {
     },
     upPaidStatus() {
       const count = this.contractData.totalUnpaidCount;
-      return count > 0 ? `미납 ${count}건` : '완납';
+      return count > 0 ? `미납 ${count}건` : '없음';
     },
   },
   methods: {

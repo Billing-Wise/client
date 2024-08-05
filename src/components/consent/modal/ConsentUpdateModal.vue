@@ -11,7 +11,12 @@
           <input type="file" ref="fileInput" @change="onImageChange" accept="image/*" style="display: none;" />
           <span class="file-guide">※ 동의 서명 이미지 파일을 등록해주세요</span>
           <InfoInputVue title="계좌 소유주" v-model="owner" />
-          <InfoInputVue title="은행" v-model="bank" />
+          <TitleUpSelectVue 
+            title="은행"
+            :selectedIdx="bankIdx"
+            :keywordArr="bankList"
+            :choiceFunc="selectBank"
+          />
           <InfoInputVue title="계좌 번호" v-model="number" />
         </div>
         <ModalFooterVue :title="title" :errorMsg="errorMsg" :func="createConsent" />
@@ -24,6 +29,7 @@
 import ModalHeaderVue from '@/components/common/modal/ModalHeader.vue';
 import ModalFooterVue from '@/components/common/modal/ModalFooter.vue';
 import InfoInputVue from '@/components/common/input/InfoInput.vue';
+import TitleUpSelectVue from '@/components/common/select/TitleUpSelect.vue';
 import { editConsent, editConsentImage } from '@/utils/consent';
 import { mapStores } from 'pinia';
 import { useContractDetailStore } from '@/stores/contract/contractDetail';
@@ -35,6 +41,7 @@ export default {
     ModalHeaderVue,
     ModalFooterVue,
     InfoInputVue,
+    TitleUpSelectVue
   },
   props: {
     'isVisible': Boolean,
@@ -48,7 +55,16 @@ export default {
       bank: '',
       number: '',
       imgFile: null,
-      imgSrc: null
+      imgSrc: null,
+      bankIdx: 0,
+      bankList: [
+        { value: 'KB', name: '국민은행' },
+        { value: 'SH', name: '신한은행' },
+        { value: 'WR', name: '우리은행' },
+        { value: 'HN', name: '하나은행' },
+        { value: 'NH', name: '농협은행' },
+        { value: 'IBK', name: '기업은행' },
+      ]
     }
   },
   computed: {
@@ -65,8 +81,14 @@ export default {
     async showData() {
       this.owner = this.consentDetailStore.data.owner;
       this.bank = this.consentDetailStore.data.bank;
+      this.bankIdx = this.bankList.findIndex((bank) => bank.name === this.consentDetailStore.data.bank);
       this.number = this.consentDetailStore.data.number;
       this.imgSrc = this.consentDetailStore.data.signUrl;
+    },
+    // 은행 선택
+    selectBank(idx) {
+      this.bankIdx = idx;
+      this.bank = this.bankList[this.bankIdx].name;
     },
     // 이미지 업로드
     triggerFileInput() {

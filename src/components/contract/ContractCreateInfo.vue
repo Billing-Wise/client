@@ -14,8 +14,8 @@
       <span class="title">상품 정보</span>
       <TitleInfoVue title="이름" :info="contractCreateStore.item.name" />
       <div class="double-info">
-        <TitleInfoVue title="금액" :info="`${contractCreateStore.item.price} 원`" />
-        <TitleInfoVue title="수량" :info="`${contractCreateStore.item.count} 개`"  />
+        <NumberInputVue title="가격" unit="원" v-model="item.price"/>
+        <NumberInputVue title="수량" unit="개" v-model="item.count"/>
       </div>
       <TitleInfoVue title="총 금액" :info="`${contractCreateStore.item.price * contractCreateStore.item.count} 원`" />
     </div>
@@ -23,16 +23,28 @@
     :class="{ 'info-box': true, 'active': contractCreateStore.step === 2 }">
       <span class="title">계약 정보</span>
       <div class="double-info">
-        <TitleInfoVue title="약정일" :info="`매월 ${contractCreateStore.contractCycle} 일`" />
-        <TitleInfoVue title="납부 기한" :info="`${contractCreateStore.paymentDueCycle} 일`" />
+        <NumberInputVue title="약정일" unit="일" v-model="contractCycle"/>
+        <NumberInputVue title="납부 기한" unit="일" v-model="paymentDueCycle"/>
       </div>
       <div class="double-info">
-        <TitleInfoVue title="구독 여부" :info="contractCreateStore.isSubscriptionName" />
-        <TitleInfoVue title="청구 생성" :info="contractCreateStore.invoiceTypeName" />
+        <TitleSelectVue title="구독 여부" 
+            :selectedIdx="contractCreateStore.isSubscriptionIdx" 
+            :keywordArr="contractCreateStore.isSubscription"
+            :choiceFunc="setSubscription" />
+          <TitleSelectVue title="청구 생성" 
+            :selectedIdx="contractCreateStore.invoiceTypeIdx" 
+            :keywordArr="contractCreateStore.invoiceType"
+            :choiceFunc="setInvoiceType" />
       </div>
       <div class="double-info">
-        <TitleInfoVue title="결제 수단" :info="contractCreateStore.paymentTypeName" />
-        <TitleInfoVue title="간편 동의" :info="contractCreateStore.isEasyConsentName" />
+        <TitleSelectVue title="결제 수단" 
+            :selectedIdx="contractCreateStore.paymentTypeIdx" 
+            :keywordArr="contractCreateStore.paymentType"
+            :choiceFunc="setPaymentType" />
+          <TitleSelectVue title="간편 동의" 
+            :selectedIdx="contractCreateStore.isEasyConsentIdx" 
+            :keywordArr="contractCreateStore.isEasyConsent"
+            :choiceFunc="setEasyConsent"/>
       </div>
     </div>
   </div>
@@ -41,15 +53,63 @@
 <script>
 import { useContractCreateStore } from '@/stores/contract/contractCreate';
 import { mapStores } from 'pinia';
-import TitleInfoVue from '../common/info/TitleInfo.vue';
+import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
+import NumberInputVue from '@/components/common/input/NumberInput.vue';
+import InfoInputVue from '@/components/common/input/InfoInput.vue';
+import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
 
 export default {
   name: 'ContractCreateInfoVue',
   components: {
-    TitleInfoVue
+    TitleInfoVue,
+    NumberInputVue,
+    InfoInputVue,
+    TitleSelectVue
   },
   computed: {
     ...mapStores(useContractCreateStore),
+    // 아이템 개수 및 가격 설정
+    item: {
+      get() {
+        return this.contractCreateStore.item;
+      },
+      set(value) {
+        this.contractCreateStore.item.price = value.price;
+        this.contractCreateStore.item.count = value.count;
+      }
+    },
+    // 약정일 설정
+    contractCycle: {
+      get() {
+        return this.contractCreateStore.contractCycle;
+      },
+      set(value) {
+        this.contractCreateStore.contractCycle = value;
+      }
+    },
+    // 납부기한 설정
+    paymentDueCycle: {
+      get() {
+        return this.contractCreateStore.paymentDueCycle;
+      },
+      set(value) {
+        this.contractCreateStore.paymentDueCycle = value;
+      }
+    },
+  },
+  methods: {
+    setSubscription(idx) {
+      this.contractCreateStore.setIsSubscription(idx);
+    },
+    setInvoiceType(idx) {
+      this.contractCreateStore.setInvoiceType(idx);
+    },
+    setPaymentType(idx) {
+      this.contractCreateStore.setPaymentType(idx);
+    },
+    setEasyConsent(idx) {
+      this.contractCreateStore.setIsEasyConsent(idx);
+    }
   },
 }
 </script>

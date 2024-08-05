@@ -8,7 +8,7 @@
       <PaymentInfoVue/>
       <div class="btn-box" v-if="invoiceDetailStore.data.paymentStatus.id !== 2">
         <ThemeWideBtnVue title="청구서 발송" 
-        v-if="invoiceDetailStore.data.paymentType.id === 1"
+          v-if="invoiceDetailStore.data.paymentType.id === 1 || invoiceDetailStore.data.paymentStatus.id === 1"
           :func="sendInvoice" />
         <SuccessWideBtnVue title="수정" :func="() => operateEditModal(true)"/>
         <WarningWideBtnVue title="삭제" :func="() => operateDeleteModal(true)"/>
@@ -102,8 +102,7 @@ export default {
 .left-side {
   @include flex-box(column, center, 20px);
   box-sizing: border-box;
-  min-width: 700px;
-  width: 40%;
+  width: 650px;
   min-height: 100%;
   padding: 40px 50px;
   border-radius: 10px;

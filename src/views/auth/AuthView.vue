@@ -4,17 +4,26 @@
       <router-view/>
     </div>
     <logo-side-vue/>
+    <AuthLoadingVue v-if="loadingStore.isLoading"/>
   </div>
+
 </template>
 
 <script>
+import AuthLoadingVue from '@/components/auth/AuthLoading.vue';
 import LogoSideVue from '@/components/auth/LogoSide.vue'
+import { useLoadingStore } from '@/stores/error/loading';
+import { mapStores } from 'pinia';
 
 export default {
   name: 'AuthView',
   components: {
     LogoSideVue,
+    AuthLoadingVue
   },
+  computed: {
+    ...mapStores(useLoadingStore)
+  }
 }
 </script>
 

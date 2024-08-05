@@ -1,5 +1,5 @@
 <template>
-  <tr class="table-row" @click="selectContact">
+  <tr :class="{'table-row': true, 'choosed-row':isChoosed}" @click="selectContact">
     <td class="table-column"><span>{{ contractData.id }}</span></td>
     <td class="table-column"><span>{{ contractData.itemName }}</span></td>
     <td class="table-column"><span>{{ contractData.memberName }}</span></td>
@@ -38,10 +38,13 @@ export default {
       const count = this.contractData.totalUnpaidCount;
       return count > 0 ? `미납 ${count}건` : '완납';
     },
+    isChoosed() {
+      return this.contractData.id === this.invoiceCreateStore.data.contractId;
+    }
   },
   methods: {
     selectContact() {
-      this.invoiceCreateStore.setContract(this.contractData)
+      this.invoiceCreateStore.setContract(this.contractData);
     }
   }
 }
@@ -56,5 +59,9 @@ export default {
 
 .warning {
   background-color: $warning-color;
+}
+
+.choosed-row {
+  background-color: $back-color;
 }
 </style>

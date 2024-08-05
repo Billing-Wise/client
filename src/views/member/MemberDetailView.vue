@@ -117,16 +117,17 @@ export default {
 @import "../../assets/scss/component/table.scss";
 
 .root-container {
-  @include flex-box(row, space-between, 20px);
+  @include flex-box(row, center, 60px);
   @include root-container;
   height: 100%;
   padding: 20px 30px
 }
 
 .left-side {
-  @include flex-box(column, space-between, 0px);
-  width: 400px;
-  height: 100%;
+  @include flex-box(column, space-between, 20px);
+  width: 350px;
+  min-height: 100%;
+  height: auto;
   padding: 20px 30px;
   border-radius: 10px;
   box-shadow: $base-shadow;
@@ -141,7 +142,7 @@ export default {
 .right-side {
   @include flex-box(column, space-between, 20px);
   position: relative;
-  width: 100%;
+  width: 1400px;
   height: 100%;
 
   .right-header {
