@@ -82,7 +82,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 @import "@/assets/scss/component/static-box.scss";
+.static-box {
+  width: 45%;
+}
+
 
 .info-box {
   @include flex-box(row, center, 30px);
