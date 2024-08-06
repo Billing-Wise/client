@@ -2,8 +2,14 @@
   <nav class="nav-bar">
     <img src="@/assets/images/name_white.png" alt="">
     <div class="nav-info">
-      <div class="nav-info-item">{{ authStore.data.clientName }}</div>
-      <div class="nav-info-item">{{ authStore.data.userName }} 님</div>
+      <div class="nav-info-item">
+        <i class="bi bi-building"></i>
+        <span>{{ authStore.data.clientName }}</span>
+      </div>
+      <div class="nav-info-item">
+        <i class="bi bi-person"></i>
+        <span>{{ authStore.data.userName }}님</span>
+      </div>
     </div>
   </nav>
 </template>
@@ -50,11 +56,16 @@ export default {
   .nav-info {
     @include flex-box(row, center, 20px);
 
-    .nav-info-item {
+    i {
       @include flex-box(row, center, 0px);
+    }
+
+    .nav-info-item {
+      @include flex-box(row, center, 7px);
       background-color: white;
       border-radius: 5px;
       padding: 5px 15px;
+      font-size: 18px;
       font-weight: bold;
     }
   }

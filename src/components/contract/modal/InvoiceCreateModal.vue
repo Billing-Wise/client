@@ -6,7 +6,7 @@
         <div class="modal-main">
           <TitleSelectVue title="결제 수단" :selectedIdx="invoiceCreateStore.paymentTypeIdx"
             :keywordArr="invoiceCreateStore.paymentType" :choiceFunc="setPaymentType" />
-          <InfoInputVue title="청구금" v-model="chargeAmount" type="number" />
+          <NumberInputVue title="청구금" v-model="chargeAmount" unit="원" />
           <InfoInputVue title="결제일" type="date" v-model="contractDate" />
           <InfoInputVue title="납부기한" type="date" v-model="dueDate" />
         </div>
@@ -21,6 +21,7 @@ import ModalHeaderVue from '../../common/modal/ModalHeader.vue';
 import ModalFooterVue from '../../common/modal/ModalFooter.vue';
 import InfoInputVue from '@/components/common/input/InfoInput.vue';
 import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
+import NumberInputVue from '@/components/common/input/NumberInput.vue';
 import { useInvoiceCreateStore } from '@/stores/invoice/invoiceCreate';
 import { useContractDetailStore } from '@/stores/contract/contractDetail';
 import { mapStores } from 'pinia';
@@ -32,7 +33,8 @@ export default {
     ModalHeaderVue,
     ModalFooterVue,
     InfoInputVue,
-    TitleSelectVue
+    TitleSelectVue,
+    NumberInputVue
   },
   props: {
     'isVisible': Boolean,

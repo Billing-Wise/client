@@ -4,6 +4,8 @@ export const useContractCreateStore = defineStore('contractCreate', {
   state() {
     return {
       dataPassed: false,
+      selectingItem: false,
+      selectingMember: false,
       step: 0,
       member: {
         id: '',
@@ -41,6 +43,12 @@ export const useContractCreateStore = defineStore('contractCreate', {
     }
   },
   actions: {
+    setSelectingItem(value) {
+      this.selectingItem = value;
+    },
+    setSelectingMember(value) {
+      this.selectingMember = value;
+    },
     setDataPassed(value) {
       this.dataPassed = value
     },

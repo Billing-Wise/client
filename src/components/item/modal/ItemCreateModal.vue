@@ -10,7 +10,7 @@
           </div>
           <input type="file" ref="fileInput" @change="onImageChange" accept="image/*" style="display: none;" />
           <InfoInputVue title="상품명" v-model="name"/>
-          <InfoInputVue title="가격" v-model="price"/>
+          <NumberInputVue title="가격" unit="원" v-model="price"/>
           <TextAreaInputVue rows=5 title="상세설명을 입력하세요." v-model="description"/>
         </div>
         <ModalFooterVue :title="title" :errorMsg="errorMsg" :func="() => createItem()"/>
@@ -24,6 +24,7 @@ import ModalHeaderVue from '../../common/modal/ModalHeader.vue';
 import ModalFooterVue from '../../common/modal/ModalFooter.vue';
 import InfoInputVue from '../../common/input/InfoInput.vue';
 import TextAreaInputVue from '../../common/input/TextAreaInput.vue';
+import NumberInputVue from '@/components/common/input/NumberInput.vue';
 import { createItem } from '@/utils/item';
 
 export default {
@@ -33,6 +34,7 @@ export default {
     ModalFooterVue,
     InfoInputVue,
     TextAreaInputVue,
+    NumberInputVue
   },
   props: {
     'isVisible': Boolean,

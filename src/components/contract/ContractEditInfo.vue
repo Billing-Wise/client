@@ -12,10 +12,10 @@
       <span class="title">상품 정보</span>
       <TitleInfoVue title="이름" :info="contractCreateStore.item.name" />
       <div class="double-info">
-        <InfoInputVue title="금액" type="number" v-model="item.price"/>
-        <InfoInputVue title="수량" type="number" v-model="item.count"/>
+        <NumberInputVue title="금액" unit="원" v-model="item.price"/>
+        <NumberInputVue title="수량" unit="개" v-model="item.count"/>
       </div>
-      <TitleInfoVue title="총 금액" :info="`${contractCreateStore.item.price * contractCreateStore.item.count} 원`" />
+      <TitleInfoVue title="총 금액" :info="`${currentTotalPrice} 원`" />
     </div>
     <div @click="contractCreateStore.setStep(2)"
     :class="{ 'info-box': true, 'active': contractCreateStore.step === 2 }">
@@ -50,24 +50,26 @@
 
 <script>
 import { useContractCreateStore } from '@/stores/contract/contractCreate';
+import { useContractDetailStore } from '@/stores/contract/contractDetail';
 import { mapStores } from 'pinia';
 import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
 import NumberInputVue from '@/components/common/input/NumberInput.vue';
-import InfoInputVue from '@/components/common/input/InfoInput.vue';
 import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
-import { useContractDetailStore } from '@/stores/contract/contractDetail';
+import { formatNumber } from '@/utils/formatter';
 
 export default {
   name: 'ContractEditInfoVue',
   components: {
     TitleInfoVue,
-    InfoInputVue,
     NumberInputVue,
     TitleSelectVue
   },
   computed: {
     ...mapStores(useContractCreateStore),
     ...mapStores(useContractDetailStore),
+    currentTotalPrice() {
+      return formatNumber(this.contractCreateStore.item.price * this.contractCreateStore.item.count)
+    },
     item: {
       get() {
         return this.contractCreateStore.item;

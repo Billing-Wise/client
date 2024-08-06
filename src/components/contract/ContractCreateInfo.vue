@@ -1,7 +1,6 @@
 <template>
   <div class="contract-create">
-    <div @click="contractCreateStore.setStep(0)"
-    :class="{ 'info-box': true, 'active': contractCreateStore.step === 0 }">
+    <div @click="() => contractCreateStore.setSelectingMember(true)" class="info-box">
       <span class="title">회원 정보</span>
       <div class="double-info">
         <TitleInfoVue title="이름" :info="contractCreateStore.member.name" />
@@ -9,18 +8,16 @@
       </div>
       <TitleInfoVue title="이메일" :info="contractCreateStore.member.email" />
     </div>
-    <div @click="contractCreateStore.setStep(1)"
-    :class="{ 'info-box': true, 'active': contractCreateStore.step === 1 }">
+    <div @click="() => contractCreateStore.setSelectingItem(true)" class="info-box">
       <span class="title">상품 정보</span>
       <TitleInfoVue title="이름" :info="contractCreateStore.item.name" />
-      <div class="double-info">
+      <div class="double-info" @click.stop>
         <NumberInputVue title="가격" unit="원" v-model="item.price"/>
         <NumberInputVue title="수량" unit="개" v-model="item.count"/>
       </div>
-      <TitleInfoVue title="총 금액" :info="`${contractCreateStore.item.price * contractCreateStore.item.count} 원`" />
+      <TitleInfoVue title="총 금액" :info="`${currentTotalPrice} 원`" />
     </div>
-    <div @click="contractCreateStore.setStep(2)"
-    :class="{ 'info-box': true, 'active': contractCreateStore.step === 2 }">
+    <div class="info-box">
       <span class="title">계약 정보</span>
       <div class="double-info">
         <NumberInputVue title="약정일" unit="일" v-model="contractCycle"/>
@@ -55,19 +52,21 @@ import { useContractCreateStore } from '@/stores/contract/contractCreate';
 import { mapStores } from 'pinia';
 import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
 import NumberInputVue from '@/components/common/input/NumberInput.vue';
-import InfoInputVue from '@/components/common/input/InfoInput.vue';
 import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
+import { formatNumber } from '@/utils/formatter';
 
 export default {
   name: 'ContractCreateInfoVue',
   components: {
     TitleInfoVue,
     NumberInputVue,
-    InfoInputVue,
     TitleSelectVue
   },
   computed: {
     ...mapStores(useContractCreateStore),
+    currentTotalPrice() {
+      return formatNumber(this.contractCreateStore.item.price * this.contractCreateStore.item.count)
+    },
     // 아이템 개수 및 가격 설정
     item: {
       get() {
@@ -142,6 +141,13 @@ export default {
     @include flex-box(row, space-between, 20px);
     width: 100%;
   }
+}
+
+.info-box:last-child {
+  &:hover {
+    box-shadow: none;
+  }
+  cursor: auto;
 }
 
 .active {

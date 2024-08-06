@@ -9,7 +9,7 @@
         <TitleInfoVue title="납부일" :info="createAt"/>
         <TitleInfoVue title="납부 수단" :info="paymentMethod"/>
       </div>
-      <TitleInfoVue title="납부금" :info="`${paymentStore.data.payAmount}원`"/>
+      <TitleInfoVue title="납부금" :info="`${currentPayAmount}원`"/>
     </div>
     <div class="info-box" v-show="paymentStore.data.paymentMethod === 'CARD'">
       <div class="double-info">
@@ -33,7 +33,7 @@ import { usePaymentStore } from '@/stores/invoice/payment';
 import { getPayment } from '@/utils/payement';
 import { mapStores } from 'pinia';
 import TitleInfoVue from '../../common/info/TitleInfo.vue';
-import { toDateFromDateTime } from '@/utils/formatter';
+import { formatNumber, toDateFromDateTime } from '@/utils/formatter';
 
 export default {
   name: 'PaymentInfoVue',
@@ -42,6 +42,9 @@ export default {
   },
   computed: {
     ...mapStores(usePaymentStore),
+    currentPayAmount() {
+      return formatNumber(this.paymentStore.data.payAmount);
+    },
     paymentMethod() {
       if (this.paymentStore.data.paymentMethod === 'CARD') {
         return '카드';

@@ -2,7 +2,7 @@
   <tr class="table-row" @click="routeContractDetail">
     <td class="table-column"><span>{{ contractData.id }}</span></td>
     <td class="table-column"><span>{{ contractData.memberName }}</span></td>
-    <td class="table-column"><span>{{ contractData.chargeAmount }} 원</span></td>
+    <td class="table-column"><span>{{ currentChargeAmount }} 원</span></td>
     <td class="table-column"><span>매월 {{ contractData.contractCycle }}일</span></td>
     <td class="table-column"><span>{{ contractData.subscription? '구독' : '단기' }}</span></td>
     <td class="table-column"><span>{{ contractData.invoiceType.name }}</span></td>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { formatNumber } from '@/utils/formatter';
+
 export default {
   name: 'ItemContractTableRowVue',
   props: {
@@ -29,6 +31,9 @@ export default {
     }
   },
   computed: {
+    currentChargeAmount() {
+      return formatNumber(this.contractData.chargeAmount);
+    },
     contractStatsClass() {
       const id = this.contractData.contractStatus.id
       if (id === 1) {
