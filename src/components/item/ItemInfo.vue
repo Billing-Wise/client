@@ -2,7 +2,7 @@
     <div class="info-container">
       <img :src="itemStore.currentItem.imageUrl" alt="item-image">
       <TitleInfoVue title="상품명" :info="itemStore.currentItem.name"/>
-      <TitleInfoVue title="가격" :info="`${itemStore.currentItem.price}원`"/>
+      <TitleInfoVue title="가격" :info="`${currentPrice}원`"/>
       <TitleInfoVue title="생성일" :info="createdAtDate"/>
       <TitleInfoVue title="수정일" :info="updatedAtDate"/>
       <DescriptionInfoVue :infoValue="itemStore.currentItem.description"/>
@@ -12,7 +12,7 @@
 <script>
 import { useItemStore } from '@/stores/item';
 import { mapStores } from 'pinia';
-import { toDateFromDateTime } from '@/utils/formatter';
+import { formatNumber, toDateFromDateTime } from '@/utils/formatter';
 import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
 import DescriptionInfoVue from '../common/info/DescriptionInfo.vue';
 
@@ -24,6 +24,9 @@ export default {
   },
   computed: {
     ...mapStores(useItemStore),
+    currentPrice() {
+      return formatNumber(this.itemStore.currentItem.price);
+    },
     createdAtDate() {
       return toDateFromDateTime(this.itemStore.currentItem.createdAt)
     },

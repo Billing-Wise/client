@@ -12,7 +12,7 @@
       <span class="title">상품 정보</span>
       <TitleInfoVue title="이름" :info="contractDetailStore.data.item.name" />
       <div class="double-info">
-        <TitleInfoVue title="금액" :info="`${contractDetailStore.data.item.price}원`" />
+        <TitleInfoVue title="금액" :info="`${currentItemPrice}원`" />
         <TitleInfoVue title="수량" :info="`${contractDetailStore.data.item.amount} 개`"  />
       </div>
     </div>
@@ -20,15 +20,15 @@
       <span class="title">계약 정보</span>
       <div class="double-info">
         <TitleInfoVue title="계약ID" :info="String(contractDetailStore.data.id)" />
-        <TitleInfoVue title="총 금액" :info="`${contractDetailStore.data.chargeAmount} 원`" />
+        <TitleInfoVue title="총 금액" :info="`${currentTotalPrice} 원`" />
       </div>
       <div class="double-info">
         <TitleInfoVue title="약정일" :info="`매월 ${contractDetailStore.data.contractCycle} 일`" />
         <TitleInfoVue title="납부 기한" :info="`${contractDetailStore.data.paymentDueCycle} 일`" />
       </div>
       <div class="double-info">
-        <TitleInfoVue title="총 청구금" :info="`${contractDetailStore.data.totalChargeAmount}원`" />
-        <TitleInfoVue title="총 미납금" :info="`${contractDetailStore.data.totalUnpaidAmount}원`" />
+        <TitleInfoVue title="총 청구금" :info="`${currentTotalCharge}원`" />
+        <TitleInfoVue title="총 미납금" :info="`${currentTotalUnpaid}원`" />
       </div>
       <div class="double-info">
         <TitleInfoVue title="청구 생성" :info="contractDetailStore.data.invoiceType.name" />
@@ -49,7 +49,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useContractDetailStore } from '@/stores/contract/contractDetail';
-import { toDateFromDateTime } from '@/utils/formatter';
+import { formatNumber, toDateFromDateTime } from '@/utils/formatter';
 import { useConsentDetailStore } from '@/stores/contract/consentDetail';
 import TitleInfoVue from '../common/info/TitleInfo.vue';
 
@@ -61,6 +61,18 @@ export default {
   computed: {
     ...mapStores(useConsentDetailStore),
     ...mapStores(useContractDetailStore),
+    currentItemPrice() {
+      return formatNumber(this.contractDetailStore.data.item.price)
+    },  
+    currentTotalPrice() {
+      return formatNumber(this.contractDetailStore.data.chargeAmount)
+    },  
+    currentTotalCharge() {
+      return formatNumber(this.contractDetailStore.data.totalChargeAmount)
+    },  
+    currentTotalUnpaid() {
+      return formatNumber(this.contractDetailStore.data.totalUnpaidAmount)
+    },  
     subscription() {
       return this.contractDetailStore.data.subscription? '정기': '단기';
     },

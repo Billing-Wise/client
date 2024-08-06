@@ -23,7 +23,9 @@
             v-if="canCreateInvoice()" />
           <ThemeIconBtnVue title="동의서 수정" icon="bi bi-pencil-square" :func="() => operationConsentEditModal(true)"
             v-if="canEditConsent()" />
-          <WarningBtnVue title="계약 종료" :func="() => editContractStatus(3)" v-if="contractDetailStore.data.contractStatus.id === 2"/>
+          <WarningBtnVue title="계약 종료" 
+            :func="() => operationContractEndModal(true)" 
+            v-if="contractDetailStore.data.contractStatus.id === 2"/>
           <SuccessBtnVue title="계약 재개" :func="() => editContractStatus(2)" v-if="contractDetailStore.data.contractStatus.id === 3"/>
         </div>
       </div>
@@ -38,6 +40,7 @@
     :close-modal="() => operateCreaeteInvoiceModal(false)" />
   <ConsentCreateModalVue :is-visible="consentModalVisible" :close-modal="() => operationConsentModal(false)" />
   <ConsentUpdateModalVue :is-visible="consentEditModalVisible" :close-modal="() => operationConsentEditModal(false)" />
+  <ContractEndModalVue :is-visible="contractEndModalVisible" :close-modal="() => operationContractEndModal(false)" />
 </template>
 
 <script>
@@ -53,6 +56,7 @@ import ConsentCreateModalVue from '@/components/consent/modal/ConsentCreateModal
 import ConsentUpdateModalVue from '@/components/consent/modal/ConsentUpdateModal.vue'
 import WarningBtnVue from '@/components/common/btn/WarningBtn.vue'
 import SuccessBtnVue from '@/components/common/btn/SuccessBtn.vue'
+import ContractEndModalVue from '@/components/contract/modal/ContractEndModal.vue'
 import { mapStores } from 'pinia'
 import { useContractCreateStore } from '@/stores/contract/contractCreate'
 import { useInvoiceListStore } from '@/stores/invoice/invoiceList'
@@ -75,8 +79,9 @@ export default {
     InvoiceCreateModalVue,
     ConsentCreateModalVue,
     ConsentUpdateModalVue,
+    ContractEndModalVue,
     WarningBtnVue,
-    SuccessBtnVue
+    SuccessBtnVue,
   },
   data() {
     return {
@@ -85,6 +90,7 @@ export default {
       creaeteInvoiceModalVisible: false,
       consentModalVisible: false,
       consentEditModalVisible: false,
+      contractEndModalVisible: false,
     }
   },
   computed: {
@@ -92,9 +98,6 @@ export default {
     ...mapStores(useContractCreateStore),
     ...mapStores(useInvoiceListStore),
     ...mapStores(useConsentDetailStore),
-    contractstatus() {
-      const stats = this.contractDetailStore.data.contrac
-    },
     contractStatsClass() {
       const id = this.contractDetailStore.data.contractStatus.id
       if (id === 1) {
@@ -118,6 +121,9 @@ export default {
     },
     operationConsentEditModal(value) {
       this.consentEditModalVisible = value
+    },
+    operationContractEndModal(value) {
+      this.contractEndModalVisible = value
     },
     routeContractEdit() {
       this.$router.push(`/contract/${this.$route.params.id}/edit`)

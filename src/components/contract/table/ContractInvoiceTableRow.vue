@@ -1,7 +1,7 @@
 <template>
   <tr class="table-row" @click="routeInvoiceDetail">
     <td class="table-column"><span>{{ invoiceData.invoiceId }}</span></td>
-    <td class="table-column"><span>{{ invoiceData.chargeAmount }} 원</span></td>
+    <td class="table-column"><span>{{ currentChargeAmount }} 원</span></td>
     <td class="table-column"><span>{{ contractDate }}</span></td>
     <td class="table-column"><span>{{ dueDate }}</span></td>
     <td class="table-column">
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { toDateFromDateTime } from '@/utils/formatter';
+import { formatNumber, toDateFromDateTime } from '@/utils/formatter';
 
 export default {
   name: 'ContractInvoiceTableRowVue',
@@ -26,6 +26,9 @@ export default {
     }
   },
   computed: {
+    currentChargeAmount() {
+      return formatNumber(this.invoiceData.chargeAmount);
+    },
     contractDate() {
       return toDateFromDateTime(this.invoiceData.contractDate)
     },

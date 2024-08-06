@@ -103,10 +103,7 @@ export default {
 
     this.contractListStore.$reset();
     
-    const result2 = await this.getContractList();
-    if (result2.code !== 200 && result2.code !== 400) {
-      return;
-    }
+    await this.getContractList();
 
     this.setupWatchers();
   }

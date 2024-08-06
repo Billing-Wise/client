@@ -3,7 +3,7 @@
     <td class="table-column"><span>{{ itemData.id }}</span></td>
     <td class="table-column"><img :src="itemData.imageUrl" alt="item-image" class="item-image"></td>
     <td class="table-column"><span>{{ itemData.name }}</span></td>
-    <td class="table-column"><span>{{ itemData.price }}원</span></td>
+    <td class="table-column"><span>{{ currentPrice }}원</span></td>
     <td class="table-column"><span>{{ itemData.contractCount }}건</span></td>
     <td class="table-column"><span>{{ createdAtDate }}</span></td>
     <td class="table-column"><span>{{ updatedAtDate }}</span></td>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { toDateFromDateTime } from '@/utils/formatter';
+import { formatNumber, toDateFromDateTime } from '@/utils/formatter';
 
 export default {
   name: 'ItemTableRowVue',
@@ -19,6 +19,9 @@ export default {
     itemData: Object
   },
   computed: {
+    currentPrice() {
+      return formatNumber(this.itemData.price);
+    },
     createdAtDate() {
       return toDateFromDateTime(this.itemData.createdAt)
     },

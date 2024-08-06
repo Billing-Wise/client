@@ -82,6 +82,9 @@ export default {
       this.owner = this.consentDetailStore.data.owner;
       this.bank = this.consentDetailStore.data.bank;
       this.bankIdx = this.bankList.findIndex((bank) => bank.name === this.consentDetailStore.data.bank);
+      if (this.bankIdx === -1) {
+        this.bankIdx = 0
+      };
       this.number = this.consentDetailStore.data.number;
       this.imgSrc = this.consentDetailStore.data.signUrl;
     },

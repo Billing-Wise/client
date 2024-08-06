@@ -5,8 +5,8 @@
     <IconInfoVue icon="bi bi-telephone-fill" :info="memberStore.currentMember.phone"/>
     <TitleInfoVue title="계약건" :info="`${memberStore.currentMember.contractCount} 건`"/>
     <TitleInfoVue title="미납건" :info="`${memberStore.currentMember.unPaidCount} 건`"/>
-    <TitleInfoVue title="총 청구액" :info="`${memberStore.currentMember.totalInvoiceAmount}원`"/>
-    <TitleInfoVue title="총 미납액" :info="`${memberStore.currentMember.totalUnpaidAmount}원`"/>
+    <TitleInfoVue title="총 청구액" :info="`${totalInvoiceAmount}원`"/>
+    <TitleInfoVue title="총 미납액" :info="`${totalUnpaidAmount}원`"/>
     <TitleInfoVue title="등록일" :info="createdAtDate"/>
     <TitleInfoVue title="수정일" :info="updatedAtDate"/>
     <DescriptionInfoVue :infoValue="memberStore.currentMember.description"/>
@@ -16,7 +16,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useMemberStore } from '@/stores/member/member';
-import { toDateFromDateTime } from '@/utils/formatter';
+import { formatNumber, toDateFromDateTime } from '@/utils/formatter';
 import IconInfoVue from '../common/info/IconInfo.vue';
 import TitleInfoVue from '@/components/common/info/TitleInfo.vue';
 import DescriptionInfoVue from '../common/info/DescriptionInfo.vue';
@@ -30,6 +30,12 @@ components: {
 },
 computed: {
   ...mapStores(useMemberStore),
+  totalInvoiceAmount() {
+    return formatNumber(this.memberStore.currentMember.totalInvoiceAmount);
+  },
+  totalUnpaidAmount() {
+    return formatNumber(this.memberStore.currentMember.totalInvoiceAmount);
+  },
   createdAtDate() {
     return toDateFromDateTime(this.memberStore.currentMember.createdAt)
   },

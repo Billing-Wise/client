@@ -37,7 +37,8 @@ export default {
       @include flex-box(row, center, 0px);
       @include white-text(16px);
       background: $theme-color;
-      width: 140px;
+      min-width: 90px;
+      width: 90px;
       height: 100%;
     }
 

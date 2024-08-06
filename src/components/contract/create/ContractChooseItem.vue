@@ -39,6 +39,6 @@ export default {
 
 .right-side {
   width: 800px;
-
+  height: 100%;
 }
 </style>
