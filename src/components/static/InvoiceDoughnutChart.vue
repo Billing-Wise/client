@@ -96,7 +96,7 @@ export default {
 @import "@/assets/scss/component/static-box.scss";
 
 .static-box {
-  height: 100%
+  height: 100%;
 }
 
 

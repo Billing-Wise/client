@@ -34,7 +34,7 @@ computed: {
     return formatNumber(this.memberStore.currentMember.totalInvoiceAmount);
   },
   totalUnpaidAmount() {
-    return formatNumber(this.memberStore.currentMember.totalInvoiceAmount);
+    return formatNumber(this.memberStore.currentMember.totalUnpaidAmount);
   },
   createdAtDate() {
     return toDateFromDateTime(this.memberStore.currentMember.createdAt)
