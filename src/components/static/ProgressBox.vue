@@ -65,9 +65,13 @@ export default {
 <style lang="scss" scoped>
 
 @import "@/assets/scss/component/static-box.scss";
+.static-box {
+  width: 55%;
+}
+
 .progress {
-  height: 40px;
   width: 250px;
+  height: 40px;
   border: $theme-color 3px solid;
   background-color: white;
   box-shadow: $base-shadow;
