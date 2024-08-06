@@ -87,9 +87,9 @@ export default {
 
       // 차트에 데이터 넣기
       this.staticStore.monthDataList.forEach((data) => {
-        monthlyInvoiced[data.month] = data.totalInvoiced;
-        monthlyCollected[data.month] = data.totalCollected;
-        monthlyOutstanding[data.month] = data.outstanding;
+        monthlyInvoiced[data.month-1] = data.totalInvoiced;
+        monthlyCollected[data.month-1] = data.totalCollected;
+        monthlyOutstanding[data.month-1] = data.outstanding;
       })
 
       // 차트 표시
