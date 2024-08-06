@@ -12,7 +12,7 @@
       <span class="title">상품 정보</span>
       <TitleInfoVue title="이름" :info="invoiceDetailStore.data.item.name" />
       <div class="double-info">
-        <TitleInfoVue title="금액" :info="`${invoiceDetailStore.data.item.price}원`" />
+        <TitleInfoVue title="금액" :info="`${currentPrice}원`" />
         <TitleInfoVue title="수량" :info="`${invoiceDetailStore.data.item.amount} 개`"  />
       </div>
     </div>
@@ -28,7 +28,7 @@
       </div>
       <div class="double-info">
         <TitleInfoVue title="구독 여부" :info="subscription" />
-        <TitleInfoVue title="청구액" :info="`${invoiceDetailStore.data.chargeAmount} 원`" />
+        <TitleInfoVue title="청구액" :info="`${currentInvoice} 원`" />
       </div>
       <div class="double-info">
         <TitleInfoVue title="결제일" :info="contractDate" />
@@ -44,7 +44,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { toDateFromDateTime } from '@/utils/formatter';
+import { formatNumber, toDateFromDateTime } from '@/utils/formatter';
 import TitleInfoVue from '../../common/info/TitleInfo.vue';
 import { useInvoiceDetailStore } from '@/stores/invoice/invoiceDetail';
 
@@ -55,6 +55,12 @@ export default {
   },
   computed: {
     ...mapStores(useInvoiceDetailStore),
+    currentPrice() {
+      return formatNumber(this.invoiceDetailStore.data.chargeAmount);
+    },
+    currentInvoice() {
+      return formatNumber(this.invoiceDetailStore.data.chargeAmount);
+    },
     subscription() {
       return this.invoiceDetailStore.data.isSubscription? '정기': '단기';
     },

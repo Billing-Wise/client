@@ -5,7 +5,7 @@
         <TitleInfoVue title="계약ID" :info="invoiceCreateStore.data.contractId" />
         <TitleSelectVue title="결제 수단" :selectedIdx="invoiceCreateStore.paymentTypeIdx"
           :keywordArr="invoiceCreateStore.paymentType" :choiceFunc="setPaymentType" />
-        <InfoInputVue title="청구금" v-model="chargeAmount" type="number" />
+        <NumberInputVue title="청구금" v-model="chargeAmount" unit="원" />
         <InfoInputVue title="결제일" type="date" v-model="contractDate" />
         <InfoInputVue title="납부기한" type="date" v-model="dueDate" />
       </div>
@@ -24,6 +24,7 @@
 
 <script>
 import InfoInputVue from '@/components/common/input/InfoInput.vue';
+import NumberInputVue from '@/components/common/input/NumberInput.vue';
 import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
 import PaginationBarVue from '@/components/common/PaginationBar.vue';
 import InvoiceCreateTableVue from '@/components/invoice/table/InvoiceCreateTable.vue';
@@ -45,7 +46,8 @@ export default {
     TitleSelectVue,
     InvoiceCreateTableVue,
     ThemeBtnVue,
-    WarningBtnVue
+    WarningBtnVue,
+    NumberInputVue
   },
   data() {
     return {

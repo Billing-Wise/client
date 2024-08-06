@@ -3,32 +3,26 @@
     <div class="left-side">
       <ContractCreateInfoVue />
       <div class="warning-msg">{{ warningMsg }}</div>
-      <div class="btn-box" v-if="contractCreateStore.step === 0">
-        <WarningWideBtnVue title="취소" :func="routeContratList" />
-        <ThemeWideBtnVue title="다음" :func="() => changeStep(1)" />
-      </div>
-      <div class="btn-box" v-if="contractCreateStore.step === 1">
-        <ThemeWideBtnVue title="이전" :func="() => changeStep(0)" />
-        <ThemeWideBtnVue title="다음" :func="() => changeStep(2)" />
-      </div>
-      <div class="btn-box" v-if="contractCreateStore.step === 2">
-        <ThemeWideBtnVue title="이전" :func="() => changeStep(1)" />
+      <div class="btn-box">
+        <WarningWideBtnVue title="취소" :func="routeContract" />
         <SuccessWideBtnVue title="완료" :func="createContract" />
       </div>
     </div>
-    <ContractChooseMemberVue v-if="contractCreateStore.step === 0" />
-    <ContractChooseItemVue v-if="contractCreateStore.step === 1" />
   </div>
+  <ItemSelectModalVue 
+    :isVisible="contractCreateStore.selectingItem"
+    :close-modal="() => contractCreateStore.setSelectingItem(false)"/>
+  <MemberSelectModalVue 
+    :isVisible="contractCreateStore.selectingMember"
+    :close-modal="() => contractCreateStore.setSelectingMember(false)"/>
 </template>
 
 <script>
 import WarningWideBtnVue from '@/components/common/btn/WarningWideBtn.vue'
-import ThemeWideBtnVue from '@/components/common/btn/ThemeWideBtn.vue'
 import SuccessWideBtnVue from '@/components/common/btn/SuccessWideBtn.vue'
 import ContractCreateInfoVue from '@/components/contract/ContractCreateInfo.vue'
-import ContractChooseMemberVue from '@/components/contract/create/ContractChooseMember.vue'
-import ContractChooseItemVue from '@/components/contract/create/ContractChooseItem.vue'
-import ContractChooseInfoVue from '@/components/contract/create/ContractChooseInfo.vue'
+import ItemSelectModalVue from '@/components/contract/modal/ItemSelectModal.vue'
+import MemberSelectModalVue from '@/components/contract/modal/MemberSelectModal.vue'
 import { mapStores } from 'pinia'
 import { useContractCreateStore } from '@/stores/contract/contractCreate'
 import { createContract } from '@/utils/contract'
@@ -38,16 +32,14 @@ export default {
   name: 'ContractCreateView',
   components: {
     WarningWideBtnVue,
-    ThemeWideBtnVue,
     SuccessWideBtnVue,
     ContractCreateInfoVue,
-    ContractChooseMemberVue,
-    ContractChooseItemVue,
-    ContractChooseInfoVue
+    ItemSelectModalVue,
+    MemberSelectModalVue
   },
   data() {
     return {
-      warningMsg: ''
+      warningMsg: '',
     }
   },
   computed: {
@@ -57,8 +49,8 @@ export default {
     routeContratList() {
       this.$router.push({ name: 'contract' });
     },
-    changeStep(step) {
-      this.contractCreateStore.setStep(step);
+    routeContract() {
+      this.$router.push({name:'contract'});
     },
     async createContract() {
       const result = await createContract();

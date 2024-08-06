@@ -25,7 +25,8 @@ export default {
   methods: {
     ...mapActions(useContractCreateStore, ['setMember']),
     chooseMember() {
-      this.contractCreateStore.setMember(this.memberData);  
+      this.contractCreateStore.setMember(this.memberData);
+      this.contractCreateStore.setSelectingMember(false);  
     }
   } 
 }

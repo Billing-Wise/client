@@ -80,7 +80,7 @@ export default {
       this.contractListStore.setFilter('itemId', this.$route.params.id);
       const result = await getContractList();
       if (result.code !== 200) {
-        console.log(result);
+        // 예외 처리
       }
     },
     setupWatchers() {
@@ -102,10 +102,8 @@ export default {
 
     this.contractListStore.$reset();
 
-    const result2 = await this.getContractList();
-    if (result2.code !== 200 && result2.code !== 400) {
-      return;
-    }
+    await this.getContractList();
+
 
     this.setupWatchers();
   }

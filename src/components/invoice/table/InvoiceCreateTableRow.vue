@@ -3,7 +3,7 @@
     <td class="table-column"><span>{{ contractData.id }}</span></td>
     <td class="table-column"><span>{{ contractData.itemName }}</span></td>
     <td class="table-column"><span>{{ contractData.memberName }}</span></td>
-    <td class="table-column"><span>{{ contractData.chargeAmount }} 원</span></td>
+    <td class="table-column"><span>{{ currentChargeAmount }} 원</span></td>
     <td class="table-column"><span>매월 {{ contractData.contractCycle }}일</span></td>
     <td class="table-column"><span>{{ contractData.subscription ? '구독' : '단기' }}</span></td>
     <td class="table-column"><span>{{ contractData.invoiceType.name }}</span></td>
@@ -17,6 +17,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useInvoiceCreateStore } from '@/stores/invoice/invoiceCreate';
+import { formatNumber } from '@/utils/formatter';
 
 export default {
   name: 'InvoiceCreateTableRowVue',
@@ -30,6 +31,9 @@ export default {
   },
   computed: {
     ...mapStores(useInvoiceCreateStore),
+    currentChargeAmount() {
+      return formatNumber(this.contractData.chargeAmount);
+    },
     upPaidStatusClass() {
       const count = this.contractData.totalUnpaidCount;
       return count > 0 ? 'warning' : 'success';
