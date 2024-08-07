@@ -5,7 +5,7 @@
     </header>
     <div class="main-box">
       <div class="sample-box">
-        <img :src="`/src/assets/images/${store.exampleImg}`" alt="">
+        <img :src="store.exampleImg" alt="">
         <div class="guide-line">
           <span>※ 위 사진처럼 이름과 형식을 맞춰서 입력해주세요</span>
           <ExcelBtnVue title="양식" :func="downloadSample" />
