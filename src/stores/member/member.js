@@ -9,7 +9,7 @@ export const useMemberStore = defineStore('member', {
       memberList: [],
       currentMember: {},
       columns: [
-        { data: 'id', name: '회원번호', sort: null },
+        { data: 'id', name: '회원번호', sort: 'desc' },
         { data: 'name', name: '이름', sort: null },
         { data: 'email', name: '이메일', sort: null },
         { data: 'phone', name: '전화번호', sort: null },
@@ -26,6 +26,9 @@ export const useMemberStore = defineStore('member', {
     },
     setMaxPage(number) {
       this.maxPage = number;
+      if (number < this.page) {
+        this.page = number;
+      }
     },
     setPage(number) {
       if (number <= this.maxPage && number >= 0) {
