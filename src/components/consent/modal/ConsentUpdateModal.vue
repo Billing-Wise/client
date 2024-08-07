@@ -91,7 +91,6 @@ export default {
     // 은행 선택
     selectBank(idx) {
       this.bankIdx = idx;
-      this.bank = this.bankList[this.bankIdx].name;
     },
     // 이미지 업로드
     triggerFileInput() {
@@ -116,7 +115,7 @@ export default {
 
       const data = {
         owner: this.owner,
-        bank: this.bank,
+        bank: this.bankList[this.bankIdx].name,
         number: this.number,
       };
 

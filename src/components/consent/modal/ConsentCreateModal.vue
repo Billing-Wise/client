@@ -29,7 +29,6 @@
 import ModalHeaderVue from '@/components/common/modal/ModalHeader.vue';
 import ModalFooterVue from '@/components/common/modal/ModalFooter.vue';
 import InfoInputVue from '@/components/common/input/InfoInput.vue';
-import TitleSelectVue from '@/components/common/select/TitleSelect.vue';
 import TitleUpSelectVue from '@/components/common/select/TitleUpSelect.vue';
 import { createConsent } from '@/utils/consent';
 import { mapStores } from 'pinia';
@@ -41,7 +40,6 @@ export default {
     ModalHeaderVue,
     ModalFooterVue,
     InfoInputVue,
-    TitleSelectVue,
     TitleUpSelectVue
   },
   props: {
@@ -79,7 +77,6 @@ export default {
     // 은행 선택
     selectBank(idx) {
       this.bankIdx = idx;
-      this.bank = this.bankList[this.bankIdx].name;
     },
     // 이미지 등록
     onImageChange(event) {
@@ -92,7 +89,6 @@ export default {
         };
         reader.readAsDataURL(file);
       }
-      
     },
     // 동의서 등록
     async createConsent() {
@@ -103,9 +99,11 @@ export default {
 
       const data = {
         owner: this.owner,
-        bank: this.bank,
+        bank: this.bankList[this.bankIdx].name,
         number: this.number,
       };
+
+      console.log(data)
 
       const result = await createConsent(
         this.contractDetailStore.data.member.id,
