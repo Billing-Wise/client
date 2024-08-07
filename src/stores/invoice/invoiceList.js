@@ -9,7 +9,7 @@ export const useInvoiceListStore = defineStore('invoiceList', {
       invoiceList: [],
       currentInvoice: {},
       columns: [
-        { data: 'id', name: '청구번호',},
+        { data: 'id', name: '청구번호', sort: 'desc'},
         { data: 'contractId', name: '계약번호',},
         { data: 'itemName', name: '상품명', notSortable: true},
         { data: 'memberName', name: '회원명', notSortable: true},
@@ -40,7 +40,10 @@ export const useInvoiceListStore = defineStore('invoiceList', {
       this.size = number
     },
     setMaxPage(number) {
-      this.maxPage = number
+      this.maxPage = number;
+      if (number < this.page) {
+        this.page = number;
+      }
     },
     setPage(number) {
       if (number <= this.maxPage && number >= 0) {

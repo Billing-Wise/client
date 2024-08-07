@@ -9,7 +9,7 @@ export const useContractListStore = defineStore('contractList', {
       contractList: [],
       currentContract: {},
       columns: [
-        { data: 'id', name: '계약번호',},
+        { data: 'id', name: '계약번호', sort:'desc'},
         { data: 'itemName', name: '상품명', },
         { data: 'memberName', name: '회원명',  },
         { data: 'chargeAmount', name: '금액',},
@@ -37,7 +37,10 @@ export const useContractListStore = defineStore('contractList', {
       this.size = number
     },
     setMaxPage(number) {
-      this.maxPage = number
+      this.maxPage = number;
+      if (number < this.page) {
+        this.page = number;
+      }
     },
     setPage(number) {
       if (number <= this.maxPage && number >= 0) {

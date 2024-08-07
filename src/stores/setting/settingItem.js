@@ -10,7 +10,7 @@ export const useSettingItemStore = defineStore('settingItem', {
       originalItemList: [],
       currentItem: {},
       columns: [
-        {data: 'id', name:'상품번호', sort:null},
+        {data: 'id', name:'상품번호', sort:'desc'},
         {data:'imageUrl', name:'상품 이미지', sort:null},
         {data: 'name', name:'상품명', sort:null},
         {data: 'price', name:'가격', sort:null},
@@ -28,6 +28,9 @@ export const useSettingItemStore = defineStore('settingItem', {
     },
     setMaxPage(number) {
       this.maxPage = number;
+      if (number < this.page) {
+        this.page = number;
+      }
     },
     setPage(number) {
       if (number <= this.maxPage && number >= 0) {
